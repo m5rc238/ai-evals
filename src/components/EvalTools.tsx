@@ -518,7 +518,7 @@ The findings support ${form.boundedClaim || '[bounded claim]'}, subject to exclu
 
 We recommend ${form.recommendedAction || '[action & conditions]'}. Accountable owner: ${form.ownerRole || '[role]'}. Reevaluation triggers: ${form.reevaluation || '[triggers]'}.`;
 
-  const fullMarkdown = `# AI Evaluation Protocol & Decision Statement
+  const fullMarkdown = `# Exosphere Experimental Protocol & Decision Statement
 
 ## Evaluation & Decision Statement
 ${statement}
@@ -549,13 +549,20 @@ ${statement}
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-stone-200 bg-white p-5">
-        <div>
-          <h2 className="text-lg font-bold text-stone-900">
-            AI-Eval Framework Protocol &amp; Decision Builder
-          </h2>
-          <p className="mt-0.5 text-xs text-stone-600">
-            Build an inspectable 12-field evaluation protocol and bounded decision statement ready for team review.
-          </p>
+        <div className="flex items-center gap-3">
+          <img
+            src="./exosphere-logo.png"
+            alt="Exosphere Experimental Protocol"
+            className="h-9 w-9 shrink-0 rounded-lg object-contain"
+          />
+          <div>
+            <h2 className="text-lg font-bold text-stone-900">
+              Exosphere Experimental Protocol Builder
+            </h2>
+            <p className="mt-0.5 text-xs text-stone-600">
+              Build an inspectable 12-field evaluation protocol and bounded decision statement ready for team review.
+            </p>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -718,7 +725,7 @@ ${statement}
               </button>
               <button
                 type="button"
-                onClick={() => downloadFile('ai-eval-protocol.md', fullMarkdown, 'text/markdown')}
+                onClick={() => downloadFile('exosphere-experimental-protocol.md', fullMarkdown, 'text/markdown')}
                 className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-stone-800 hover:bg-stone-50"
               >
                 <Download className="h-3.5 w-3.5" />
@@ -726,7 +733,7 @@ ${statement}
               </button>
               <button
                 type="button"
-                onClick={() => downloadFile('ai-eval-protocol.json', JSON.stringify(form, null, 2), 'application/json')}
+                onClick={() => downloadFile('exosphere-experimental-protocol.json', JSON.stringify(form, null, 2), 'application/json')}
                 className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-stone-800 hover:bg-stone-50"
               >
                 <Download className="h-3.5 w-3.5" />

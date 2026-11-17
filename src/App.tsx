@@ -94,15 +94,17 @@ export function App() {
             >
               {sidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white">
-              <BookOpen className="h-4 w-4" />
-            </div>
+            <img
+              src="./exosphere-logo.png"
+              alt="Exosphere Experimental Protocol logo"
+              className="h-9 w-9 shrink-0 rounded-lg object-contain"
+            />
             <div>
               <h1 className="text-sm font-bold tracking-tight text-stone-900 sm:text-base">
-                AI Evaluation &amp; Human–AI Interaction
+                Exosphere Experimental Protocol
               </h1>
               <p className="hidden text-xs text-stone-500 sm:block">
-                7-Module Visual Guide · Complete framework + SPHERE (CS 329X)
+                7-Module AI Evaluation Guide · Complete framework + SPHERE (CS 329X)
               </p>
             </div>
           </div>
@@ -134,7 +136,7 @@ export function App() {
                 }`}
               >
                 <ClipboardCheck className="h-3.5 w-3.5" />
-                Framework Protocol Tool
+                Exosphere Protocol Tool
               </button>
             </div>
 
