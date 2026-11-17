@@ -96,15 +96,15 @@ export function App() {
             </button>
             <img
               src="./exosphere-logo.png"
-              alt="Exosphere Experimental Protocol logo"
+              alt="AI Evaluation Guide & Protocol logo"
               className="h-9 w-9 shrink-0 rounded-lg object-contain"
             />
             <div>
               <h1 className="text-sm font-bold tracking-tight text-stone-900 sm:text-base">
-                Exosphere Experimental Protocol
+                AI Evaluation Guide &amp; Protocol
               </h1>
               <p className="hidden text-xs text-stone-500 sm:block">
-                7-Module AI Evaluation Guide · Complete framework + SPHERE (CS 329X)
+                7-Module Visual Guide · Evidence-based AI Eval + SPHERE (CS 329X)
               </p>
             </div>
           </div>
@@ -136,7 +136,7 @@ export function App() {
                 }`}
               >
                 <ClipboardCheck className="h-3.5 w-3.5" />
-                Exosphere Protocol Tool
+                Eval Protocol Tool
               </button>
             </div>
 
