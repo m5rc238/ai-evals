@@ -4,7 +4,7 @@
 
 # AI Evaluation Guide & Protocol
 
-A 7-module visual guide and protocol builder for evidence-based AI and Human–AI Interaction evaluation, combining the core AI evaluation landscape with the **SPHERE** framework ([sphere-eval.github.io](https://sphere-eval.github.io/)) and Stanford CS 329X (*Evaluate Human-AI Interaction*).
+A 7-module study guide, capstone project, and protocol builder for evidence-based AI and Human–AI Interaction evaluation, combining the core AI evaluation landscape with **SPHERE** (Zhao et al., ACL 2025 Findings · [sphere-eval.github.io](https://sphere-eval.github.io/)) and Stanford CS 329X (*Evaluate Human-AI Interaction*).
 
 **Live Site:** https://m5rc238.github.io/ai-evals/
 
@@ -12,16 +12,20 @@ A 7-module visual guide and protocol builder for evidence-based AI and Human–A
 
 ## What’s Included
 
-### 1. Seven-Module Visual Guide
-1. **Foundations & The Evaluation Landscape** — Definition, statement types (empirical, conceptual/normative, practical), 10-element architecture, and capability vs. mechanism.
-2. **Human–AI Interaction & SPHERE** — Interaction as the interface, the 5 SPHERE dimensions (*What, How, Who, When, Meta-Validation*), and human–AI synergy findings.
-3. **Framing: Purpose, Scope, Targets & Context** — Exploratory vs. confirmatory modes, 6 nested scopes (model, harness, human–AI team, organization, societal), and coverage exclusions.
-4. **Criteria, Evidence Collection & Sampling** — 8-field criterion specification, intrinsic vs. extrinsic pipelines, SWE-bench vs. ProgramBench, and sampling purposes.
-5. **Real Human Outcomes, Grading & Aggregation** — Perceived vs. actual speed, skill erosion, offloading, grader validation, and severity-preserving aggregation.
-6. **Statistics, Validity, Lifecycle & Protocol** — Rare-failure binomial bounds, conversation clustering, 10 validity checks, longitudinal dynamics, and governance.
-7. **Debunking AI Eval Hype, Fallacies & Failure Modes** — 10 common evaluation fallacies and a red-flag checklist for reading eval claims.
+### 1. Seven-Module Study Guide
+1. **Foundations & The Evaluation Landscape** — Definition, 10-type taxonomy, 15-term glossary, evidence hierarchy, and capability vs. mechanism.
+2. **Human–AI Interaction & SPHERE** — Interaction as the interface, the 5 SPHERE dimensions (*What, How, Who, When, Meta-Validation*), human factors, and synergy evidence.
+3. **Framing: Purpose, Scope, Targets & Context** — Research questions, exploratory vs. confirmatory modes, 6 nested scopes, agent harnesses, and contamination/leakage.
+4. **Criteria, Evidence Collection & Sampling** — Operational criteria, task-specific metrics, dataset design, imperfect ground truth, and robustness.
+5. **Real Human Outcomes, Grading & Aggregation** — 9 outcome levels, inter-rater reliability ($\kappa$, $\alpha$, ICC), LLM-judge validation, and Simpson’s paradox.
+6. **Statistics, Validity, Lifecycle & Protocol** — 12 worked statistical examples, 3-category validity framework, experimental design, and lifecycle governance.
+7. **How AI Benchmarks and Leaderboards Can Mislead** — 18 benchmark/reporting pitfalls and auditing overstated AI claims.
 
-### 2. Two Exportable Protocol Tools
+### 2. Final Capstone Project & Optional Advanced Tracks
+- **Capstone Project:** Worked 22-element proposal for the fictional *Meridian Research Assistant*, reusable template, fictional mixed results, sample statistical interpretation, sample final report, and 4-level grading rubric.
+- **Optional Advanced Tracks (A–F):** RAG Evaluation, AI Agents, Safety & Security, Multimodal Evaluation, Advanced Measurement, and Organizational Evaluation.
+
+### 3. Supplementary Protocol Tools
 - **SPHERE Card Tool:** Interactive 5-dimension builder for Human–AI systems with live preview and `.md` / `.json` export.
 - **Eval Protocol Tool:** 12-field companion protocol and bounded decision statement builder with live preview and `.md` / `.json` export.
 

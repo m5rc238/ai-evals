@@ -262,18 +262,58 @@ export const SAMPLING_PURPOSES = [
   { name: 'Regression collections', role: 'Preserves previously discovered failures to prevent backsliding.', warning: 'Passing regression tests does not prove new capabilities or unseen safety.' },
 ] as const;
 
-export const VALIDITY_DIMENSIONS = [
-  { name: 'Conceptual adequacy', question: 'Is the target sufficiently defined for the intended claim?' },
-  { name: 'Construct validity', question: 'Why do these observations and scores support the proposed meaning?' },
-  { name: 'Content validity', question: 'Do the test items adequately represent the domain or task specification?' },
-  { name: 'Criterion-related validity', question: 'Do scores correlate with or predict relevant external criteria or outcomes?' },
-  { name: 'Internal (causal) validity', question: 'For causal claims, could alternative explanations account for the difference?' },
-  { name: 'External validity (generalization)', question: 'Which other tasks, people, settings, or periods do the findings cover?' },
-  { name: 'Ecological validity', question: 'Do study tasks, tools, and pressures reflect real-world deployment conditions?' },
-  { name: 'Measurement reliability', question: 'How stable are scores across repetitions, prompts, or independent assessors?' },
-  { name: 'Consequential validity', question: 'What are the intended and unintended downstream effects of using these scores?' },
-  { name: 'Leakage, reproducibility & traceability', question: 'Is contamination ruled out and can others inspect the exact procedure?' },
-] as const;
+export interface ValidityCategory {
+  id: 'measurement' | 'design' | 'reliability';
+  label: string;
+  subtitle: string;
+  corePrinciple: string;
+  items: { name: string; question: string }[];
+}
+
+export const VALIDITY_CATEGORIES: ValidityCategory[] = [
+  {
+    id: 'measurement',
+    label: 'Category A — Validity of Measurement & Interpretation',
+    subtitle: 'Evidence and reasoning supporting a specific score interpretation and intended use (Standards for Educational and Psychological Testing, 2014).',
+    corePrinciple:
+      'Validity is not a single numerical score or universal property of a test; it is an argument linking constructs, indicators, instruments, scores, interpretations, and decisions for a specific use.',
+    items: [
+      { name: 'Construct validity', question: 'Do the observations and scores genuinely reflect the defined theoretical or practical construct rather than irrelevant artifacts?' },
+      { name: 'Content validity', question: 'Do the test items, prompts, and tasks adequately represent the target domain and specification?' },
+      { name: 'Criterion-related evidence', question: 'Do evaluation scores correlate with or predict relevant external criteria and downstream outcomes?' },
+      { name: 'Consequential considerations', question: 'What are the intended and unintended social, operational, and human consequences of using these scores for decisions?' },
+      { name: 'Argument-based validation', question: 'Is every inferential link—from observation to score, generalization, and decision—explicitly justified and stress-tested?' },
+    ],
+  },
+  {
+    id: 'design',
+    label: 'Category B — Study Design, Causal Inference & Generalization',
+    subtitle: 'Whether observed differences reflect causal effects of the system and generalize beyond the studied sample.',
+    corePrinciple:
+      'Internal, external, and ecological validity address distinct study-design and generalization questions—they are not interchangeable subtypes of one validity score.',
+    items: [
+      { name: 'Internal validity', question: 'Is the observed difference plausibly attributable to the AI intervention rather than confounding, selection bias, or attrition?' },
+      { name: 'External validity & generalizability', question: 'How far can findings be generalized beyond the studied tasks, user population, prompts, and time period?' },
+      { name: 'Ecological validity', question: 'Do study tasks, tools, time pressures, and incentives reflect the relevant real-world deployment context?' },
+      { name: 'Randomization & causal inference', question: 'Does the design (e.g., randomized control, counterbalancing, or explicit observational assumptions) support a causal claim?' },
+      { name: 'Distribution shift & context dependence', question: 'How sensitive are results to shifts in inputs, model versions, harnesses, or user populations?' },
+    ],
+  },
+  {
+    id: 'reliability',
+    label: 'Category C — Reliability, Reproducibility & Traceability',
+    subtitle: 'Consistency of measurement and transparency of the evaluation pipeline.',
+    corePrinciple:
+      'Reliability and validity are related but distinct. A measure can be highly reliable without supporting the intended interpretation or use; likewise, reproducibility and traceability are necessary for trustworthy evaluations but do not substitute for validity evidence.',
+    items: [
+      { name: 'Measurement & test-retest reliability', question: 'How consistent are scores across repeated runs, prompt paraphrases, or equivalent test forms?' },
+      { name: 'Inter-rater reliability', question: 'How consistently do independent human assessors or calibrated judges score the same outputs?' },
+      { name: 'Reproducibility & replicability', question: 'Can independent teams re-run the procedure on the same data (reproducibility) or new samples (replicability) and obtain consistent findings?' },
+      { name: 'Version control & dataset provenance', question: 'Are model snapshots, harnesses, prompts, rubrics, and dataset origins pinned and documented?' },
+      { name: 'Evaluation traceability & audit trails', question: 'Can reviewers inspect raw inputs, tool calls, retrieved passages, and scoring logs for any result?' },
+    ],
+  },
+];
 
 export const REPORTING_CLAIMS = [
   {

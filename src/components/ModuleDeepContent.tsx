@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   AggregationTrapDiagram,
   FallaciesDiagram,
@@ -8,6 +9,7 @@ import {
   ScopeBoundaryDiagram,
   SphereDiagram,
   SynergyDiagram,
+  ValidityCategoriesDiagram,
 } from './VisualDiagrams';
 import {
   DISCIPLINES,
@@ -22,10 +24,13 @@ import {
   SCOPES,
   STATEMENT_TYPES,
   TARGET_INVENTORY,
-  VALIDITY_DIMENSIONS,
+  VALIDITY_CATEGORIES,
 } from '../data/evalsData';
+import { STATS_WORKED_EXAMPLES } from '../data/statsWorkedExamples';
+import { LESSON_CONSOLIDATION_MAP } from '../data/curriculum';
 
 export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
+  const [selectedStatIdx, setSelectedStatIdx] = useState(0);
   if (moduleId === 'm1') {
     return (
       <div className="space-y-6 text-sm leading-relaxed text-[#231F1A]">
@@ -135,11 +140,15 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
         <div className="space-y-2.5">
           <h4 className="font-display text-base font-bold">The Proposed SPHERE Evaluation Card</h4>
           <p className="text-xs text-[#5C5346]">
-            <strong>SPHERE</strong> (Ma et al., ACL 2025 Findings;{' '}
-            <a href="https://sphere-eval.github.io/" target="_blank" rel="noopener noreferrer" className="text-[#C8552D] underline">
+            <strong>SPHERE</strong> (Zhao et al., ACL 2025 Findings;{' '}
+            <a href="https://doi.org/10.18653/v1/2025.findings-acl.70" target="_blank" rel="noopener noreferrer" className="text-[#C8552D] underline">
+              DOI: 10.18653/v1/2025.findings-acl.70
+            </a>
+            {' · '}
+            <a href="https://sphere-eval.github.io/" target="_blank" rel="noopener noreferrer" className="text-[#335C81] underline">
               sphere-eval.github.io
             </a>
-            ) is a <strong>proposed organizing framework</strong> bridging HCI and NLP—not a universally mandated standard.
+            ) is a <strong>proposed organizing framework</strong> bridging HCI and NLP—not a universally mandated standard. Extensions in this study guide (such as the Meridian case study) are guide-specific pedagogy rather than part of the original SPHERE publication.
           </p>
           <SphereDiagram />
         </div>
@@ -398,41 +407,100 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
   }
 
   if (moduleId === 'm6') {
+    const activeStat = STATS_WORKED_EXAMPLES[selectedStatIdx] ?? STATS_WORKED_EXAMPLES[0];
     return (
       <div className="space-y-6 text-sm leading-relaxed text-[#231F1A]">
-        <div className="vintage-box rounded-md p-4 space-y-2 text-xs">
-          <h4 className="font-display text-base font-bold">Section A: Statistical Foundations</h4>
+        {/* Section A */}
+        <div className="vintage-box rounded-md p-4 space-y-3 text-xs">
+          <h4 className="font-display text-base font-bold">Section A: Statistical Foundations &amp; 12 Worked Examples</h4>
           <p className="text-[#5C5346]">
-            Distinguish <strong>descriptive statistics</strong> (mean, median, variance, SD, distributions) from <strong>inferential uncertainty</strong> (sampling error, confidence intervals, hypothesis tests, effect sizes, statistical power, sample-size planning). Account for <strong>multiple comparisons</strong>, <strong>missing data</strong>, <strong>clustered observations</strong> (e.g., 300 turns across 5 conversations ≠ 300 independent items), and <strong>repeated measures</strong>.
+            Distinguish descriptive statistics (mean, median, variance, SD, distributions) from inferential uncertainty (sampling error, CIs, hypothesis tests, effect sizes, power, multiple comparisons, missing data, clustered observations, and repeated measures). Always compute a <strong>direct difference CI</strong> when comparing two systems—<strong>the overlap or non-overlap of two separate 95% CIs is not a formal statistical test of the difference</strong>.
           </p>
-          <p className="text-[#231F1A]">
-            <strong>Numerical example:</strong> Observing 0 failures in 100 independent Bernoulli trials yields an exact one-sided 95% upper confidence bound of ~<strong>3%</strong> (not 0%). Conversely, with <em>N</em> = 10,000, a tiny 0.05-point gain can be statistically significant (<em>p</em> &lt; 0.01) while being practically irrelevant.
-          </p>
+
+          <div className="flex flex-wrap gap-1.5">
+            {STATS_WORKED_EXAMPLES.map((ex, i) => (
+              <button
+                key={ex.id}
+                type="button"
+                onClick={() => setSelectedStatIdx(i)}
+                className={`rounded border px-2 py-1 text-[11px] font-medium transition ${
+                  selectedStatIdx === i
+                    ? 'border-[#231F1A] bg-[#231F1A] text-[#FBF7EE]'
+                    : 'border-[#231F1A]/30 bg-[#F5EFE2] text-[#231F1A] hover:border-[#231F1A]'
+                }`}
+              >
+                {ex.id}. {ex.title.replace(/^\d+\.\s*/, '').split('(')[0].trim()}
+              </button>
+            ))}
+          </div>
+
+          <div className="rounded border border-[#231F1A] bg-[#F5EFE2] p-4 space-y-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="font-display text-sm font-bold text-[#231F1A]">{activeStat.title}</div>
+              <span className="rounded bg-[#EFE7D6] px-2 py-0.5 font-mono text-[10px] border border-[#231F1A]/30">
+                Fictional Worked Example
+              </span>
+            </div>
+            <div><strong>Question answered:</strong> {activeStat.question}</div>
+            <div className="text-[#5C5346]"><strong>Why appropriate:</strong> {activeStat.whyAppropriate}</div>
+            <div className="rounded bg-[#FBF7EE] p-2.5 border border-[#231F1A]/20">
+              <div><strong>Fictional data:</strong> {activeStat.fictionalData}</div>
+              <div className="mt-1 font-mono text-[11px] text-[#1E3A54]">
+                <strong>Calculation:</strong> {activeStat.calculation}
+              </div>
+            </div>
+            <div><strong>What the result means:</strong> {activeStat.meaning}</div>
+            <div className="grid gap-2 sm:grid-cols-2">
+              <div className="rounded bg-[#F7E4DC]/70 p-2 text-[#7D3016]">
+                <strong>Does not establish:</strong> {activeStat.doesNotEstablish}
+              </div>
+              <div className="rounded bg-[#F6ECD5] p-2 text-[#6E4E12]">
+                <strong>Common mistake:</strong> {activeStat.commonMistake}
+              </div>
+            </div>
+          </div>
         </div>
 
+        {/* Section B */}
         <div className="vintage-box rounded-md p-4 space-y-2 text-xs">
           <h4 className="font-display text-base font-bold">Section B: Experimental Design &amp; Causal Inference</h4>
           <p className="text-[#5C5346]">
-            Causal claims require appropriate designs: <strong>randomization</strong> and <strong>control groups</strong> reduce confounding; <strong>within-subject designs</strong> with <strong>counterbalancing</strong> control user-to-user variance while requiring attention to carryover/learning effects; <strong>between-subject designs</strong> avoid carryover at higher sample cost. In <strong>observational studies</strong>, selection bias, confounding, and attrition limit causal inference.
+            Select statistical procedures to match the design: <strong>independent samples</strong> (between-subject randomization), <strong>paired observations</strong> (shared tasks), <strong>within-subject repeated measures</strong> (with counterbalancing to control order/learning effects), or <strong>clustered observations</strong> (multiple tasks per user or turns per conversation). No single statistical test fits every design. In <strong>observational studies</strong>, confounding, selection bias, and attrition limit causal inference.
           </p>
         </div>
 
-        <div className="space-y-2.5">
-          <h4 className="font-display text-base font-bold">Section C: Argument-Based Validity (Standards, 2014)</h4>
+        {/* Section C: Reorganized 3-Category Validity Framework */}
+        <div className="space-y-3">
+          <h4 className="font-display text-base font-bold">Section C: Three Distinct Categories of Evaluation Quality</h4>
           <p className="text-xs text-[#5C5346]">
-            Validity is not a single score or checkbox—it is an argument supporting specific interpretations and intended uses. Reliability (consistency) is distinct from validity (meaningfulness).
+            Grounded in the <em>Standards for Educational and Psychological Testing</em> (2014) and argument-based validation, separate <strong>measurement validity</strong> (Category A), <strong>study design &amp; generalization</strong> (Category B), and <strong>reliability &amp; traceability</strong> (Category C).
           </p>
-          <div className="grid gap-2 sm:grid-cols-2 text-xs">
-            {VALIDITY_DIMENSIONS.map((v, i) => (
-              <div key={v.name} className="vintage-box rounded-md p-3">
-                <span className="font-semibold">{i + 1}. {v.name}: </span>
-                <span className="text-[#5C5346]">{v.question}</span>
+          <ValidityCategoriesDiagram />
+          <div className="space-y-3">
+            {VALIDITY_CATEGORIES.map((cat) => (
+              <div key={cat.id} className="vintage-box rounded-md p-4 space-y-2.5 text-xs">
+                <div>
+                  <div className="font-display text-sm font-bold text-[#231F1A]">{cat.label}</div>
+                  <p className="text-[#5C5346]">{cat.subtitle}</p>
+                </div>
+                <div className="rounded border border-[#231F1A]/20 bg-[#EFE7D6] p-2.5 font-medium text-[#231F1A]">
+                  {cat.corePrinciple}
+                </div>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {cat.items.map((item) => (
+                    <div key={item.name} className="rounded bg-[#F5EFE2] p-2.5">
+                      <span className="font-semibold text-[#231F1A]">{item.name}: </span>
+                      <span className="text-[#5C5346]">{item.question}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="space-y-2.5">
+        {/* Section D */}
+        <div className="space-y-3">
           <h4 className="font-display text-base font-bold">Section D: Lifecycle, Governance &amp; Pre-Registered Protocols</h4>
           <HorizonDiagram />
           <p className="text-xs text-[#5C5346]">
@@ -446,6 +514,34 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
               </div>
             ))}
           </div>
+
+          <details className="vintage-box rounded-md p-3.5 text-xs">
+            <summary className="cursor-pointer font-semibold text-[#231F1A]">
+              Curriculum Note: How the Original 9 Lessons Consolidated into 7 Modules
+            </summary>
+            <div className="mt-3 overflow-x-auto">
+              <table className="w-full text-left text-[11px]">
+                <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
+                  <tr>
+                    <th className="px-2.5 py-1.5 font-semibold">Original Lesson</th>
+                    <th className="px-2.5 py-1.5 font-semibold">New Module</th>
+                    <th className="px-2.5 py-1.5 font-semibold">Content Retained</th>
+                    <th className="px-2.5 py-1.5 font-semibold">Changes Made</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#231F1A]/15">
+                  {LESSON_CONSOLIDATION_MAP.map((row) => (
+                    <tr key={row.originalLesson}>
+                      <td className="px-2.5 py-1.5 font-medium">{row.originalLesson}</td>
+                      <td className="px-2.5 py-1.5">{row.newModule}</td>
+                      <td className="px-2.5 py-1.5 text-[#5C5346]">{row.contentRetained}</td>
+                      <td className="px-2.5 py-1.5 text-[#5C5346]">{row.changesMade}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
         </div>
       </div>
     );

@@ -179,9 +179,9 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
     ],
     researchEvidence: [
       {
-        citation: 'Ma, Q., Zhao, D., Zhao, X., Si, C., Yang, C., Louie, R., Reiter, E., Yang, D., & Wu, T. (2025). SPHERE: An Evaluation Card for Human-AI Systems. Findings of ACL 2025.',
+        citation: 'Zhao, D., Ma, Q., Zhao, X., Si, C., Yang, C., Louie, R., Reiter, E., Yang, D., & Wu, T. (2025). SPHERE: An Evaluation Card for Human-AI Systems. Findings of the Association for Computational Linguistics: ACL 2025.',
         sourceType: 'Conference paper (Peer-reviewed)',
-        url: 'https://sphere-eval.github.io/',
+        url: 'https://doi.org/10.18653/v1/2025.findings-acl.70',
         sampleOrScope: 'Proposed organizing framework bridging HCI and NLP evaluation practices.',
         finding: 'Organizes Human–AI evaluation around What, How, Who, When, and Meta-Validation to improve methodological transparency.',
         limitations: 'A proposed organizing card/taxonomy, not an empirically validated universal standard.',
@@ -280,7 +280,8 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       'Appropriate reliance requires measuring when humans accept correct outputs, verify uncertain ones, and reject errors.',
     ],
     furtherReading: [
-      { label: 'SPHERE Evaluation Card (Ma et al., ACL 2025 Findings)', type: 'Conference paper / Tool', url: 'https://sphere-eval.github.io/' },
+      { label: 'Zhao et al. (2025), SPHERE: An Evaluation Card for Human-AI Systems (ACL 2025 Findings)', type: 'Conference paper (Peer-reviewed)', url: 'https://doi.org/10.18653/v1/2025.findings-acl.70' },
+      { label: 'SPHERE Interactive Card Site', type: 'Research tool', url: 'https://sphere-eval.github.io/' },
       { label: 'Vaccaro, Almaatouq & Malone (2024), Nature Human Behaviour', type: 'Meta-analysis (Peer-reviewed)', url: 'https://doi.org/10.1038/s41562-024-02024-1' },
     ],
     transition: 'Once you know how humans and AI interact, Module 3 shows how to translate broad goals into a tightly scoped, leak-free evaluation question.',
@@ -547,13 +548,13 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
         doesNotEstablish: 'Does not generalize to all AI coding tools, novice developers, or greenfield projects.',
       },
       {
-        citation: 'Shen, J., & Tamkin, A. (2026). AI Assistance and Coding Skills. Anthropic Research.',
+        citation: 'Shen, J. H., & Tamkin, A. (January 29, 2026). How AI assistance impacts the formation of coding skills. Anthropic Research.',
         sourceType: 'Technical report / Framework',
         url: 'https://www.anthropic.com/research/AI-assistance-coding-skills',
-        sampleOrScope: 'RCT of 52 engineers learning a new Python library with vs. without AI assistance.',
-        finding: 'In that experimental setting, the AI-assisted group scored 17% lower on a follow-up mastery quiz, with the largest gap on debugging questions.',
-        limitations: 'Specific to 52 engineers, one new library, and a short-term learning/quiz protocol.',
-        doesNotEstablish: 'Does not establish that AI universally causes a 17% loss of human skill across all contexts or long-term workflows.',
+        sampleOrScope: 'Randomized controlled trial of 52 software engineers learning a new Python library (Trio) with vs. without AI assistance.',
+        finding: 'On a follow-up mastery quiz (measuring conceptual understanding, code reading, and debugging), the AI-assisted group averaged approximately 50% compared with approximately 67% for the hand-coding group—a 17-percentage-point difference (largest on debugging), while immediate task completion time showed no statistically significant difference.',
+        limitations: 'Short-term experiment with 52 engineers learning one unfamiliar library; outcomes depend on how participants interacted with AI (passive offloading vs. active conceptual questioning).',
+        doesNotEstablish: 'Does not establish universal or long-term skill degradation across all occupations, AI systems, user expertise levels, or learning contexts.',
       },
       {
         citation: 'Jakesch, M., Bhat, A., Buschek, D., Zalmanson, L., & Naaman, M. (2023). Co-writing with opinionated language models affects users’ views. CHI 2023.',
@@ -613,17 +614,17 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
     knowledgeChecks: [
       {
         id: 'm5-q1',
-        question: 'In Anthropic’s RCT (Shen & Tamkin, 2026) on 52 engineers learning a new Python library, what is the accurate interpretation of the 17% lower quiz score?',
+        question: 'In Anthropic’s study "How AI assistance impacts the formation of coding skills" (Shen & Tamkin, Jan 29, 2026), what is the accurate interpretation of the ~50% vs. ~67% quiz result?',
         options: [
-          'AI tools universally destroy 17% of engineering skill in all settings.',
-          'In that specific short-term learning experiment, engineers using AI scored 17% lower on a follow-up mastery quiz (especially debugging) than those without AI.',
-          'The AI group wrote 17% fewer lines of code.',
+          'AI tools universally destroy 17% of engineering skill across all occupations and workflows.',
+          'In that RCT of 52 engineers learning a new Python library, the AI-assisted group scored 17 percentage points lower on a follow-up mastery quiz (conceptual understanding, code reading, and debugging) than the hand-coding group, which does not establish universal long-term deskilling.',
+          'The AI-assisted group took 17 percentage points longer to finish the initial coding task.',
         ],
         correctIndex: 1,
-        correctExplanation: 'Accurate scientific reporting scopes the finding to the 52 participants, new-library task, and follow-up quiz without overgeneralizing to all software work.',
+        correctExplanation: 'Reporting the result as a 17-percentage-point difference (~50% vs. ~67%) scoped to 52 engineers learning an unfamiliar library distinguishes immediate task completion from learning/skill acquisition without overgeneralizing.',
         distractorNotes: [
-          'A overgeneralizes a single experimental context into a universal law.',
-          'C misstates the measured outcome.',
+          'A confuses a 17-percentage-point difference with a 17% relative reduction and overgeneralizes to all occupations.',
+          'C misstates the measured outcome (mastery quiz score, not task time).',
         ],
       },
       {
@@ -649,7 +650,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
     ],
     furtherReading: [
       { label: 'METR (2025), Early-2025 AI Experienced OS Developer Study', type: 'Technical report', url: 'https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/' },
-      { label: 'Shen & Tamkin (2026), AI Assistance and Coding Skills', type: 'Technical report', url: 'https://www.anthropic.com/research/AI-assistance-coding-skills' },
+      { label: 'Shen & Tamkin (Jan 29, 2026), How AI assistance impacts the formation of coding skills', type: 'Industry research report', url: 'https://www.anthropic.com/research/AI-assistance-coding-skills' },
     ],
     transition: 'Once outputs and human outcomes are measured, Module 6 teaches how to analyze statistical uncertainty, design causal studies, build validity arguments, and govern the lifecycle.',
   },
@@ -714,22 +715,25 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       },
     ],
     exercise: {
-      title: 'Assignment 6: Interpret Fictional Results for Two AI Systems',
-      objective: 'Critically interpret statistical output, subgroup disparities, and operational trade-offs.',
-      scenario: 'System A (N=200 tasks): mean 4.1/5 (SD 0.6, 95% CI [4.02, 4.18]), latency 1.2s, cost $0.02/task, Non-English subgroup (n=15) mean 2.8/5. System B (N=200 tasks): mean 4.2/5 (SD 0.7, 95% CI [4.10, 4.30]), latency 6.5s, cost $0.18/task, Non-English subgroup (n=15) mean 3.9/5.',
+      title: 'Assignment 6: Interpret Differences, Confidence Intervals & Subgroup Results',
+      objective: 'Compare two AI systems directly using difference confidence intervals, effect sizes, subgroup checks, and practical significance.',
+      scenario:
+        'Fictional paired comparison on N = 200 shared research tasks (evaluated by 25 analysts, 8 tasks each): System A mean 4.10/5 (SD 0.60, 95% CI [4.02, 4.18]), latency 1.2s, cost $0.02/task; Non-English subgroup (n = 15 tasks) mean 2.80/5. System B mean 4.20/5 (SD 0.70, 95% CI [4.10, 4.30]), latency 6.5s, cost $0.18/task; Non-English subgroup (n = 15 tasks) mean 3.90/5. Direct paired difference (B − A): +0.10 points (cluster-robust 95% CI [+0.01, +0.19]).',
       instructions: [
-        'Assess whether the overall 0.1-point difference (4.2 vs 4.1) is practically meaningful given overlapping CIs and 9× higher cost / 5× higher latency.',
-        'Evaluate whether the subgroup sample (n=15) is sufficient and how the Non-English gap changes the deployment decision.',
-        'Specify what additional evidence is needed before choosing a system.',
+        'Warning: The overlap or non-overlap of two separate 95% confidence intervals ([4.02, 4.18] vs. [4.10, 4.30]) is not, by itself, a formal statistical test of the difference between System A and System B.',
+        'Explain why estimating the paired/clustered difference directly (+0.10, 95% CI [+0.01, +0.19]) is required rather than eyeballing separate CIs, and distinguish statistical uncertainty from measurement uncertainty (rater noise).',
+        'Assess whether a +0.10-point overall difference (small effect size) is practically meaningful given 9× higher cost and 5.4× higher latency.',
+        'Evaluate whether n = 15 Non-English tasks is sufficient and how the 1.10-point subgroup gap changes the deployment decision.',
       ],
       requiredOutput: 'A 4-part statistical & decision interpretation memo.',
       evaluationCriteria: [
-        'Distinguishes overall mean difference from practical significance and cost/latency trade-offs.',
-        'Flags the small subgroup sample (n=15) and the 1.1-point Non-English disparity.',
+        'Avoids the overlapping-CI fallacy and uses the direct difference CI and cluster-aware reasoning.',
+        'Distinguishes statistical detectability from practical significance and cost/latency trade-offs.',
+        'Flags the small subgroup sample (n = 15) and recommends targeted follow-up sampling before Non-English deployment.',
       ],
       strongExample:
-        'Overall difference (0.1 points) has overlapping CIs and may not justify 9× cost and 5.4× latency for English tasks. However, System A drops sharply on Non-English queries (2.8 vs 3.9), though n=15 yields wide uncertainty. Recommendation: do not deploy System A for Non-English users; collect a powered stratified sample (e.g., n≥60 per language) before deciding.',
-      reflectionQuestion: 'Why is a pre-registered analysis plan important even when evaluating an internal product rather than publishing a paper?',
+        'Even though the two separate 95% CIs overlap ([4.02, 4.18] and [4.10, 4.30]), the direct paired difference is +0.10 with a cluster-robust 95% CI [+0.01, +0.19], showing a statistically detectable but small overall effect (d ≈ 0.15). Practically, +0.10 on a 5-point scale does not justify 9× cost and 5.4× latency for English tasks. However, System A drops to 2.80/5 on Non-English queries (n = 15, wide uncertainty). Decision: do not deploy System A for Non-English workflows; run a powered stratified evaluation (e.g., n ≥ 60 per language) before deciding.',
+      reflectionQuestion: 'Why can two systems have overlapping individual 95% CIs yet still show a statistically detectable paired difference (and vice versa when observations are clustered)?',
     },
     knowledgeChecks: [
       {
@@ -760,6 +764,51 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
         distractorNotes: [
           'A treats validity as context-free.',
           'C confuses reliability with validity.',
+        ],
+      },
+      {
+        id: 'm6-q3',
+        question: 'Two systems have separate 95% CIs of [0.74, 0.82] and [0.78, 0.86] on the same 200 paired test items. What is the right way to test their difference?',
+        options: [
+          'Conclude there is no statistically significant difference because the two 95% CIs overlap.',
+          'Compute the paired difference on each item and construct a 95% CI for the difference directly.',
+          'Run 20 separate subgroup t-tests without correction until one is significant.',
+        ],
+        correctIndex: 1,
+        correctExplanation: 'Overlap of separate 95% CIs is not a valid hypothesis test—especially for paired designs where item-level covariance reduces the variance of the difference.',
+        distractorNotes: [
+          'A commits the overlapping-CI fallacy.',
+          'C introduces multiple-comparison false positives.',
+        ],
+      },
+      {
+        id: 'm6-q4',
+        question: 'A model produces 0 critical failures in 100 independent representative trials. Using the rule of three, what is the approximate one-sided 95% upper bound on the failure rate, and what does it assume?',
+        options: [
+          '0%, proving the model is completely safe in production.',
+          '~3% (3/100), assuming independent Bernoulli trials, a fixed failure rate, and accurate failure detection—and saying nothing about untested shifts.',
+          '~30%, because 100 trials is always underpowered.',
+        ],
+        correctIndex: 1,
+        correctExplanation: 'Under independent Bernoulli trials with accurate detection, 1 − 0.05^(1/100) ≈ 2.95% (~3% via the rule of three 3/N). It does not guarantee safety under distribution shift.',
+        distractorNotes: [
+          'A confuses zero observed failures with zero true probability.',
+          'C miscalculates the binomial bound.',
+        ],
+      },
+      {
+        id: 'm6-q5',
+        question: 'With N = 15,000 tasks, Model B beats Model A by +0.4 percentage points (82.4% vs. 82.0%, p = 0.02) but costs 4× more and adds 3 seconds of latency. How should you interpret this?',
+        options: [
+          'Model B must be deployed because p < 0.05 proves practical superiority.',
+          'The difference is statistically detectable due to large N, but practically negligible relative to the 4× cost and latency trade-off.',
+          'The p-value proves the measurement instrument is valid.',
+        ],
+        correctIndex: 1,
+        correctExplanation: 'Statistical significance depends heavily on sample size and does not establish practical importance or net value.',
+        distractorNotes: [
+          'A conflates statistical significance with practical significance.',
+          'C confuses p-values with measurement validity.',
         ],
       },
     ],
@@ -875,5 +924,69 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       { label: 'HELM: Transparency on Coverage & Scenarios', type: 'Peer-reviewed study', url: 'https://crfm.stanford.edu/helm/' },
     ],
     transition: 'Now apply all seven modules together in the Final Capstone Project—or explore the optional Advanced Learning Tracks (RAG, Agents, Safety, Multimodal, Advanced Measurement, Organizational Eval).',
+  },
+];
+
+export interface LessonMappingRow {
+  originalLesson: string;
+  newModule: string;
+  contentRetained: string;
+  changesMade: string;
+}
+
+export const LESSON_CONSOLIDATION_MAP: LessonMappingRow[] = [
+  {
+    originalLesson: 'Lesson 1: What Is AI Evaluation & How It Works',
+    newModule: 'Module 1: Foundations & The Evaluation Landscape',
+    contentRetained: 'Definition, 3 statement types, 10-element landscape, capability vs. mechanism.',
+    changesMade: 'Expanded with 10-type evaluation taxonomy, 5 scope levels, 15-term glossary, evidence hierarchy, and Claim Classification assignment.',
+  },
+  {
+    originalLesson: 'Lesson 2: Why Human–AI Interaction Changes Everything',
+    newModule: 'Module 2: Human–AI Interaction & SPHERE',
+    contentRetained: 'Interaction vs. autonomy, SPHERE framework, Vaccaro et al. (2024) synergy meta-analysis.',
+    changesMade: 'Corrected SPHERE citation to Zhao et al. (2025), added augmentation/synergy/substitution, appropriate reliance, human factors, and 3-condition study assignment.',
+  },
+  {
+    originalLesson: 'Lesson 3: Purpose, Scope, Targets & Evaluation Modes',
+    newModule: 'Module 3: Framing: Purpose, Scope, Targets & Context',
+    contentRetained: 'Exploratory vs. confirmatory modes, 6 nested scopes, agent harnesses, target inventory, question framing.',
+    changesMade: 'Added formal RQ/hypothesis/estimand framing, comparator selection, 7 contamination/leakage modes, and internal/external/ecological validity.',
+  },
+  {
+    originalLesson: 'Lesson 4: Who Evaluates, For Whom & Context Coverage',
+    newModule: 'Modules 2 & 3 (distributed by theme)',
+    contentRetained: 'Target users vs. crowd annotators, CoMPosT caricature risks, HELM-style missing coverage.',
+    changesMade: 'Merged participant/synthetic-persona topics into Module 2 and context/coverage exclusions into Module 3.',
+  },
+  {
+    originalLesson: 'Lesson 5: How We Evaluate: Methods, Intrinsic vs. Extrinsic & Sampling',
+    newModule: 'Module 4: Criteria, Evidence Collection & Sampling',
+    contentRetained: 'Quantitative vs. qualitative, intrinsic vs. extrinsic, SWE-bench vs. ProgramBench, Rehearsal, 8 methods, 4 sampling purposes.',
+    changesMade: 'Added 6-layer construct-to-score chain, metrics by task type, dataset design, imperfect ground truth, robustness testing, and 100-item RAG dataset assignment.',
+  },
+  {
+    originalLesson: 'Lesson 6: Measuring Real Outcomes, Skill Erosion & Grading',
+    newModule: 'Module 5: Real Human Outcomes, Grading & Aggregation',
+    contentRetained: 'METR study, Anthropic coding-skills study, opinion drift, Offloading Score, grader validation, severity-preserving aggregation.',
+    changesMade: 'Corrected Anthropic title & 17-percentage-point framing, added 9 outcome levels, κ/α/ICC reliability metrics, LLM-judge biases, Simpson’s paradox, and judge validation assignment.',
+  },
+  {
+    originalLesson: 'Lesson 7: Statistical Uncertainty, Clustering & Validity',
+    newModule: 'Module 6: Statistics, Validity, Lifecycle & Protocol',
+    contentRetained: '0/100 rare-failure bound, conversation clustering, validity review.',
+    changesMade: 'Reorganized validity into 3 distinct categories (A, B, C), added 12 step-by-step statistical worked examples, and corrected CI-overlap guidance.',
+  },
+  {
+    originalLesson: 'Lesson 8: When to Evaluate: Lifecycle, Long-Term Effects & Governance',
+    newModule: 'Module 6 (Section D: Lifecycle & Governance)',
+    contentRetained: 'Short-term vs. long-term dynamics (familiarization, sycophancy), governance roles, oversight checks, reevaluation triggers.',
+    changesMade: 'Consolidated into Module 6 Section D alongside pre-registered protocols, audit trails, and drift detection.',
+  },
+  {
+    originalLesson: 'Lesson 9: Worked Example, Reporting Discipline & Protocol Builder',
+    newModule: 'Modules 6 & 7 + Final Capstone Project',
+    contentRetained: 'Research Assistant case study, Claim Calibration table, 12-field protocol, Decision Statement.',
+    changesMade: 'Expanded the Research Assistant into the continuous Meridian case study across Modules 1–7, moved benchmark/claim auditing into Module 7, and built the full 22-element Capstone.',
   },
 ];

@@ -1,5 +1,19 @@
 # A Complete Guide to AI Evaluation
 
+> [!NOTE]
+> **Course Synchronization:** This Markdown document serves as the companion prose reference to the interactive 7-module study guide (`src/data/curriculum.ts` and `src/data/evalsData.ts` are the authoritative sources for module structure, exercises, knowledge checks, and the Meridian Research Assistant capstone).
+>
+> | Study Guide Module | Companion Guide Sections | Original 9-Lesson Consolidation |
+> |---|---|---|
+> | **Module 1: Foundations & The Evaluation Landscape** | Sections 1–2 | Lesson 1 |
+> | **Module 2: Human–AI Interaction & SPHERE** | Sections 4, 9 (with **Zhao et al., 2025** SPHERE card) | Lessons 2 & 4 (participant/synthetic aspects) |
+> | **Module 3: Framing: Purpose, Scope, Targets & Context** | Sections 3–6 | Lessons 3 & 4 (context/coverage aspects) |
+> | **Module 4: Criteria, Evidence Collection & Sampling** | Sections 7–8 | Lesson 5 |
+> | **Module 5: Real Human Outcomes, Grading & Aggregation** | Sections 9–10 | Lesson 6 |
+> | **Module 6: Statistics, Validity, Lifecycle & Protocol** | Sections 11–13, 17 | Lessons 7, 8 & 9 (protocol aspects) |
+> | **Module 7: How AI Benchmarks and Leaderboards Can Mislead** | Section 16 & critical auditing | Lesson 9 (reporting calibration) + new audit curriculum |
+> | **Final Capstone Project** | Section 15 (Meridian Research Assistant) + 22-element proposal | Lesson 9 (expanded worked example) |
+
 **AI evaluation** is the systematic inquiry that collects and interprets evidence about an AI model, system, its use, or its effects, against explicit questions and criteria, to inform understanding or support a decision.
 
 Evaluation can test whether a model solves a problem, whether a product behaves appropriately, or whether people benefit from using it. These questions require different evidence and support different conclusions. A benchmark score, an expert’s judgment, and a measured improvement in someone’s work each establish something different.
@@ -327,7 +341,10 @@ Human-outcome evaluations should use appropriate comparators (an existing workfl
 
 Where a causal claim matters, design the comparison accordingly. Random allocation reduces confounding, but does not eliminate learning effects, noncompliance, spillovers, attrition, measurement problems, or limited external validity. Observational comparisons require explicit assumptions and greater caution about alternative explanations.
 
-*Reference:* METR’s randomized study of early-2025 coding tools with experienced developers assessed effects on completed work directly rather than inferring productivity from model benchmarks. Its findings concern that study’s specific tools, participants, tasks, and period, and should not be generalized to all AI-assisted development.
+*References:*
+- **METR (Becker et al., 2025):** Randomized study of early-2025 AI tools with 16 experienced open-source developers across 246 tasks on familiar large repositories; developers forecasted a ~20% speedup but were observed to be 19% slower. Concerns those specific tools, participants, repositories, and period.
+- **Anthropic (Shen & Tamkin, January 29, 2026):** *How AI assistance impacts the formation of coding skills.* In an RCT of 52 software engineers learning a new Python library (`Trio`), the AI-assisted group averaged ~50% on a follow-up mastery quiz (measuring conceptual understanding, code reading, and debugging) compared with ~67% for the hand-coding group—a **17-percentage-point difference** (not a 17% relative reduction), while immediate task completion time showed no statistically significant difference. This finding is specific to that short-term learning context and does not establish universal or long-term skill degradation across all occupations, AI systems, or users.
+- **SPHERE (Zhao, D., Ma, Q., Zhao, X., Si, C., Yang, C., Louie, R., Reiter, E., Yang, D., & Wu, T., 2025):** *SPHERE: An Evaluation Card for Human-AI Systems*, Findings of ACL 2025 ([DOI: 10.18653/v1/2025.findings-acl.70](https://doi.org/10.18653/v1/2025.findings-acl.70)). A proposed 5-dimension organizing card (*What, How, Who, When, Meta-Validation*) rather than an established universal standard.
 
 > **Practical output:** An explicit statement distinguishing immediate system performance from the human or collective outcomes being investigated.
 
@@ -399,8 +416,8 @@ Match the analysis to the inference target and study design:
 - **Target:** Are you describing a fixed collection of items or generalizing to a broader population? (NIST’s statistical-modeling work highlights that these are distinct inference targets with different uncertainty questions.)
 - **Dependence:** Hundreds of turns from a few conversations are not equivalent to hundreds of independent tasks. Repeated attempts characterize variability on those tasks; they do not independently expand task coverage.
 - **Sample size:** Base sample sizes on the decision, expected variation, precision needs, subgroups, and consequences of error. No universal number guarantees rigor.
-- **Rare failures:** Observing zero failures in 100 independent, representative Bernoulli trials (assuming accurate detection) yields an exact one-sided 95% upper confidence bound of approximately 3%—and establishes nothing about untested conditions or measurement bias. Exact binomial methods are especially relevant when failures are rare.
-- **Comparisons:** Account for pairing or clustering; report effect sizes and practical significance alongside uncertainty; explain missing data; account for searching across many models, prompts, metrics, or analyses (separating exploratory selection from independent final assessment).
+- **Rare failures (Rule of Three):** Observing zero failures in 100 independent, representative Bernoulli trials (assuming accurate detection) yields an exact one-sided 95% upper confidence bound of approximately 3% (approximated by the rule of three: $3/N = 3/100 = 3\%$)—and establishes nothing about untested conditions, distribution shift, or measurement bias.
+- **Comparisons & overlapping CIs:** The overlap or non-overlap of two separate 95% confidence intervals is **not**, by itself, a formal statistical test of the difference between two systems. Estimate the difference directly and construct an appropriate CI for that difference, accounting for pairing, repeated measures, or clustering. Report effect sizes and practical significance alongside uncertainty; explain missing data; account for multiple comparisons.
 - **Inconclusive vs. equivalent:** A statistically detectable difference can be practically unimportant, and an inconclusive difference does not establish equivalence. Equivalence or noninferiority claims require an appropriate design and justified margins.
 
 Confidence intervals quantify sampling or model-specific uncertainty under stated assumptions; they do not summarize the credibility of the entire evaluation.
@@ -409,24 +426,30 @@ Confidence intervals quantify sampling or model-specific uncertainty under state
 
 ---
 
-### 12. Evaluation Quality and Validity
+### 12. Evaluation Quality, Validity, Study Design, and Reliability
 
-The outer layer asks what interpretations and uses the evaluation credibly supports. The *Standards for Educational and Psychological Testing* locates **validity** in particular score interpretations and intended uses—a procedure is never universally valid across all purposes and populations. While differences between AI systems and human testing require care, this principle is directly applicable.
+The outer layer asks what interpretations and uses the evaluation credibly supports. Grounded in the *Standards for Educational and Psychological Testing* (2014) and argument-based validation, **validity** is not a single numerical score or universal property of a test; it is an argument supporting specific score interpretations and intended uses. Organize quality review into three distinct categories:
 
-| Concern | Question |
-|---|---|
-| **Conceptual adequacy** | Is the target sufficiently defined for the intended claim? |
-| **Construct validity** | Why do these observations and scores support the proposed meaning? |
-| **Internal (causal) validity** | For causal claims, could alternative explanations account for the difference? |
-| **External validity (generalization)** | Which other tasks, people, settings, or periods do the findings cover? |
-| **Statistical validity** | Are estimates and uncertainty appropriate to the design and data? |
-| **Reliability** | How stable are measurements across relevant repetitions or assessors? |
-| **Coverage** | Which material cases or consequences remain unexamined? |
-| **Leakage and contamination** | Has evaluation data influenced training, tuning, or answer access? |
-| **Evaluator limitations** | Which errors or biases affect scoring? |
-| **Reproducibility and traceability** | Can others inspect the procedure and trace what generated the result? |
+#### Category A — Validity of Measurement and Interpretation
+- **Construct validity:** Do scores reflect the defined construct rather than irrelevant artifacts?
+- **Content validity:** Do test items adequately represent the target domain and specification?
+- **Criterion-related evidence:** Do scores correlate with or predict relevant external criteria?
+- **Consequential considerations:** What are the intended and unintended consequences of using these scores?
+- **Argument-based validation:** Are the links from construct → indicator → instrument → score → interpretation → decision explicitly justified?
 
-Passing one check does not substitute for others: a reliable rubric can consistently measure an inadequate proxy, and human agreement can coexist with shared blind spots. Document **contamination uncertainty** honestly—when training provenance is inaccessible, behavioral tests can probe concerns without proving the absence of contamination.
+#### Category B — Study Design, Causal Inference, and Generalization
+- **Internal validity:** Is the observed difference plausibly attributable to the AI intervention rather than confounding, selection bias, or attrition?
+- **External validity & generalizability:** How far can findings be generalized beyond the studied population, tasks, and period?
+- **Ecological validity:** Do study tasks, tools, and time pressures reflect the relevant real-world context?
+- **Randomization, distribution shift, and context dependence:** Does the design support causal inference, and how sensitive are results to input or harness shifts?
+
+#### Category C — Reliability, Reproducibility, and Traceability
+**Reliability and validity are related but distinct. A measure can be reliable without supporting the intended interpretation or use.** Likewise, reproducibility and traceability are necessary for trustworthy evaluations but do not substitute for validity evidence.
+- **Measurement, inter-rater, and test-retest reliability:** Stability across repeated runs, prompt paraphrases, and independent assessors ($\kappa$, weighted $\kappa$, $\alpha$, ICC).
+- **Reproducibility & replicability:** Ability to re-run on the same data or replicate on new samples.
+- **Version control, dataset provenance, traceability & audit trails:** Pinned model/harness/judge versions, documented data origins, and inspectable logs.
+
+Document **contamination uncertainty** honestly—when training provenance is inaccessible, behavioral tests can probe concerns without proving the absence of contamination.
 
 > **Practical output:** A justification record linking each intended claim to supporting evidence, assumptions, objections, and unresolved limitations.
 
@@ -485,9 +508,9 @@ An inconclusive result can justify further investigation, a narrower claim, or a
 
 ---
 
-### 15. Worked Example: An Illustrative Research Assistant
+### 15. Worked Example: Meridian Research Assistant (Capstone Scenario)
 
-*The following is a fictional design example, not a report of measured results.*
+*The following is a fictional design example (the continuous Meridian Research Assistant case study used across Modules 1–7 and the 22-element Final Capstone Project), not a report of measured empirical results.*
 
 Suppose an assistant helps researchers compare empirical papers and draft evidence syntheses.
 

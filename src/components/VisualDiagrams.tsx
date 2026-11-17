@@ -130,7 +130,7 @@ export function SphereDiagram() {
           Human–AI Interaction
         </text>
         <text x="400" y="174" textAnchor="middle" fontSize="10" fill="#D49B2A">
-          Ma et al. (ACL 2025)
+          Zhao et al. (ACL 2025)
         </text>
 
         <rect x="26" y="48" width="240" height="94" rx="6" fill="#E6EDE2" stroke="#4A6B4E" strokeWidth="1.5" />
@@ -282,11 +282,11 @@ export function OutcomesComparisonDiagram() {
         <text x="26" y="124" fontSize="10.5" fill="#5C5346">Perception surveys ≠ ground truth.</text>
 
         <rect x="269" y="14" width="242" height="156" rx="6" fill="#F6ECD5" stroke="#D49B2A" strokeWidth="1.5" />
-        <text x="283" y="38" fontSize="11.5" fontWeight="700" fill="#6E4E12">Skill Erosion (Anthropic 2026)</text>
-        <text x="283" y="62" fontSize="11" fill="#231F1A">• 52 engineers learning new library</text>
-        <text x="283" y="82" fontSize="11" fontWeight="700" fill="#8C5F0B">• −17% on follow-up mastery quiz</text>
-        <text x="283" y="106" fontSize="10.5" fill="#231F1A">Largest drop in debugging skill.</text>
-        <text x="283" y="124" fontSize="10.5" fill="#5C5346">Track mastery, not just completion.</text>
+        <text x="283" y="38" fontSize="11.5" fontWeight="700" fill="#6E4E12">Skill Formation (Anthropic 2026)</text>
+        <text x="283" y="62" fontSize="11" fill="#231F1A">• 52 engineers learning Python library</text>
+        <text x="283" y="82" fontSize="11" fontWeight="700" fill="#8C5F0B">• ~50% vs. ~67% (−17 pp quiz gap)</text>
+        <text x="283" y="106" fontSize="10.5" fill="#231F1A">Largest gap in debugging mastery.</text>
+        <text x="283" y="124" fontSize="10.5" fill="#5C5346">Task speed ≠ learning / retention.</text>
 
         <rect x="526" y="14" width="242" height="156" rx="6" fill="#E3EAF0" stroke="#335C81" strokeWidth="1.5" />
         <text x="540" y="38" fontSize="11.5" fontWeight="700" fill="#1E3A54">Offloading Score (NeurIPS 2026)</text>
@@ -375,7 +375,7 @@ export function FallaciesDiagram() {
         <text x="426" y="38" fontSize="12" fontWeight="700" fill="#6E4E12">2. Human–AI &amp; Preference Illusions</text>
         <text x="426" y="58" fontSize="10.5" fill="#231F1A">• “Perceived speedup (+20%) = actual speedup (−19%)”</text>
         <text x="426" y="76" fontSize="10.5" fill="#231F1A">• “Instant chat preference = long-term benefit” (sycophancy)</text>
-        <text x="426" y="94" fontSize="10.5" fill="#5C5346">• Ignoring skill erosion (−17%) &amp; opinion drift</text>
+        <text x="426" y="94" fontSize="10.5" fill="#5C5346">• Ignoring skill-quiz gaps (−17 pp) &amp; opinion drift</text>
 
         <rect x="14" y="130" width="376" height="100" rx="6" fill="#E3EAF0" stroke="#335C81" strokeWidth="1.5" />
         <text x="30" y="154" fontSize="12" fontWeight="700" fill="#1E3A54">3. Evaluator &amp; Simulation Traps</text>
@@ -391,6 +391,38 @@ export function FallaciesDiagram() {
       </svg>
       <figcaption className="mt-2.5 text-center font-mono text-[11px] text-[#5C5346]">
         FIG 7.1 — Four families of AI evaluation fallacies that cause teams to overstate readiness or misread user impact.
+      </figcaption>
+    </figure>
+  );
+}
+
+export function ValidityCategoriesDiagram() {
+  return (
+    <figure className="vintage-card my-6 rounded-lg p-5">
+      <svg viewBox="0 0 800 185" className="w-full h-auto" role="img" aria-label="Three Distinct Categories of Evaluation Quality">
+        <rect x="12" y="14" width="246" height="156" rx="6" fill="#E3EAF0" stroke="#335C81" strokeWidth="1.5" />
+        <text x="26" y="38" fontSize="11.5" fontWeight="700" fill="#1E3A54">A. Measurement &amp; Interpretation</text>
+        <text x="26" y="60" fontSize="10.5" fill="#231F1A">• Construct, content &amp; criterion</text>
+        <text x="26" y="78" fontSize="10.5" fill="#231F1A">• Consequential considerations</text>
+        <text x="26" y="96" fontSize="10.5" fill="#231F1A">• Argument-based validation</text>
+        <text x="26" y="128" fontSize="10" fontWeight="600" fill="#1E3A54">Supports score meaning &amp; use</text>
+
+        <rect x="277" y="14" width="246" height="156" rx="6" fill="#E6EDE2" stroke="#4A6B4E" strokeWidth="1.5" />
+        <text x="291" y="38" fontSize="11.5" fontWeight="700" fill="#2A422D">B. Design, Causality &amp; Generalization</text>
+        <text x="291" y="60" fontSize="10.5" fill="#231F1A">• Internal, external &amp; ecological</text>
+        <text x="291" y="78" fontSize="10.5" fill="#231F1A">• Confounding, selection &amp; RCTs</text>
+        <text x="291" y="96" fontSize="10.5" fill="#231F1A">• Distribution shift &amp; context</text>
+        <text x="291" y="128" fontSize="10" fontWeight="600" fill="#2A422D">Supports causal &amp; transfer claims</text>
+
+        <rect x="542" y="14" width="246" height="156" rx="6" fill="#F6ECD5" stroke="#D49B2A" strokeWidth="1.5" />
+        <text x="556" y="38" fontSize="11.5" fontWeight="700" fill="#6E4E12">C. Reliability &amp; Traceability</text>
+        <text x="556" y="60" fontSize="10.5" fill="#231F1A">• Test-retest &amp; inter-rater (κ, α)</text>
+        <text x="556" y="78" fontSize="10.5" fill="#231F1A">• Reproducibility &amp; replicability</text>
+        <text x="556" y="96" fontSize="10.5" fill="#231F1A">• Versioning, provenance &amp; audit</text>
+        <text x="556" y="128" fontSize="10" fontWeight="600" fill="#6E4E12">Necessary, not sufficient for validity</text>
+      </svg>
+      <figcaption className="mt-2.5 text-center font-mono text-[11px] text-[#5C5346]">
+        FIG 6.2 — Three distinct pillars: Measurement Validity (A), Study Design &amp; Generalization (B), and Reliability &amp; Traceability (C).
       </figcaption>
     </figure>
   );

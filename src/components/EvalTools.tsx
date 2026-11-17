@@ -132,7 +132,7 @@ export function SphereCardTool() {
 - **Validation Details:** ${form.metaDetails || '—'}
 
 ---
-*Structured with the SPHERE Evaluation Card (Ma et al., ACL 2025 · https://sphere-eval.github.io/)*
+*Structured with the SPHERE Evaluation Card (Zhao et al., ACL 2025 Findings · https://doi.org/10.18653/v1/2025.findings-acl.70)*
 `;
 
   const copyMd = async () => {
