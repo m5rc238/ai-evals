@@ -2,6 +2,44 @@
 
 @layer base {
   body {
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #F5EFE2;
+    color: #231F1A;
   }
+
+  h1, h2, h3, .font-display {
+    font-family: "Fraunces", Georgia, serif;
+    letter-spacing: -0.015em;
+  }
+
+  code, pre, .font-mono {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+  }
+}
+
+.vintage-card {
+  background-color: #FBF7EE;
+  border: 1.5px solid #231F1A;
+  box-shadow: 3px 3px 0px #231F1A;
+}
+
+.vintage-box {
+  background-color: #FBF7EE;
+  border: 1px solid #231F1A;
+}
+
+.vintage-btn {
+  border: 1.5px solid #231F1A;
+  box-shadow: 2px 2px 0px #231F1A;
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.vintage-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px #231F1A;
+}
+
+.vintage-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px #231F1A;
 }

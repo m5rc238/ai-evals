@@ -31,8 +31,8 @@ function ToggleChips({
             onClick={() => onToggle(opt)}
             className={`rounded-full border px-2.5 py-1 text-xs font-medium transition ${
               active
-                ? 'border-indigo-600 bg-indigo-600 text-white shadow-2xs'
-                : 'border-stone-200 bg-stone-50 text-stone-700 hover:border-stone-300 hover:bg-stone-100'
+                ? 'border-indigo-600 bg-[#C8552D] text-[#FBF7EE] shadow-2xs'
+                : 'border-stone-200 bg-[#EFE7D6] text-[#231F1A] hover:border-stone-300 hover:bg-stone-100'
             }`}
           >
             {opt}
@@ -144,23 +144,23 @@ export function SphereCardTool() {
   return (
     <div className="space-y-6">
       {/* Tool Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-stone-200 bg-white p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 vintage-box rounded-md p-5">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-bold text-stone-900">
+            <h2 className="text-lg font-bold text-[#231F1A]">
               SPHERE Evaluation Card Builder
             </h2>
             <a
               href="https://sphere-eval.github.io/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs font-medium text-indigo-700 hover:underline"
+              className="inline-flex items-center gap-1 text-xs font-medium text-[#C8552D] hover:underline"
             >
               sphere-eval.github.io
               <ExternalLink className="h-3 w-3" />
             </a>
           </div>
-          <p className="mt-0.5 text-xs text-stone-600">
+          <p className="mt-0.5 text-xs text-[#5C5346]">
             Design and export a transparent 5-dimension evaluation card for your Human–AI system.
           </p>
         </div>
@@ -169,15 +169,15 @@ export function SphereCardTool() {
           <button
             type="button"
             onClick={() => setForm(EXAMPLE_SPHERE)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-medium text-stone-700 hover:bg-stone-100"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-medium text-[#231F1A] hover:bg-stone-100"
           >
-            <Sparkles className="h-3.5 w-3.5 text-indigo-600" />
+            <Sparkles className="h-3.5 w-3.5 text-[#C8552D]" />
             Load Example
           </button>
           <button
             type="button"
             onClick={() => setForm(EMPTY_SPHERE)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 hover:bg-stone-50"
+            className="inline-flex items-center gap-1.5 vintage-box rounded-md px-3 py-1.5 text-xs font-medium text-[#5C5346] hover:bg-stone-50"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             Clear
@@ -189,36 +189,36 @@ export function SphereCardTool() {
       <div className="grid gap-6 lg:grid-cols-12">
         {/* Form Column */}
         <div className="space-y-5 lg:col-span-7">
-          <div className="rounded-xl border border-stone-200 bg-white p-5 space-y-3">
+          <div className="vintage-box rounded-md p-5 space-y-3">
             <div className="text-xs font-semibold uppercase tracking-wider text-stone-400">
               System Overview
             </div>
-            <label className="block text-xs font-medium text-stone-700">
+            <label className="block text-xs font-medium text-[#231F1A]">
               System Name &amp; Version
               <input
                 value={form.systemName}
                 onChange={(e) => setForm({ ...form, systemName: e.target.value })}
                 placeholder="e.g., Clinical Triage Copilot v1.2"
-                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-sm text-stone-900 focus:border-indigo-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-sm text-[#231F1A] focus:border-indigo-500 focus:outline-none"
               />
             </label>
-            <label className="block text-xs font-medium text-stone-700">
+            <label className="block text-xs font-medium text-[#231F1A]">
               System Purpose
               <textarea
                 rows={2}
                 value={form.systemDesc}
                 onChange={(e) => setForm({ ...form, systemDesc: e.target.value })}
                 placeholder="What does the Human–AI system help people do?"
-                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-stone-900 focus:border-indigo-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-[#231F1A] focus:border-indigo-500 focus:outline-none"
               />
             </label>
           </div>
 
           {/* 1. What */}
-          <div className="rounded-xl border border-stone-200 bg-white p-5 space-y-3">
+          <div className="vintage-box rounded-md p-5 space-y-3">
             <div className="text-sm font-bold text-emerald-900">1. What is being evaluated?</div>
             <div className="space-y-1.5">
-              <div className="text-xs font-medium text-stone-600">Component</div>
+              <div className="text-xs font-medium text-[#5C5346]">Component</div>
               <ToggleChips
                 options={['Full Human–AI System', 'Underlying Model', 'Agent Harness / Tools', 'UI / Interaction Layer']}
                 selected={form.whatComponent}
@@ -226,7 +226,7 @@ export function SphereCardTool() {
               />
             </div>
             <div className="space-y-1.5">
-              <div className="text-xs font-medium text-stone-600">Design Goals</div>
+              <div className="text-xs font-medium text-[#5C5346]">Design Goals</div>
               <ToggleChips
                 options={[
                   'Effectiveness (synthesis quality)',
@@ -239,23 +239,23 @@ export function SphereCardTool() {
                 onToggle={(v) => setForm({ ...form, whatGoals: toggleItem(form.whatGoals, v) })}
               />
             </div>
-            <label className="block text-xs font-medium text-stone-700">
+            <label className="block text-xs font-medium text-[#231F1A]">
               Goals → Tasks → Data
               <textarea
                 rows={2}
                 value={form.whatDetails}
                 onChange={(e) => setForm({ ...form, whatDetails: e.target.value })}
                 placeholder="What tasks do users perform, and what data/traces are collected?"
-                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-stone-900 focus:border-indigo-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-[#231F1A] focus:border-indigo-500 focus:outline-none"
               />
             </label>
           </div>
 
           {/* 2. How */}
-          <div className="rounded-xl border border-stone-200 bg-white p-5 space-y-3">
+          <div className="vintage-box rounded-md p-5 space-y-3">
             <div className="text-sm font-bold text-blue-900">2. How is the evaluation conducted?</div>
             <div className="space-y-1.5">
-              <div className="text-xs font-medium text-stone-600">Approach</div>
+              <div className="text-xs font-medium text-[#5C5346]">Approach</div>
               <ToggleChips
                 options={['Intrinsic (automated / rubric)', 'Extrinsic (downstream task)', 'Longitudinal Monitoring']}
                 selected={form.howApproach}
@@ -263,7 +263,7 @@ export function SphereCardTool() {
               />
             </div>
             <div className="space-y-1.5">
-              <div className="text-xs font-medium text-stone-600">Methods</div>
+              <div className="text-xs font-medium text-[#5C5346]">Methods</div>
               <ToggleChips
                 options={[
                   'Quantitative (scores, time)',
@@ -275,60 +275,60 @@ export function SphereCardTool() {
                 onToggle={(v) => setForm({ ...form, howMethods: toggleItem(form.howMethods, v) })}
               />
             </div>
-            <label className="block text-xs font-medium text-stone-700">
+            <label className="block text-xs font-medium text-[#231F1A]">
               Procedure &amp; Metrics
               <textarea
                 rows={2}
                 value={form.howDetails}
                 onChange={(e) => setForm({ ...form, howDetails: e.target.value })}
                 placeholder="Describe metrics, rubrics, and how qualitative + quantitative evidence combine."
-                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-stone-900 focus:border-indigo-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-[#231F1A] focus:border-indigo-500 focus:outline-none"
               />
             </label>
           </div>
 
           {/* 3. Who */}
-          <div className="rounded-xl border border-stone-200 bg-white p-5 space-y-3">
+          <div className="vintage-box rounded-md p-5 space-y-3">
             <div className="text-sm font-bold text-amber-900">3. Who is participating in the evaluation?</div>
             <ToggleChips
               options={['Target End Users', 'Domain Experts', 'Lay Users', 'Crowd Annotators', 'LLM-Simulated Users (early check only)']}
               selected={form.whoParticipants}
               onToggle={(v) => setForm({ ...form, whoParticipants: toggleItem(form.whoParticipants, v) })}
             />
-            <label className="block text-xs font-medium text-stone-700">
+            <label className="block text-xs font-medium text-[#231F1A]">
               Participant Context &amp; Recruitment
               <textarea
                 rows={2}
                 value={form.whoDetails}
                 onChange={(e) => setForm({ ...form, whoDetails: e.target.value })}
                 placeholder="Sample size, expertise, language/accessibility coverage, and whose values are represented."
-                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-stone-900 focus:border-indigo-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-[#231F1A] focus:border-indigo-500 focus:outline-none"
               />
             </label>
           </div>
 
           {/* 4. When */}
-          <div className="rounded-xl border border-stone-200 bg-white p-5 space-y-3">
+          <div className="vintage-box rounded-md p-5 space-y-3">
             <div className="text-sm font-bold text-rose-900">4. When is the evaluation conducted?</div>
             <ToggleChips
               options={['Immediate / Single-turn', 'Short-term (1–2 hr session)', 'Long-term (multi-week deployment)', 'Continuous Post-Deploy']}
               selected={form.whenHorizon}
               onToggle={(v) => setForm({ ...form, whenHorizon: toggleItem(form.whenHorizon, v) })}
             />
-            <label className="block text-xs font-medium text-stone-700">
+            <label className="block text-xs font-medium text-[#231F1A]">
               Time Horizon &amp; Lifecycle Notes
               <textarea
                 rows={2}
                 value={form.whenDetails}
                 onChange={(e) => setForm({ ...form, whenDetails: e.target.value })}
                 placeholder="How familiarization, novelty effects, sycophancy, or skill erosion are tracked over time."
-                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-stone-900 focus:border-indigo-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-[#231F1A] focus:border-indigo-500 focus:outline-none"
               />
             </label>
           </div>
 
           {/* 5. Meta Validation */}
-          <div className="rounded-xl border border-stone-200 bg-white p-5 space-y-3">
+          <div className="vintage-box rounded-md p-5 space-y-3">
             <div className="text-sm font-bold text-violet-900">5. (Meta) How is the evaluation validated?</div>
             <ToggleChips
               options={[
@@ -341,14 +341,14 @@ export function SphereCardTool() {
               selected={form.metaValidation}
               onToggle={(v) => setForm({ ...form, metaValidation: toggleItem(form.metaValidation, v) })}
             />
-            <label className="block text-xs font-medium text-stone-700">
+            <label className="block text-xs font-medium text-[#231F1A]">
               Validation Details &amp; Limitations
               <textarea
                 rows={2}
                 value={form.metaDetails}
                 onChange={(e) => setForm({ ...form, metaDetails: e.target.value })}
                 placeholder="Agreement metrics, blinding, sample-size/clustering checks, and remaining threats to validity."
-                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-stone-900 focus:border-indigo-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-[#231F1A] focus:border-indigo-500 focus:outline-none"
               />
             </label>
           </div>
@@ -357,16 +357,16 @@ export function SphereCardTool() {
         {/* Live Card Preview & Export Column */}
         <div className="lg:col-span-5">
           <div className="sticky top-24 space-y-3">
-            <div className="rounded-xl border border-stone-300 bg-white p-5 shadow-sm space-y-4">
+            <div className="vintage-card rounded-md p-5 shadow-sm space-y-4">
               <div className="flex items-start justify-between gap-2 border-b border-stone-100 pb-3">
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-700">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#C8552D]">
                     Live SPHERE Card
                   </span>
-                  <h3 className="text-base font-bold text-stone-900">
+                  <h3 className="text-base font-bold text-[#231F1A]">
                     {form.systemName || 'Untitled Human–AI System'}
                   </h3>
-                  <p className="mt-0.5 text-xs text-stone-600">
+                  <p className="mt-0.5 text-xs text-[#5C5346]">
                     {form.systemDesc || 'Add a brief system description on the left.'}
                   </p>
                 </div>
@@ -375,33 +375,33 @@ export function SphereCardTool() {
               <div className="space-y-3 text-xs">
                 <div className="rounded-lg bg-emerald-50/70 p-2.5">
                   <div className="font-semibold text-emerald-950">1. What</div>
-                  <div className="text-stone-700">{form.whatComponent.join(' · ') || 'No component selected'}</div>
-                  <div className="text-stone-600">{form.whatGoals.join(', ')}</div>
-                  {form.whatDetails && <p className="mt-1 text-stone-700">{form.whatDetails}</p>}
+                  <div className="text-[#231F1A]">{form.whatComponent.join(' · ') || 'No component selected'}</div>
+                  <div className="text-[#5C5346]">{form.whatGoals.join(', ')}</div>
+                  {form.whatDetails && <p className="mt-1 text-[#231F1A]">{form.whatDetails}</p>}
                 </div>
 
                 <div className="rounded-lg bg-blue-50/70 p-2.5">
                   <div className="font-semibold text-blue-950">2. How</div>
-                  <div className="text-stone-700">{[...form.howApproach, ...form.howMethods].join(' · ') || 'No methods selected'}</div>
-                  {form.howDetails && <p className="mt-1 text-stone-700">{form.howDetails}</p>}
+                  <div className="text-[#231F1A]">{[...form.howApproach, ...form.howMethods].join(' · ') || 'No methods selected'}</div>
+                  {form.howDetails && <p className="mt-1 text-[#231F1A]">{form.howDetails}</p>}
                 </div>
 
                 <div className="rounded-lg bg-amber-50/70 p-2.5">
                   <div className="font-semibold text-amber-950">3. Who</div>
-                  <div className="text-stone-700">{form.whoParticipants.join(' · ') || 'No participants selected'}</div>
-                  {form.whoDetails && <p className="mt-1 text-stone-700">{form.whoDetails}</p>}
+                  <div className="text-[#231F1A]">{form.whoParticipants.join(' · ') || 'No participants selected'}</div>
+                  {form.whoDetails && <p className="mt-1 text-[#231F1A]">{form.whoDetails}</p>}
                 </div>
 
                 <div className="rounded-lg bg-rose-50/70 p-2.5">
                   <div className="font-semibold text-rose-950">4. When</div>
-                  <div className="text-stone-700">{form.whenHorizon.join(' · ') || 'No horizon selected'}</div>
-                  {form.whenDetails && <p className="mt-1 text-stone-700">{form.whenDetails}</p>}
+                  <div className="text-[#231F1A]">{form.whenHorizon.join(' · ') || 'No horizon selected'}</div>
+                  {form.whenDetails && <p className="mt-1 text-[#231F1A]">{form.whenDetails}</p>}
                 </div>
 
                 <div className="rounded-lg bg-violet-50/70 p-2.5">
                   <div className="font-semibold text-violet-950">5. Meta-Validation</div>
-                  <div className="text-stone-700">{form.metaValidation.join(' · ') || 'No validation selected'}</div>
-                  {form.metaDetails && <p className="mt-1 text-stone-700">{form.metaDetails}</p>}
+                  <div className="text-[#231F1A]">{form.metaValidation.join(' · ') || 'No validation selected'}</div>
+                  {form.metaDetails && <p className="mt-1 text-[#231F1A]">{form.metaDetails}</p>}
                 </div>
               </div>
 
@@ -410,7 +410,7 @@ export function SphereCardTool() {
                 <button
                   type="button"
                   onClick={copyMd}
-                  className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-stone-900 px-3 py-2 text-xs font-medium text-white hover:bg-stone-800"
+                  className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg vintage-btn bg-[#231F1A] px-3 py-2 text-xs font-medium text-[#FBF7EE]"
                 >
                   {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                   {copied ? 'Copied Markdown' : 'Copy Markdown'}
@@ -418,7 +418,7 @@ export function SphereCardTool() {
                 <button
                   type="button"
                   onClick={() => downloadFile('sphere-evaluation-card.md', markdown, 'text/markdown')}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-stone-800 hover:bg-stone-50"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-[#231F1A] hover:bg-stone-50"
                 >
                   <Download className="h-3.5 w-3.5" />
                   .md
@@ -426,7 +426,7 @@ export function SphereCardTool() {
                 <button
                   type="button"
                   onClick={() => downloadFile('sphere-evaluation-card.json', JSON.stringify(form, null, 2), 'application/json')}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-stone-800 hover:bg-stone-50"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-[#231F1A] hover:bg-stone-50"
                 >
                   <Download className="h-3.5 w-3.5" />
                   .json
@@ -548,7 +548,7 @@ ${statement}
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-stone-200 bg-white p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 vintage-box rounded-md p-5">
         <div className="flex items-center gap-3">
           <img
             src="./exosphere-logo.png"
@@ -556,10 +556,10 @@ ${statement}
             className="h-9 w-9 shrink-0 rounded-lg object-contain"
           />
           <div>
-            <h2 className="text-lg font-bold text-stone-900">
+            <h2 className="text-lg font-bold text-[#231F1A]">
               AI Evaluation Protocol &amp; Decision Builder
             </h2>
-            <p className="mt-0.5 text-xs text-stone-600">
+            <p className="mt-0.5 text-xs text-[#5C5346]">
               Build an inspectable 12-field evaluation protocol and bounded decision statement ready for team review.
             </p>
           </div>
@@ -569,15 +569,15 @@ ${statement}
           <button
             type="button"
             onClick={() => setForm(EXAMPLE_FRAMEWORK)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-medium text-stone-700 hover:bg-stone-100"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-medium text-[#231F1A] hover:bg-stone-100"
           >
-            <Sparkles className="h-3.5 w-3.5 text-indigo-600" />
+            <Sparkles className="h-3.5 w-3.5 text-[#C8552D]" />
             Load Example
           </button>
           <button
             type="button"
             onClick={() => setForm(EMPTY_FRAMEWORK)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-xs font-medium text-stone-600 hover:bg-stone-50"
+            className="inline-flex items-center gap-1.5 vintage-box rounded-md px-3 py-1.5 text-xs font-medium text-[#5C5346] hover:bg-stone-50"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             Clear
@@ -588,9 +588,9 @@ ${statement}
       <div className="grid gap-6 lg:grid-cols-12">
         {/* Form Column */}
         <div className="space-y-4 lg:col-span-7">
-          <div className="rounded-xl border border-stone-200 bg-white p-5 space-y-3">
+          <div className="vintage-box rounded-md p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-bold text-stone-900">Framing &amp; Scope</span>
+              <span className="text-sm font-bold text-[#231F1A]">Framing &amp; Scope</span>
               <div className="inline-flex rounded-lg border border-stone-200 bg-stone-100 p-0.5 text-xs">
                 {(['Exploratory', 'Confirmatory'] as const).map((m) => (
                   <button
@@ -598,7 +598,7 @@ ${statement}
                     key={m}
                     onClick={() => setForm({ ...form, mode: m })}
                     className={`rounded-md px-2.5 py-1 font-medium ${
-                      form.mode === m ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-600'
+                      form.mode === m ? 'bg-white text-[#231F1A] shadow-xs' : 'text-[#5C5346]'
                     }`}
                   >
                     {m}
@@ -616,20 +616,20 @@ ${statement}
                 ['contextExclusions', '4. Context, Coverage & Explicit Exclusions'],
               ] as const
             ).map(([k, label]) => (
-              <label key={k} className="block text-xs font-medium text-stone-700">
+              <label key={k} className="block text-xs font-medium text-[#231F1A]">
                 {label}
                 <textarea
                   rows={2}
                   value={form[k]}
                   onChange={(e) => setForm({ ...form, [k]: e.target.value })}
-                  className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-stone-900 focus:border-indigo-500 focus:outline-none"
+                  className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-[#231F1A] focus:border-indigo-500 focus:outline-none"
                 />
               </label>
             ))}
           </div>
 
-          <div className="rounded-xl border border-stone-200 bg-white p-5 space-y-3">
-            <div className="text-sm font-bold text-stone-900">Criteria, Evidence &amp; Rigor</div>
+          <div className="vintage-box rounded-md p-5 space-y-3">
+            <div className="text-sm font-bold text-[#231F1A]">Criteria, Evidence &amp; Rigor</div>
             {(
               [
                 ['criteria', '5. Criteria, Rubrics & Mandatory Constraints'],
@@ -642,20 +642,20 @@ ${statement}
                 ['reevaluation', '12. Monitoring & Reevaluation Triggers'],
               ] as const
             ).map(([k, label]) => (
-              <label key={k} className="block text-xs font-medium text-stone-700">
+              <label key={k} className="block text-xs font-medium text-[#231F1A]">
                 {label}
                 <textarea
                   rows={2}
                   value={form[k]}
                   onChange={(e) => setForm({ ...form, [k]: e.target.value })}
-                  className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-stone-900 focus:border-indigo-500 focus:outline-none"
+                  className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-[#231F1A] focus:border-indigo-500 focus:outline-none"
                 />
               </label>
             ))}
           </div>
 
-          <div className="rounded-xl border border-stone-200 bg-white p-5 space-y-3">
-            <div className="text-sm font-bold text-stone-900">Bounded Decision Statement</div>
+          <div className="vintage-box rounded-md p-5 space-y-3">
+            <div className="text-sm font-bold text-[#231F1A]">Bounded Decision Statement</div>
             {(
               [
                 ['boundedClaim', 'Bounded Finding Supported'],
@@ -664,12 +664,12 @@ ${statement}
                 ['ownerRole', 'Accountable Decision-Maker (Role)'],
               ] as const
             ).map(([k, label]) => (
-              <label key={k} className="block text-xs font-medium text-stone-700">
+              <label key={k} className="block text-xs font-medium text-[#231F1A]">
                 {label}
                 <input
                   value={form[k]}
                   onChange={(e) => setForm({ ...form, [k]: e.target.value })}
-                  className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-stone-900 focus:border-indigo-500 focus:outline-none"
+                  className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-[#231F1A] focus:border-indigo-500 focus:outline-none"
                 />
               </label>
             ))}
@@ -678,17 +678,17 @@ ${statement}
 
         {/* Live Protocol & Decision Statement Preview */}
         <div className="lg:col-span-5">
-          <div className="sticky top-24 rounded-xl border border-stone-300 bg-white p-5 shadow-sm space-y-4">
+          <div className="sticky top-24 vintage-card rounded-md p-5 shadow-sm space-y-4">
             <div className="border-b border-stone-100 pb-3">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-700">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#C8552D]">
                 Live Protocol &amp; Decision Statement
               </span>
-              <h3 className="text-base font-bold text-stone-900">
+              <h3 className="text-base font-bold text-[#231F1A]">
                 {form.mode} Evaluation Protocol
               </h3>
             </div>
 
-            <div className="rounded-lg border border-indigo-200 bg-indigo-50/40 p-3.5 text-xs leading-relaxed text-stone-800 whitespace-pre-wrap">
+            <div className="rounded-md border border-[#335C81] bg-[#E3EAF0] p-3.5 text-xs leading-relaxed text-[#231F1A] whitespace-pre-wrap">
               {statement}
             </div>
 
@@ -708,8 +708,8 @@ ${statement}
                 ['12. Reevaluation', form.reevaluation],
               ].map(([k, v]) => (
                 <div key={k} className="rounded border border-stone-100 bg-stone-50 p-2">
-                  <span className="font-semibold text-stone-900">{k}: </span>
-                  <span className="text-stone-600">{v || '—'}</span>
+                  <span className="font-semibold text-[#231F1A]">{k}: </span>
+                  <span className="text-[#5C5346]">{v || '—'}</span>
                 </div>
               ))}
             </div>
@@ -718,7 +718,7 @@ ${statement}
               <button
                 type="button"
                 onClick={copyMd}
-                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-stone-900 px-3 py-2 text-xs font-medium text-white hover:bg-stone-800"
+                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg vintage-btn bg-[#231F1A] px-3 py-2 text-xs font-medium text-[#FBF7EE]"
               >
                 {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                 {copied ? 'Copied Markdown' : 'Copy Markdown'}
@@ -726,7 +726,7 @@ ${statement}
               <button
                 type="button"
                 onClick={() => downloadFile('ai-eval-protocol.md', fullMarkdown, 'text/markdown')}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-stone-800 hover:bg-stone-50"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-[#231F1A] hover:bg-stone-50"
               >
                 <Download className="h-3.5 w-3.5" />
                 .md
@@ -734,7 +734,7 @@ ${statement}
               <button
                 type="button"
                 onClick={() => downloadFile('ai-eval-protocol.json', JSON.stringify(form, null, 2), 'application/json')}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-stone-800 hover:bg-stone-50"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-[#231F1A] hover:bg-stone-50"
               >
                 <Download className="h-3.5 w-3.5" />
                 .json

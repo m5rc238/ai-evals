@@ -82,14 +82,14 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 flex flex-col">
+    <div className="min-h-screen bg-[#F5EFE2] text-[#231F1A] flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/95 backdrop-blur-xs">
+      <header className="sticky top-0 z-30 border-b-2 border-[#231F1A] bg-[#FBF7EE]">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen((v) => !v)}
-              className="rounded-lg border border-stone-200 p-1.5 text-stone-700 lg:hidden"
+              className="vintage-btn rounded-md bg-[#F5EFE2] p-1.5 text-[#231F1A] lg:hidden"
               aria-label="Toggle modules"
             >
               {sidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -97,24 +97,26 @@ export function App() {
             <img
               src="./exosphere-logo.png"
               alt="AI Evaluation Guide & Protocol logo"
-              className="h-9 w-9 shrink-0 rounded-lg object-contain"
+              className="h-10 w-10 shrink-0 rounded-md border border-[#231F1A] bg-[#FBF7EE] p-0.5 object-contain"
             />
             <div>
-              <h1 className="text-sm font-bold tracking-tight text-stone-900 sm:text-base">
+              <h1 className="font-display text-base font-bold tracking-tight text-[#231F1A] sm:text-lg">
                 AI Evaluation Guide &amp; Protocol
               </h1>
-              <p className="hidden text-xs text-stone-500 sm:block">
-                7-Module Visual Guide · Evidence-based AI Eval + SPHERE (CS 329X)
+              <p className="hidden font-mono text-[11px] text-[#5C5346] sm:block">
+                7-Module Field Manual · Evidence-Based AI Eval + SPHERE (CS 329X)
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="inline-flex rounded-lg border border-stone-200 bg-stone-100 p-0.5 text-xs">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <div className="inline-flex rounded-md border border-[#231F1A] bg-[#EFE7D6] p-0.5 text-xs">
               <button
                 onClick={() => setViewMode('guide')}
-                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 font-medium transition ${
-                  viewMode === 'guide' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-600 hover:text-stone-900'
+                className={`inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 font-medium transition ${
+                  viewMode === 'guide'
+                    ? 'bg-[#231F1A] text-[#FBF7EE]'
+                    : 'text-[#231F1A] hover:bg-[#E5DBC5]'
                 }`}
               >
                 <BookOpen className="h-3.5 w-3.5" />
@@ -122,8 +124,10 @@ export function App() {
               </button>
               <button
                 onClick={() => setViewMode('sphere-tool')}
-                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 font-medium transition ${
-                  viewMode === 'sphere-tool' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-600 hover:text-stone-900'
+                className={`inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 font-medium transition ${
+                  viewMode === 'sphere-tool'
+                    ? 'bg-[#231F1A] text-[#FBF7EE]'
+                    : 'text-[#231F1A] hover:bg-[#E5DBC5]'
                 }`}
               >
                 <Layers className="h-3.5 w-3.5" />
@@ -131,8 +135,10 @@ export function App() {
               </button>
               <button
                 onClick={() => setViewMode('framework-tool')}
-                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 font-medium transition ${
-                  viewMode === 'framework-tool' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-600 hover:text-stone-900'
+                className={`inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 font-medium transition ${
+                  viewMode === 'framework-tool'
+                    ? 'bg-[#231F1A] text-[#FBF7EE]'
+                    : 'text-[#231F1A] hover:bg-[#E5DBC5]'
                 }`}
               >
                 <ClipboardCheck className="h-3.5 w-3.5" />
@@ -144,10 +150,10 @@ export function App() {
               href="https://sphere-eval.github.io/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-medium text-indigo-800 hover:bg-indigo-100"
+              className="vintage-btn inline-flex items-center gap-1.5 rounded-md bg-[#F6ECD5] px-3 py-1.5 font-mono text-[11px] font-semibold text-[#231F1A]"
             >
               sphere-eval.github.io
-              <ExternalLink className="h-3.5 w-3.5" />
+              <ExternalLink className="h-3 w-3" />
             </a>
           </div>
         </div>
@@ -167,12 +173,12 @@ export function App() {
         {/* Left Module Sidebar */}
         <aside
           className={`${
-            sidebarOpen ? 'fixed inset-y-0 left-0 z-20 block w-72 bg-white pt-16 shadow-xl' : 'hidden'
-          } w-72 shrink-0 border-r border-stone-200 bg-white/80 p-4 lg:block`}
+            sidebarOpen ? 'fixed inset-y-0 left-0 z-20 block w-72 bg-[#F5EFE2] pt-16 shadow-xl' : 'hidden'
+          } w-72 shrink-0 border-r border-[#231F1A]/20 bg-[#EFE7D6]/60 p-4 lg:block`}
         >
-          <div className="sticky top-20 space-y-1.5">
-            <div className="px-2.5 pb-1.5 text-[11px] font-semibold uppercase tracking-wider text-stone-400">
-              Learning Modules ({activeIdx + 1} / {MODULES.length})
+          <div className="sticky top-24 space-y-2">
+            <div className="px-2 pb-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-[#5C5346]">
+              Index · {activeIdx + 1} / {MODULES.length}
             </div>
             {MODULES.map((m, idx) => {
               const active = idx === activeIdx;
@@ -180,18 +186,18 @@ export function App() {
                 <button
                   key={m.id}
                   onClick={() => selectModule(idx)}
-                  className={`w-full rounded-xl p-3 text-left transition ${
+                  className={`w-full rounded-md border p-3 text-left transition ${
                     active
-                      ? 'bg-stone-900 text-white shadow-xs'
-                      : 'text-stone-700 hover:bg-stone-100'
+                      ? 'border-[#231F1A] bg-[#231F1A] text-[#FBF7EE] shadow-[2px_2px_0_#C8552D]'
+                      : 'border-[#231F1A]/25 bg-[#FBF7EE] text-[#231F1A] hover:border-[#231F1A] hover:bg-[#F6ECD5]'
                   }`}
                 >
                   <div className="text-xs font-semibold leading-snug">
-                    Module {m.number}: {m.title}
+                    <span className="font-mono opacity-75">0{m.number}.</span> {m.title}
                   </div>
                   <div
                     className={`mt-1 text-[11px] leading-snug ${
-                      active ? 'text-stone-300' : 'text-stone-500'
+                      active ? 'text-[#EAE3D2]' : 'text-[#5C5346]'
                     }`}
                   >
                     {m.subtitle}
@@ -206,78 +212,78 @@ export function App() {
         <main className="min-w-0 flex-1 px-4 py-8 sm:px-8">
           <article className="mx-auto max-w-3xl space-y-8 pb-16">
             {/* Module Header */}
-            <header className="space-y-2 border-b border-stone-200 pb-5">
-              <div className="text-xs font-semibold uppercase tracking-wider text-indigo-700">
-                Module {activeModule.number} of {MODULES.length}
+            <header className="space-y-2 border-b-2 border-[#231F1A] pb-5">
+              <div className="font-mono text-xs font-semibold uppercase tracking-wider text-[#C8552D]">
+                Section 0{activeModule.number} / 0{MODULES.length}
               </div>
-              <h2 className="text-2xl font-bold tracking-tight text-stone-900 sm:text-3xl">
+              <h2 className="font-display text-2xl font-bold tracking-tight text-[#231F1A] sm:text-3xl">
                 {activeModule.title}
               </h2>
-              <p className="text-sm text-stone-600">{activeModule.subtitle}</p>
+              <p className="text-sm text-[#5C5346]">{activeModule.subtitle}</p>
             </header>
 
             {/* MODULE 1 */}
             {activeModule.id === 'm1' && (
-              <div className="space-y-8 text-sm leading-relaxed text-stone-700">
+              <div className="space-y-8 text-sm leading-relaxed text-[#231F1A]">
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">1.1 Definition &amp; Framework Status</h3>
+                  <h3 className="text-lg font-bold text-[#231F1A]">1.1 Definition &amp; Framework Status</h3>
                   <p>
                     <strong>AI evaluation</strong> is the systematic collection and interpretation of evidence about an AI model, system, its use, or its effects, against explicit questions and criteria, to inform understanding or support a decision.
                   </p>
                   <p>
                     Testing whether a model can solve a mathematical problem, whether a product behaves safely, and whether people benefit from using it require different evidence. A benchmark score, an expert’s judgment, and a measured improvement in someone’s work each establish something different.
                   </p>
-                  <div className="rounded-xl border border-stone-200 bg-white p-4 text-xs text-stone-600">
-                    <strong className="text-stone-900">Status of this architecture:</strong> This framework is a proposed synthesis developed to organize evaluation concerns. It is not a recognized industry standard, an empirically validated taxonomy, or a guarantee of completeness. Judge its value by whether it helps formulate sharper questions, uncover omissions, obtain credible evidence, and make defensible decisions.
+                  <div className="vintage-box rounded-md p-4 text-xs text-[#5C5346]">
+                    <strong className="text-[#231F1A]">Status of this architecture:</strong> This framework is a proposed synthesis developed to organize evaluation concerns. It is not a recognized industry standard, an empirically validated taxonomy, or a guarantee of completeness. Judge its value by whether it helps formulate sharper questions, uncover omissions, obtain credible evidence, and make defensible decisions.
                   </div>
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">1.2 Three Kinds of Statements</h3>
+                  <h3 className="text-lg font-bold text-[#231F1A]">1.2 Three Kinds of Statements</h3>
                   <p>
                     A systematic procedure can still measure the wrong construct, overlook affected people, or support an overextended conclusion. Throughout an evaluation, keep three kinds of statements distinct:
                   </p>
                   <div className="grid gap-3 sm:grid-cols-3 text-xs">
-                    <div className="rounded-xl border border-stone-200 bg-white p-4 space-y-1">
-                      <div className="font-semibold text-stone-900">Empirical claims</div>
-                      <p className="text-stone-600">What observations, tests, or studies show (e.g., “achieved 85/100 under these conditions”).</p>
+                    <div className="vintage-box rounded-md p-4 space-y-1">
+                      <div className="font-semibold text-[#231F1A]">Empirical claims</div>
+                      <p className="text-[#5C5346]">What observations, tests, or studies show (e.g., “achieved 85/100 under these conditions”).</p>
                     </div>
-                    <div className="rounded-xl border border-stone-200 bg-white p-4 space-y-1">
-                      <div className="font-semibold text-stone-900">Conceptual &amp; normative choices</div>
-                      <p className="text-stone-600">Definitions, priorities, requirements, and value judgments about acceptable consequences.</p>
+                    <div className="vintage-box rounded-md p-4 space-y-1">
+                      <div className="font-semibold text-[#231F1A]">Conceptual &amp; normative choices</div>
+                      <p className="text-[#5C5346]">Definitions, priorities, requirements, and value judgments about acceptable consequences.</p>
                     </div>
-                    <div className="rounded-xl border border-stone-200 bg-white p-4 space-y-1">
-                      <div className="font-semibold text-stone-900">Practical recommendations</div>
-                      <p className="text-stone-600">Proposed procedures whose suitability depends on the question, stakes, evidence, and resources.</p>
+                    <div className="vintage-box rounded-md p-4 space-y-1">
+                      <div className="font-semibold text-[#231F1A]">Practical recommendations</div>
+                      <p className="text-[#5C5346]">Proposed procedures whose suitability depends on the question, stakes, evidence, and resources.</p>
                     </div>
                   </div>
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">1.3 The 10-Element Evaluation Landscape</h3>
+                  <h3 className="text-lg font-bold text-[#231F1A]">1.3 The 10-Element Evaluation Landscape</h3>
                   <p>
                     The central flow connects a decision to the evidence needed to inform it. Governance and lifecycle considerations apply throughout, and the outer evaluation-quality layer asks how much confidence the evidence warrants. The numbers identify dimensions, not an inflexible one-way sequence (similar to how NIST describes its AI risk-management functions as iterative). Measurement procedures should also be designed before evidence is collected.
                   </p>
 
                   <LandscapeDiagram />
 
-                  <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+                  <div className="overflow-x-auto vintage-box rounded-md">
                     <table className="w-full text-left text-xs">
-                      <thead className="border-b border-stone-200 bg-stone-50 text-stone-700">
+                      <thead className="border-b border-[#231F1A] bg-[#EFE7D6] text-[#231F1A]">
                         <tr>
                           <th className="px-4 py-2.5 font-semibold">Element</th>
                           <th className="px-4 py-2.5 font-semibold">Core Question</th>
                           <th className="px-4 py-2.5 font-semibold">Practical Output</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-100 text-stone-700">
+                      <tbody className="divide-y divide-[#231F1A]/15 text-[#231F1A]">
                         {FLOW_NODES.map((n) => (
                           <tr key={n.id}>
-                            <td className="px-4 py-2.5 font-medium text-stone-900">
+                            <td className="px-4 py-2.5 font-medium text-[#231F1A]">
                               {n.number}. {n.title}
                             </td>
                             <td className="px-4 py-2.5">{n.question}</td>
-                            <td className="px-4 py-2.5 text-stone-600">{n.practicalOutput}</td>
+                            <td className="px-4 py-2.5 text-[#5C5346]">{n.practicalOutput}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -286,7 +292,7 @@ export function App() {
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     1.4 Conceptual Foundations: Capability vs. Mechanism
                   </h3>
                   <p>
@@ -297,9 +303,9 @@ export function App() {
                   </p>
                   <div className="grid gap-2.5 sm:grid-cols-2 text-xs">
                     {DISCIPLINES.map((d) => (
-                      <div key={d.name} className="rounded-lg border border-stone-200 bg-white p-3">
-                        <span className="font-semibold text-stone-900">{d.name}: </span>
-                        <span className="text-stone-600">{d.role}</span>
+                      <div key={d.name} className="vintage-box rounded-md p-3">
+                        <span className="font-semibold text-[#231F1A]">{d.name}: </span>
+                        <span className="text-[#5C5346]">{d.role}</span>
                       </div>
                     ))}
                   </div>
@@ -309,20 +315,20 @@ export function App() {
 
             {/* MODULE 2 */}
             {activeModule.id === 'm2' && (
-              <div className="space-y-8 text-sm leading-relaxed text-stone-700">
+              <div className="space-y-8 text-sm leading-relaxed text-[#231F1A]">
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     2.1 Why Human–AI Interaction Matters Now
                   </h3>
                   <p>
                     Most enterprise AI today shows up at work as <strong>interaction</strong>—copilots, assistants, and interactive agents—rather than isolated autonomy. Consequently, the quality of the interaction determines the quality of the outcome:
                   </p>
                   <div className="grid gap-3 sm:grid-cols-2 text-xs">
-                    <div className="rounded-xl border border-rose-200 bg-rose-50/60 p-4">
+                    <div className="rounded-md border border-[#C8552D] bg-[#F7E4DC] p-4">
                       <div className="font-semibold text-rose-950">Bad interaction quietly degrades decisions</div>
                       <p className="mt-1 text-rose-900">Leads to <strong>sycophancy</strong> (AI telling users what they want to hear) and <strong>deskilling</strong> (erosion of human mastery and debugging ability).</p>
                     </div>
-                    <div className="rounded-xl border border-emerald-200 bg-emerald-50/60 p-4">
+                    <div className="rounded-md border border-[#4A6B4E] bg-[#E6EDE2] p-4">
                       <div className="font-semibold text-emerald-950">Good interaction amplifies human work</div>
                       <p className="mt-1 text-emerald-900">Supports <strong>augmented judgment</strong>, appropriate reliance, and <strong>faster, well-verified decisions</strong>.</p>
                     </div>
@@ -333,7 +339,7 @@ export function App() {
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     2.2 The SPHERE Evaluation Card (5 Dimensions)
                   </h3>
                   <p>
@@ -342,7 +348,7 @@ export function App() {
                       href="https://sphere-eval.github.io/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-medium text-indigo-700 underline hover:text-indigo-900"
+                      className="font-medium text-[#C8552D] underline hover:text-indigo-900"
                     >
                       SPHERE Evaluation Card (Ma et al., ACL 2025)
                     </a>{' '}
@@ -351,41 +357,41 @@ export function App() {
 
                   <SphereDiagram />
 
-                  <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+                  <div className="overflow-x-auto vintage-box rounded-md">
                     <table className="w-full text-left text-xs">
-                      <thead className="border-b border-stone-200 bg-stone-50 text-stone-700">
+                      <thead className="border-b border-[#231F1A] bg-[#EFE7D6] text-[#231F1A]">
                         <tr>
                           <th className="px-4 py-2.5 font-semibold">SPHERE Dimension</th>
                           <th className="px-4 py-2.5 font-semibold">Key Distinctions &amp; Design Choices</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-100 text-stone-700">
+                      <tbody className="divide-y divide-[#231F1A]/15 text-[#231F1A]">
                         <tr>
-                          <td className="px-4 py-2.5 font-semibold text-stone-900">1. What is being evaluated?</td>
+                          <td className="px-4 py-2.5 font-semibold text-[#231F1A]">1. What is being evaluated?</td>
                           <td className="px-4 py-2.5">
                             <strong>Component:</strong> Full System vs. underlying Model. <strong>Design goals:</strong> Effectiveness, Efficiency, and Satisfaction. Mapped via <em>Goals</em> (“What do I need to know?”) → <em>Tasks</em> (“What should users do?”) → <em>Data</em> (“What data do I collect?”).
                           </td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-2.5 font-semibold text-stone-900">2. How is it conducted?</td>
+                          <td className="px-4 py-2.5 font-semibold text-[#231F1A]">2. How is it conducted?</td>
                           <td className="px-4 py-2.5">
                             <strong>Approach:</strong> Intrinsic (model alone on benchmarks) vs. Extrinsic (downstream real-world tasks). <strong>Metrics:</strong> Quantitative (“what” — accuracy, completion, time) vs. Qualitative (“why” — interviews, observations, frustrations).
                           </td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-2.5 font-semibold text-stone-900">3. Who participates?</td>
+                          <td className="px-4 py-2.5 font-semibold text-[#231F1A]">3. Who participates?</td>
                           <td className="px-4 py-2.5">
                             Targeted user group, domain experts, lay users, use-case-specific roles (teachers, clinicians, students), or LLM-simulated users (early checks only).
                           </td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-2.5 font-semibold text-stone-900">4. When is it conducted?</td>
+                          <td className="px-4 py-2.5 font-semibold text-[#231F1A]">4. When is it conducted?</td>
                           <td className="px-4 py-2.5">
                             Immediate/short-term constrained sessions (e.g., 1 hour) vs. long-term longitudinal studies (e.g., multi-week daily workflows).
                           </td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-2.5 font-semibold text-stone-900">5. (Meta) How is it validated?</td>
+                          <td className="px-4 py-2.5 font-semibold text-[#231F1A]">5. (Meta) How is it validated?</td>
                           <td className="px-4 py-2.5">
                             Construct and ecological validity, inter-rater reliability, counterbalancing, blinding, and randomized controlled comparisons.
                           </td>
@@ -396,7 +402,7 @@ export function App() {
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     2.3 When Are Combinations of Humans and AI Useful?
                   </h3>
                   <p>
@@ -405,7 +411,7 @@ export function App() {
 
                   <SynergyDiagram />
 
-                  <p className="text-xs text-stone-600">
+                  <p className="text-xs text-[#5C5346]">
                     <strong>Implication for evaluation:</strong> Always compare the human–AI team against both the <em>unassisted human baseline</em> and the <em>AI-alone / simpler-tool baseline</em>, and disaggregate results by task type (decision-making vs. content creation) and user expertise (for instance, Dohmke et al., 2023 found ~30% code-suggestion acceptance growing over 6 months, with the largest productivity gains among less experienced developers).
                   </p>
                 </section>
@@ -414,9 +420,9 @@ export function App() {
 
             {/* MODULE 3 */}
             {activeModule.id === 'm3' && (
-              <div className="space-y-8 text-sm leading-relaxed text-stone-700">
+              <div className="space-y-8 text-sm leading-relaxed text-[#231F1A]">
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     3.1 Begin with the Decision, Question &amp; Evaluation Mode
                   </h3>
                   <p>
@@ -425,7 +431,7 @@ export function App() {
                   <p>
                     A well-formed evaluation question specifies the <strong>system</strong>, <strong>task</strong>, <strong>population</strong>, <strong>comparator</strong>, <strong>desired outcome</strong>, and <strong>relevant constraints</strong>:
                   </p>
-                  <blockquote className="rounded-xl border-l-4 border-indigo-600 bg-white p-4 text-xs italic text-stone-800 shadow-xs">
+                  <blockquote className="rounded-xl border-l-4 border-[#C8552D] bg-[#FBF7EE] border border-[#231F1A]/25 p-4 text-xs italic text-[#231F1A] shadow-xs">
                     “For researchers comparing empirical papers, does this version of the assistant improve the quality of their completed evidence synthesis compared with their existing workflow, without increasing unsupported conclusions?”
                   </blockquote>
                   <p>
@@ -433,15 +439,15 @@ export function App() {
                   </p>
 
                   <div className="grid gap-3 sm:grid-cols-2 text-xs">
-                    <div className="rounded-xl border border-stone-200 bg-white p-4 space-y-1">
-                      <div className="font-semibold text-stone-900">Exploratory Mode</div>
-                      <p className="text-stone-600">
+                    <div className="vintage-box rounded-md p-4 space-y-1">
+                      <div className="font-semibold text-[#231F1A]">Exploratory Mode</div>
+                      <p className="text-[#5C5346]">
                         <strong>Purpose:</strong> Discover failures, user needs, and plausible explanations. Criteria and analyses can develop as evidence is examined.
                       </p>
                     </div>
-                    <div className="rounded-xl border border-stone-200 bg-white p-4 space-y-1">
-                      <div className="font-semibold text-stone-900">Confirmatory Mode</div>
-                      <p className="text-stone-600">
+                    <div className="vintage-box rounded-md p-4 space-y-1">
+                      <div className="font-semibold text-[#231F1A]">Confirmatory Mode</div>
+                      <p className="text-[#5C5346]">
                         <strong>Purpose:</strong> Test a specified claim or decision rule. Fix main outcomes, comparisons, analyses, and thresholds <em>before</em> inspecting confirmatory results.
                       </p>
                     </div>
@@ -449,7 +455,7 @@ export function App() {
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     3.2 Specify Scope, Agent Harness &amp; Unit of Analysis
                   </h3>
                   <p>
@@ -458,19 +464,19 @@ export function App() {
 
                   <ScopeBoundaryDiagram />
 
-                  <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+                  <div className="overflow-x-auto vintage-box rounded-md">
                     <table className="w-full text-left text-xs">
-                      <thead className="border-b border-stone-200 bg-stone-50 text-stone-700">
+                      <thead className="border-b border-[#231F1A] bg-[#EFE7D6] text-[#231F1A]">
                         <tr>
                           <th className="px-4 py-2.5 font-semibold">Scope</th>
                           <th className="px-4 py-2.5 font-semibold">Example Question</th>
                           <th className="px-4 py-2.5 font-semibold">Scope-Transfer Warning</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-100 text-stone-700">
+                      <tbody className="divide-y divide-[#231F1A]/15 text-[#231F1A]">
                         {SCOPES.map((s) => (
                           <tr key={s.id}>
-                            <td className="px-4 py-2.5 font-semibold text-stone-900">{s.name}</td>
+                            <td className="px-4 py-2.5 font-semibold text-[#231F1A]">{s.name}</td>
                             <td className="px-4 py-2.5">{s.question}</td>
                             <td className="px-4 py-2.5 text-amber-900">{s.transferWarning}</td>
                           </tr>
@@ -478,13 +484,13 @@ export function App() {
                       </tbody>
                     </table>
                   </div>
-                  <p className="text-xs text-stone-600">
+                  <p className="text-xs text-[#5C5346]">
                     <strong>Unit of analysis:</strong> Explicitly state whether your unit is a claim, response, conversation, task attempt, user, team, or organization. Multiple responses from a single conversation share context and are not independent observations.
                   </p>
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     3.3 Separate Targets from Scope &amp; Document Context Coverage
                   </h3>
                   <p>
@@ -492,9 +498,9 @@ export function App() {
                   </p>
                   <div className="grid gap-2.5 sm:grid-cols-2 text-xs">
                     {TARGET_INVENTORY.map((t) => (
-                      <div key={t.name} className="rounded-lg border border-stone-200 bg-white p-3">
-                        <div className="font-semibold text-stone-900">{t.name}</div>
-                        <p className="mt-0.5 text-stone-600">{t.concerns}</p>
+                      <div key={t.name} className="vintage-box rounded-md p-3">
+                        <div className="font-semibold text-[#231F1A]">{t.name}</div>
+                        <p className="mt-0.5 text-[#5C5346]">{t.concerns}</p>
                       </div>
                     ))}
                   </div>
@@ -507,9 +513,9 @@ export function App() {
 
             {/* MODULE 4 */}
             {activeModule.id === 'm4' && (
-              <div className="space-y-8 text-sm leading-relaxed text-stone-700">
+              <div className="space-y-8 text-sm leading-relaxed text-[#231F1A]">
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     4.1 Define Criteria, Lenses &amp; the 8-Field Specification
                   </h3>
                   <p>
@@ -529,19 +535,19 @@ export function App() {
                       ['7. Applicability', 'Conditions under which the criterion applies.'],
                       ['8. Limitations', 'What the assessment cannot establish.'],
                     ].map(([f, d]) => (
-                      <div key={f} className="rounded-lg border border-stone-200 bg-white p-3">
-                        <div className="font-semibold text-stone-900">{f}</div>
-                        <p className="mt-0.5 text-stone-600">{d}</p>
+                      <div key={f} className="vintage-box rounded-md p-3">
+                        <div className="font-semibold text-[#231F1A]">{f}</div>
+                        <p className="mt-0.5 text-[#5C5346]">{d}</p>
                       </div>
                     ))}
                   </div>
-                  <p className="text-xs text-stone-600">
+                  <p className="text-xs text-[#5C5346]">
                     <strong>Criteria drift &amp; observable behavior:</strong> Examining real outputs often changes what teams realize their requirements are (<em>criteria drift</em>). Allow iterative refinement during exploration, then validate on an independent set for confirmation. Avoid inferring hidden mental states (beliefs or intentions) when the evidence only covers observable behavior.
                   </p>
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     4.2 Intrinsic vs. Extrinsic &amp; Layered Evaluation Pipelines
                   </h3>
                   <p>
@@ -551,19 +557,19 @@ export function App() {
                   <LayeredPipelineDiagram />
 
                   <div className="grid gap-3 sm:grid-cols-2 text-xs">
-                    <div className="rounded-xl border border-stone-200 bg-white p-4 space-y-1">
-                      <div className="font-semibold text-stone-900">
+                    <div className="vintage-box rounded-md p-4 space-y-1">
+                      <div className="font-semibold text-[#231F1A]">
                         Coding Agents: SWE-bench vs. ProgramBench
                       </div>
-                      <p className="text-stone-600">
+                      <p className="text-[#5C5346]">
                         <strong>SWE-bench</strong> (<em>Jimenez et al., 2023</em>) evaluates GitHub issue patches via unit tests tied to internal implementation details. <strong>ProgramBench</strong> evaluates against artifacts and documentation via implementation-agnostic behavioral tests (invoking the built program and diffing outputs). Even top models struggle when tasks require full behavioral reproduction.
                       </p>
                     </div>
-                    <div className="rounded-xl border border-stone-200 bg-white p-4 space-y-1">
-                      <div className="font-semibold text-stone-900">
+                    <div className="vintage-box rounded-md p-4 space-y-1">
+                      <div className="font-semibold text-[#231F1A]">
                         Conflict Simulation: Rehearsal (SIGCHI 2024)
                       </div>
-                      <p className="text-stone-600">
+                      <p className="text-[#5C5346]">
                         <em>Shaikh et al. (2024)</em> combined <strong>intrinsic</strong> ecological-validity checks of Interests-Rights-Power prompting (TrueSkill rankings) with an <strong>extrinsic</strong> user study (<em>N</em> = 40 vs. static Stanford GSB training), showing significantly higher cooperative strategy use in actual conflicts even though recognition/recall quiz scores did not significantly differ.
                       </p>
                     </div>
@@ -571,27 +577,27 @@ export function App() {
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     4.3 Evidence Methods &amp; Sampling Purposes
                   </h3>
                   <p>
                     NIST’s ARIA program combines model testing, red teaming, and user testing to achieve methodological complementarity. Before building automated evaluators, <em>Husain &amp; Shankar</em> emphasize <strong>trace and error analysis</strong>—inspecting real logs, recording open-ended observations, and grouping recurring breakdowns. For agents, always corroborate transcript claims against actual environment state changes.
                   </p>
-                  <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+                  <div className="overflow-x-auto vintage-box rounded-md">
                     <table className="w-full text-left text-xs">
-                      <thead className="border-b border-stone-200 bg-stone-50 text-stone-700">
+                      <thead className="border-b border-[#231F1A] bg-[#EFE7D6] text-[#231F1A]">
                         <tr>
                           <th className="px-4 py-2.5 font-semibold">Method</th>
                           <th className="px-4 py-2.5 font-semibold">What It Establishes</th>
                           <th className="px-4 py-2.5 font-semibold">Main Limitation</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-100 text-stone-700">
+                      <tbody className="divide-y divide-[#231F1A]/15 text-[#231F1A]">
                         {EVIDENCE_METHODS.map((m) => (
                           <tr key={m.name}>
-                            <td className="px-4 py-2.5 font-medium text-stone-900">{m.name}</td>
+                            <td className="px-4 py-2.5 font-medium text-[#231F1A]">{m.name}</td>
                             <td className="px-4 py-2.5">{m.establishes}</td>
-                            <td className="px-4 py-2.5 text-stone-600">{m.limitation}</td>
+                            <td className="px-4 py-2.5 text-[#5C5346]">{m.limitation}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -599,9 +605,9 @@ export function App() {
                   </div>
                   <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-4 text-xs">
                     {SAMPLING_PURPOSES.map((sp) => (
-                      <div key={sp.name} className="rounded-lg border border-stone-200 bg-white p-3 space-y-1">
-                        <div className="font-semibold text-stone-900">{sp.name}</div>
-                        <p className="text-stone-600">{sp.role}</p>
+                      <div key={sp.name} className="vintage-box rounded-md p-3 space-y-1">
+                        <div className="font-semibold text-[#231F1A]">{sp.name}</div>
+                        <p className="text-[#5C5346]">{sp.role}</p>
                         <p className="font-medium text-amber-800">{sp.warning}</p>
                       </div>
                     ))}
@@ -612,9 +618,9 @@ export function App() {
 
             {/* MODULE 5 */}
             {activeModule.id === 'm5' && (
-              <div className="space-y-8 text-sm leading-relaxed text-stone-700">
+              <div className="space-y-8 text-sm leading-relaxed text-[#231F1A]">
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     5.1 Separate Output Quality, Task Success &amp; Human Outcomes
                   </h3>
                   <p>
@@ -624,19 +630,19 @@ export function App() {
                   <OutcomesComparisonDiagram />
 
                   <div className="grid gap-3 sm:grid-cols-2 text-xs">
-                    <div className="rounded-xl border border-stone-200 bg-white p-4 space-y-1">
-                      <div className="font-semibold text-stone-900">
+                    <div className="vintage-box rounded-md p-4 space-y-1">
+                      <div className="font-semibold text-[#231F1A]">
                         Co-Writing &amp; Opinion Drift (CHI 2022, CHI 2023)
                       </div>
-                      <p className="text-stone-600">
+                      <p className="text-[#5C5346]">
                         In <strong>CoAuthor</strong> (<em>CHI 2022</em>), human + GPT-3 co-writing reduced errors and increased vocabulary diversity, while opening longitudinal questions on novelty, homogenization, and edit traces. In <em>Jakesch et al. (CHI 2023)</em>, co-writing with an opinionated model shifted both participants’ written arguments and their subsequent survey opinions—while most participants believed the model’s suggestions were neutral.
                       </p>
                     </div>
-                    <div className="rounded-xl border border-stone-200 bg-white p-4 space-y-1">
-                      <div className="font-semibold text-stone-900">
+                    <div className="vintage-box rounded-md p-4 space-y-1">
+                      <div className="font-semibold text-[#231F1A]">
                         Counterfactual Workflows &amp; Offloading Score (NeurIPS 2026)
                       </div>
-                      <p className="text-stone-600">
+                      <p className="text-[#5C5346]">
                         <em>Padmakumar et al. (2026)</em> induce user workflows from keystroke/click traces and estimate counterfactual steps without AI to compute <strong>Offloading Score</strong> (fraction of steps saved, &gt;85% content validity). Higher offloading generally correlated with lower code recall—except for an “appropriately reliant” cluster who used AI to explore best approaches and then improvised.
                       </p>
                     </div>
@@ -644,39 +650,39 @@ export function App() {
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     5.2 From Observation to Decision &amp; Validating Graders
                   </h3>
                   <p>
                     “The model answered 85% correctly” is already a scored measurement, not a raw observation. Every link in the inference chain—<strong>Record observations</strong> → <strong>Apply measurement rules</strong> → <strong>Estimate beyond observations</strong> → <strong>Interpret a construct</strong> → <strong>Support a decision</strong>—introduces assumptions that require justification.
                   </p>
-                  <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+                  <div className="overflow-x-auto vintage-box rounded-md">
                     <table className="w-full text-left text-xs">
-                      <thead className="border-b border-stone-200 bg-stone-50 text-stone-700">
+                      <thead className="border-b border-[#231F1A] bg-[#EFE7D6] text-[#231F1A]">
                         <tr>
                           <th className="px-4 py-2.5 font-semibold">Grading Mechanism</th>
                           <th className="px-4 py-2.5 font-semibold">Suitable Uses</th>
                           <th className="px-4 py-2.5 font-semibold">Validation Checks Needed</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-100 text-stone-700">
+                      <tbody className="divide-y divide-[#231F1A]/15 text-[#231F1A]">
                         <tr>
-                          <td className="px-4 py-2.5 font-semibold text-stone-900">Code-based checks</td>
+                          <td className="px-4 py-2.5 font-semibold text-[#231F1A]">Code-based checks</td>
                           <td className="px-4 py-2.5">Schemas, calculations, execution results, state changes, explicit constraints.</td>
                           <td className="px-4 py-2.5">Does the check capture the real requirement and accept valid alternatives?</td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-2.5 font-semibold text-stone-900">Human assessment</td>
+                          <td className="px-4 py-2.5 font-semibold text-[#231F1A]">Human assessment</td>
                           <td className="px-4 py-2.5">Domain correctness, contextual appropriateness, nuanced failures, lived experience.</td>
                           <td className="px-4 py-2.5">Separate initial ratings from adjudication; investigate disagreement rather than treating consensus as automatic truth.</td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-2.5 font-semibold text-stone-900">Model-based judge</td>
+                          <td className="px-4 py-2.5 font-semibold text-[#231F1A]">Model-based judge</td>
                           <td className="px-4 py-2.5">Scaling defined judgments that can be calibrated for a specific use.</td>
                           <td className="px-4 py-2.5">Validate on held-out sets; check missed rare failures, false alarms, and position/verbosity/self-enhancement biases.</td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-2.5 font-semibold text-stone-900">Hybrid assessment</td>
+                          <td className="px-4 py-2.5 font-semibold text-[#231F1A]">Hybrid assessment</td>
                           <td className="px-4 py-2.5">Combining deterministic checks, LLM screening, and human escalation.</td>
                           <td className="px-4 py-2.5">Verify routing rules, abstention thresholds, and handling of missing/failed runs.</td>
                         </tr>
@@ -686,7 +692,7 @@ export function App() {
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     5.3 Preserve Severity &amp; Trade-Offs When Aggregating
                   </h3>
                   <p>
@@ -700,15 +706,15 @@ export function App() {
 
             {/* MODULE 6 */}
             {activeModule.id === 'm6' && (
-              <div className="space-y-8 text-sm leading-relaxed text-stone-700">
+              <div className="space-y-8 text-sm leading-relaxed text-[#231F1A]">
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     6.1 Statistical Uncertainty, Rare Failures &amp; Clustering
                   </h3>
                   <p>
                     Distinguish performance on a fixed benchmark from generalization to a broader population of tasks (<em>NIST statistical modeling</em>), and match your uncertainty analysis to the data structure:
                   </p>
-                  <ul className="space-y-2 rounded-xl border border-stone-200 bg-white p-4 text-xs text-stone-700">
+                  <ul className="space-y-2 vintage-box rounded-md p-4 text-xs text-[#231F1A]">
                     <li>
                       <strong>• Zero observed failures ≠ zero failure rate:</strong> Observing 0 failures in 100 independent, representative Bernoulli trials yields an exact one-sided 95% upper confidence bound of approximately <strong>3%</strong> (assuming accurate failure detection), and says nothing about untested conditions.
                     </li>
@@ -722,7 +728,7 @@ export function App() {
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     6.2 Evaluation Quality, Validity &amp; Who Evaluates
                   </h3>
                   <p>
@@ -730,13 +736,13 @@ export function App() {
                   </p>
                   <div className="grid gap-2.5 sm:grid-cols-2 text-xs">
                     {VALIDITY_DIMENSIONS.map((v, i) => (
-                      <div key={v.name} className="rounded-lg border border-stone-200 bg-white p-3">
-                        <span className="font-semibold text-stone-900">{i + 1}. {v.name}: </span>
-                        <span className="text-stone-600">{v.question}</span>
+                      <div key={v.name} className="vintage-box rounded-md p-3">
+                        <span className="font-semibold text-[#231F1A]">{i + 1}. {v.name}: </span>
+                        <span className="text-[#5C5346]">{v.question}</span>
                       </div>
                     ))}
                   </div>
-                  <div className="rounded-xl border border-amber-200 bg-amber-50/70 p-4 text-xs text-amber-950 space-y-1">
+                  <div className="rounded-md border border-[#D49B2A] bg-[#F6ECD5] p-4 text-xs text-amber-950 space-y-1">
                     <div className="font-semibold">
                       Who Evaluates &amp; LLM-Simulated Caricatures (Argyle et al., 2023; CoMPosT, EMNLP 2023)
                     </div>
@@ -747,7 +753,7 @@ export function App() {
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     6.3 When to Evaluate: Lifecycle Dynamics &amp; Governance
                   </h3>
                   <p>
@@ -756,33 +762,33 @@ export function App() {
 
                   <HorizonDiagram />
 
-                  <p className="text-xs text-stone-600">
+                  <p className="text-xs text-[#5C5346]">
                     <strong>Concrete governance &amp; versioning:</strong> Name who owns the question, defines criteria, represents affected groups (distinguishing consultation from decision authority), reviews methods, accepts risk, and initiates reevaluation. Evaluate human oversight itself (time, expertise, visibility, authority), and version product and evaluator separately.
                   </p>
                 </section>
 
                 <section className="space-y-4">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     6.4 Worked Example, Reporting Discipline &amp; Companion Protocol
                   </h3>
-                  <div className="rounded-xl border border-stone-200 bg-white p-4 text-xs space-y-1.5">
-                    <div className="font-semibold text-stone-900">
+                  <div className="vintage-box rounded-md p-4 text-xs space-y-1.5">
+                    <div className="font-semibold text-[#231F1A]">
                       Illustrative Research Assistant (Fictional Design Example)
                     </div>
-                    <p className="text-stone-600">
+                    <p className="text-[#5C5346]">
                       To decide on a restricted pilot for researchers comparing empirical papers, pair <strong>intrinsic</strong> source-fidelity rubrics (detecting observational claims misstated as causal) with an <strong>extrinsic</strong> blinded comparative study of completed syntheses (measuring independent quality, unsupported conclusions, completion time, and verification effort). If summaries improve without better syntheses, investigate workflow integration; if speed accompanies consequential errors, evaluate that trade-off before expanding use.
                     </p>
                   </div>
 
-                  <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+                  <div className="overflow-x-auto vintage-box rounded-md">
                     <table className="w-full text-left text-xs">
-                      <thead className="border-b border-stone-200 bg-stone-50 text-stone-700">
+                      <thead className="border-b border-[#231F1A] bg-[#EFE7D6] text-[#231F1A]">
                         <tr>
                           <th className="px-4 py-2.5 font-semibold">Overextended Claim</th>
                           <th className="px-4 py-2.5 font-semibold">Evidence-Matched Formulation</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-100 text-stone-700">
+                      <tbody className="divide-y divide-[#231F1A]/15 text-[#231F1A]">
                         {REPORTING_CLAIMS.map((c) => (
                           <tr key={c.overextended}>
                             <td className="px-4 py-2.5 font-medium text-rose-900">{c.overextended}</td>
@@ -795,14 +801,14 @@ export function App() {
 
                   <div className="grid gap-2.5 sm:grid-cols-2 text-xs">
                     {PROTOCOL_FIELDS.map((f) => (
-                      <div key={f.id} className="rounded-lg border border-stone-200 bg-white p-3">
-                        <div className="font-semibold text-stone-900">{f.label}</div>
-                        <p className="mt-0.5 text-stone-600">{f.placeholder}</p>
+                      <div key={f.id} className="vintage-box rounded-md p-3">
+                        <div className="font-semibold text-[#231F1A]">{f.label}</div>
+                        <p className="mt-0.5 text-[#5C5346]">{f.placeholder}</p>
                       </div>
                     ))}
                   </div>
 
-                  <blockquote className="rounded-xl border border-indigo-200 bg-indigo-50/50 p-4 text-xs leading-relaxed text-stone-800 space-y-1.5">
+                  <blockquote className="rounded-md border border-[#335C81] bg-[#E3EAF0] p-4 text-xs leading-relaxed text-[#231F1A] space-y-1.5">
                     <div className="font-semibold text-indigo-950">
                       Reusable Evaluation &amp; Decision Statement Template
                     </div>
@@ -816,9 +822,9 @@ export function App() {
 
             {/* MODULE 7 */}
             {activeModule.id === 'm7' && (
-              <div className="space-y-8 text-sm leading-relaxed text-stone-700">
+              <div className="space-y-8 text-sm leading-relaxed text-[#231F1A]">
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     7.1 Why Most Public AI Evals &amp; Leaderboards Mislead
                   </h3>
                   <p>
@@ -829,23 +835,23 @@ export function App() {
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     7.2 The 10 Most Common AI Evaluation Fallacies &amp; Hype Traps
                   </h3>
-                  <div className="overflow-x-auto rounded-xl border border-stone-200 bg-white">
+                  <div className="overflow-x-auto vintage-box rounded-md">
                     <table className="w-full text-left text-xs">
-                      <thead className="border-b border-stone-200 bg-stone-50 text-stone-700">
+                      <thead className="border-b border-[#231F1A] bg-[#EFE7D6] text-[#231F1A]">
                         <tr>
                           <th className="px-4 py-2.5 font-semibold">Fallacy / Hype Claim</th>
                           <th className="px-4 py-2.5 font-semibold">Why It Fails (Empirical &amp; Methodological Reality)</th>
                           <th className="px-4 py-2.5 font-semibold">Corrective Practice</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-stone-100 text-stone-700">
+                      <tbody className="divide-y divide-[#231F1A]/15 text-[#231F1A]">
                         <tr>
                           <td className="px-4 py-2.5 font-semibold text-rose-950">
                             1. The Leaderboard Transfer Fallacy
-                            <div className="font-normal text-stone-500">“#1 on the benchmark = ready for our workflow.”</div>
+                            <div className="font-normal text-[#5C5346]">“#1 on the benchmark = ready for our workflow.”</div>
                           </td>
                           <td className="px-4 py-2.5">
                             Static benchmarks suffer from training contamination, prompt overfitting, and missing harness/context. Models scoring ~75% on SWE-bench unit tests dropped near 0–4.5% on ProgramBench behavioral reproduction.
@@ -857,7 +863,7 @@ export function App() {
                         <tr>
                           <td className="px-4 py-2.5 font-semibold text-rose-950">
                             2. The Mechanistic Anthropomorphism Fallacy
-                            <div className="font-normal text-stone-500">“It passed the math/law exam, so it reasons like an expert.”</div>
+                            <div className="font-normal text-[#5C5346]">“It passed the math/law exam, so it reasons like an expert.”</div>
                           </td>
                           <td className="px-4 py-2.5">
                             Correct answers underdetermine the mechanism—they can reflect memorized templates, dataset shortcuts, or tool calls rather than generalizable reasoning.
@@ -869,7 +875,7 @@ export function App() {
                         <tr>
                           <td className="px-4 py-2.5 font-semibold text-rose-950">
                             3. The Perceived-Speed Illusion
-                            <div className="font-normal text-stone-500">“Surveyed users say AI makes them 2× faster!”</div>
+                            <div className="font-normal text-[#5C5346]">“Surveyed users say AI makes them 2× faster!”</div>
                           </td>
                           <td className="px-4 py-2.5">
                             Self-reports measure perception, not ground truth. In METR’s RCT (246 tasks), experienced developers <em>believed</em> they were 20% faster with AI but were actually <strong>19% slower</strong>.
@@ -881,7 +887,7 @@ export function App() {
                         <tr>
                           <td className="px-4 py-2.5 font-semibold text-rose-950">
                             4. The “Human-in-the-Loop Guarantees Safety” Fallacy
-                            <div className="font-normal text-stone-500">“Human + AI always beats either alone.”</div>
+                            <div className="font-normal text-[#5C5346]">“Human + AI always beats either alone.”</div>
                           </td>
                           <td className="px-4 py-2.5">
                             Vaccaro et al. (2024, 370 effect sizes) found Human+AI underperformed the best solo actor on average (<em>g</em> = −0.23), especially in decision tasks. Reviewers without time, expertise, or authority create “oversight theater.”
@@ -893,7 +899,7 @@ export function App() {
                         <tr>
                           <td className="px-4 py-2.5 font-semibold text-rose-950">
                             5. The Instant-Preference / Sycophancy Trap
-                            <div className="font-normal text-stone-500">“Users gave it the highest thumbs-up in blind chat!”</div>
+                            <div className="font-normal text-[#5C5346]">“Users gave it the highest thumbs-up in blind chat!”</div>
                           </td>
                           <td className="px-4 py-2.5">
                             One-turn human preference rewards flattering, verbose, sycophantic answers. Ibrahim et al. showed sycophantic AI is ranked #1 in the moment but erodes human-interaction satisfaction over time.
@@ -905,7 +911,7 @@ export function App() {
                         <tr>
                           <td className="px-4 py-2.5 font-semibold text-rose-950">
                             6. The “Task Done = User Benefits” Fallacy
-                            <div className="font-normal text-stone-500">“The output looked good, so the user succeeded.”</div>
+                            <div className="font-normal text-[#5C5346]">“The output looked good, so the user succeeded.”</div>
                           </td>
                           <td className="px-4 py-2.5">
                             Ignores hidden downstream harms: <strong>17% skill erosion</strong> in debugging (Anthropic, 2026), reduced code recall under high offloading (Padmakumar et al., 2026), and unnoticed opinion drift (Jakesch et al., 2023).
@@ -917,7 +923,7 @@ export function App() {
                         <tr>
                           <td className="px-4 py-2.5 font-semibold text-rose-950">
                             7. The Unvalidated LLM-as-a-Judge Fallacy
-                            <div className="font-normal text-stone-500">“GPT/Claude scored our system at 96%!”</div>
+                            <div className="font-normal text-[#5C5346]">“GPT/Claude scored our system at 96%!”</div>
                           </td>
                           <td className="px-4 py-2.5">
                             LLM judges exhibit position bias, verbosity bias, and self-enhancement bias, and often share the exact same blind spots as the generator on rare domain errors.
@@ -929,7 +935,7 @@ export function App() {
                         <tr>
                           <td className="px-4 py-2.5 font-semibold text-rose-950">
                             8. The Synthetic-User Replacement Fallacy
-                            <div className="font-normal text-stone-500">“We simulated 500 diverse users with an LLM.”</div>
+                            <div className="font-normal text-[#5C5346]">“We simulated 500 diverse users with an LLM.”</div>
                           </td>
                           <td className="px-4 py-2.5">
                             CoMPosT (Cheng et al., EMNLP 2023) showed LLM simulations of sociocultural groups flatten nuance into exaggerated caricatures.
@@ -941,7 +947,7 @@ export function App() {
                         <tr>
                           <td className="px-4 py-2.5 font-semibold text-rose-950">
                             9. The “Zero Failures = Safe” &amp; Pseudo-Replication Trap
-                            <div className="font-normal text-stone-500">“0 failures in 100 runs (or 300 chat turns) proves safety.”</div>
+                            <div className="font-normal text-[#5C5346]">“0 failures in 100 runs (or 300 chat turns) proves safety.”</div>
                           </td>
                           <td className="px-4 py-2.5">
                             0/100 independent runs still leaves a ~3% one-sided 95% upper bound. Worse, treating 300 turns from 5 conversations as <em>N</em> = 300 ignores clustering and overstates precision.
@@ -953,7 +959,7 @@ export function App() {
                         <tr>
                           <td className="px-4 py-2.5 font-semibold text-rose-950">
                             10. Eval P-Hacking (Exploratory as Confirmatory)
-                            <div className="font-normal text-stone-500">“We iterated until our agent passed the eval suite.”</div>
+                            <div className="font-normal text-[#5C5346]">“We iterated until our agent passed the eval suite.”</div>
                           </td>
                           <td className="px-4 py-2.5">
                             Repeatedly adjusting prompts, thresholds, and rubrics on the same dataset turns a confirmatory test into an overfitted training set.
@@ -968,7 +974,7 @@ export function App() {
                 </section>
 
                 <section className="space-y-3">
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="text-lg font-bold text-[#231F1A]">
                     7.3 Quick Red-Flag Checklist When Reading Any AI Eval Claim
                   </h3>
                   <div className="grid gap-2.5 sm:grid-cols-2 text-xs">
@@ -980,9 +986,9 @@ export function App() {
                       ['Collapsed average', 'Are catastrophic rare failures buried inside a single 95%+ pass rate?'],
                       ['One-session horizon', 'Was a collaborative tool evaluated in a 30-minute demo with no check for familiarization, sycophancy, or skill erosion?'],
                     ].map(([title, desc]) => (
-                      <div key={title} className="rounded-lg border border-rose-200 bg-rose-50/40 p-3">
+                      <div key={title} className="rounded-md border border-[#C8552D]/60 bg-[#F7E4DC]/70 p-3">
                         <div className="font-semibold text-rose-950">🚩 {title}</div>
-                        <p className="mt-0.5 text-stone-700">{desc}</p>
+                        <p className="mt-0.5 text-[#231F1A]">{desc}</p>
                       </div>
                     ))}
                   </div>
@@ -991,11 +997,11 @@ export function App() {
             )}
 
             {/* Module Footer Navigation */}
-            <nav className="flex items-center justify-between border-t border-stone-200 pt-6">
+            <nav className="flex flex-wrap items-center justify-between gap-3 border-t-2 border-[#231F1A] pt-6">
               {activeIdx > 0 ? (
                 <button
                   onClick={() => selectModule(activeIdx - 1)}
-                  className="inline-flex items-center gap-2 rounded-xl border border-stone-200 bg-white px-4 py-2.5 text-xs font-semibold text-stone-800 shadow-2xs hover:bg-stone-50"
+                  className="vintage-btn inline-flex items-center gap-2 rounded-md bg-[#FBF7EE] px-4 py-2.5 text-xs font-semibold text-[#231F1A]"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   Module {MODULES[activeIdx - 1].number}: {MODULES[activeIdx - 1].title}
@@ -1007,7 +1013,7 @@ export function App() {
               {activeIdx < MODULES.length - 1 && (
                 <button
                   onClick={() => selectModule(activeIdx + 1)}
-                  className="inline-flex items-center gap-2 rounded-xl bg-stone-900 px-4 py-2.5 text-xs font-semibold text-white shadow-2xs hover:bg-stone-800"
+                  className="vintage-btn inline-flex items-center gap-2 rounded-md bg-[#231F1A] px-4 py-2.5 text-xs font-semibold text-[#FBF7EE]"
                 >
                   Module {MODULES[activeIdx + 1].number}: {MODULES[activeIdx + 1].title}
                   <ArrowRight className="h-4 w-4" />
