@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, ExternalLink, Menu, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, ClipboardCheck, ExternalLink, Layers, Menu, X } from 'lucide-react';
+import { FrameworkProtocolTool, SphereCardTool } from './components/EvalTools';
 import {
   AggregationTrapDiagram,
   FallaciesDiagram,
@@ -68,6 +69,7 @@ const MODULES = [
 ] as const;
 
 export function App() {
+  const [viewMode, setViewMode] = useState<'guide' | 'sphere-tool' | 'framework-tool'>('guide');
   const [activeIdx, setActiveIdx] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -105,19 +107,60 @@ export function App() {
             </div>
           </div>
 
-          <a
-            href="https://sphere-eval.github.io/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-medium text-indigo-800 hover:bg-indigo-100"
-          >
-            SPHERE Evaluation Card
-            <ExternalLink className="h-3.5 w-3.5" />
-          </a>
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex rounded-lg border border-stone-200 bg-stone-100 p-0.5 text-xs">
+              <button
+                onClick={() => setViewMode('guide')}
+                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 font-medium transition ${
+                  viewMode === 'guide' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-600 hover:text-stone-900'
+                }`}
+              >
+                <BookOpen className="h-3.5 w-3.5" />
+                Guide
+              </button>
+              <button
+                onClick={() => setViewMode('sphere-tool')}
+                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 font-medium transition ${
+                  viewMode === 'sphere-tool' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-600 hover:text-stone-900'
+                }`}
+              >
+                <Layers className="h-3.5 w-3.5" />
+                SPHERE Card Tool
+              </button>
+              <button
+                onClick={() => setViewMode('framework-tool')}
+                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 font-medium transition ${
+                  viewMode === 'framework-tool' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-600 hover:text-stone-900'
+                }`}
+              >
+                <ClipboardCheck className="h-3.5 w-3.5" />
+                Framework Protocol Tool
+              </button>
+            </div>
+
+            <a
+              href="https://sphere-eval.github.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-xs font-medium text-indigo-800 hover:bg-indigo-100"
+            >
+              sphere-eval.github.io
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
         </div>
       </header>
 
-      {/* Main Layout */}
+      {viewMode === 'sphere-tool' ? (
+        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">
+          <SphereCardTool />
+        </main>
+      ) : viewMode === 'framework-tool' ? (
+        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">
+          <FrameworkProtocolTool />
+        </main>
+      ) : (
+      /* Main Layout */
       <div className="mx-auto flex w-full max-w-7xl flex-1">
         {/* Left Module Sidebar */}
         <aside
@@ -972,6 +1015,7 @@ export function App() {
           </article>
         </main>
       </div>
+      )}
     </div>
   );
 }
