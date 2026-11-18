@@ -24,7 +24,7 @@ interface ModuleRendererProps {
   onSelectModule?: (idx: number) => void;
   onOpenCapstone?: () => void;
   onOpenTracks?: () => void;
-  onOpenTool?: (tool: 'sphere-tool' | 'framework-tool') => void;
+  onOpenTool?: (tool: 'sphere-tool' | 'framework-tool' | 'taxonomy-tool') => void;
 }
 
 export function ModuleRenderer({
@@ -191,6 +191,20 @@ export function ModuleRenderer({
               className="vintage-btn rounded-md bg-[#FBF7EE] px-3 py-1 font-semibold text-[#231F1A]"
             >
               Open SPHERE Card Tool →
+            </button>
+          </div>
+        )}
+        {module.number === 4 && onOpenTool && (
+          <div className="rounded-md border border-[#335C81] bg-[#E3EAF0] p-3.5 text-xs flex flex-wrap items-center justify-between gap-2">
+            <span>
+              <strong>Supplementary Practice Tool:</strong> Browse and filter 25 evaluation metrics across Machine Learning, Systems &amp; Agentic AI, and Human–AI Interaction.
+            </span>
+            <button
+              type="button"
+              onClick={() => onOpenTool('taxonomy-tool')}
+              className="vintage-btn rounded-md bg-[#FBF7EE] px-3 py-1 font-semibold text-[#231F1A]"
+            >
+              Open Metrics Taxonomy →
             </button>
           </div>
         )}

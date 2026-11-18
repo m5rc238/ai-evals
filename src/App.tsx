@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { Award, BookOpen, ClipboardCheck, ExternalLink, Layers, Menu, X } from 'lucide-react';
+import { Award, BookOpen, ClipboardCheck, ExternalLink, Layers, Menu, TableProperties, X } from 'lucide-react';
 import { MODULES_CURRICULUM } from './data/curriculum';
 import { ModuleRenderer } from './components/ModuleRenderer';
 import { CapstoneView } from './components/CapstoneView';
 import { AdvancedTracksView } from './components/AdvancedTracksView';
 import { FrameworkProtocolTool, SphereCardTool } from './components/EvalTools';
+import { MetricsTaxonomyTool } from './components/MetricsTaxonomyTool';
 
-type ViewMode = 'guide' | 'capstone' | 'tracks' | 'sphere-tool' | 'framework-tool';
+type ViewMode = 'guide' | 'capstone' | 'tracks' | 'sphere-tool' | 'framework-tool' | 'taxonomy-tool';
 
 export function App() {
   const [viewMode, setViewMode] = useState<ViewMode>('guide');
@@ -117,6 +118,16 @@ export function App() {
               >
                 Eval Protocol
               </button>
+              <button
+                onClick={() => openView('taxonomy-tool')}
+                className={`rounded border px-2 py-1 font-medium transition ${
+                  viewMode === 'taxonomy-tool'
+                    ? 'border-[#231F1A] bg-[#231F1A] text-[#FBF7EE]'
+                    : 'border-[#231F1A]/30 bg-[#FBF7EE] text-[#231F1A] hover:border-[#231F1A]'
+                }`}
+              >
+                Metrics Taxonomy
+              </button>
             </div>
 
             <a
@@ -156,6 +167,18 @@ export function App() {
             </button>
           </div>
           <FrameworkProtocolTool />
+        </main>
+      ) : viewMode === 'taxonomy-tool' ? (
+        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 space-y-4">
+          <div className="rounded-md border border-[#335C81] bg-[#E3EAF0] px-4 py-2.5 text-xs text-[#1E3A54] flex flex-wrap items-center justify-between gap-2">
+            <span>
+              <strong>Supplementary Tool (Linked to Module 4):</strong> Explore how evaluation metrics map across Machine Learning, Systems &amp; Agentic AI, and Human–AI Interaction.
+            </span>
+            <button onClick={() => selectModule(3)} className="font-semibold underline">
+              ← Return to Module 4
+            </button>
+          </div>
+          <MetricsTaxonomyTool />
         </main>
       ) : (
         <div className="mx-auto flex w-full max-w-7xl flex-1">
@@ -238,6 +261,13 @@ export function App() {
                 >
                   <ClipboardCheck className="h-3.5 w-3.5" />
                   Eval Protocol Tool
+                </button>
+                <button
+                  onClick={() => openView('taxonomy-tool')}
+                  className="flex w-full items-center gap-2 rounded-md border border-[#231F1A]/25 bg-[#FBF7EE] p-2 text-xs font-medium"
+                >
+                  <TableProperties className="h-3.5 w-3.5" />
+                  Metrics Taxonomy Tool
                 </button>
               </div>
             </div>

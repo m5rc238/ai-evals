@@ -25,9 +25,10 @@ A 7-module study guide, capstone project, and protocol builder for evidence-base
 - **Capstone Project:** Worked 22-element proposal for the fictional *Meridian Research Assistant*, reusable template, fictional mixed results, sample statistical interpretation, sample final report, and 4-level grading rubric.
 - **Optional Advanced Tracks (A–F):** RAG Evaluation, AI Agents, Safety & Security, Multimodal Evaluation, Advanced Measurement, and Organizational Evaluation.
 
-### 3. Supplementary Protocol Tools
+### 3. Supplementary Practice Tools
 - **SPHERE Card Tool:** Interactive 5-dimension builder for Human–AI systems with live preview and `.md` / `.json` export.
 - **Eval Protocol Tool:** 12-field companion protocol and bounded decision statement builder with live preview and `.md` / `.json` export.
+- **Metrics Taxonomy Tool:** Searchable, filterable, and sortable reference of 25 AI evaluation metrics mapped by discipline, unit of analysis, and category.
 
 ### 3. Markdown Reference
 - [ai-evals-guide.md](./ai-evals-guide.md) — Standalone Markdown reference guide.
