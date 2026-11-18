@@ -698,7 +698,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
     caseStudy: {
       stageTitle: 'Stage 6 (Fictional Case Study): Interpreting Meridian’s Results & Governance Plan',
       narrative:
-        'Meridian’s 48-analyst counterbalanced within-subject experiment shows a +0.45-point gain on the 5-point synthesis rubric (95% CI: +0.15 to +0.75), but 0 confidentiality breaches in 100 audited runs (one-sided 95% upper bound ≈ 3%) and a +4-minute verification overhead for junior analysts. You write a bounded deployment decision: approve a monitored 4-week pilot for non-confidential research only, with separate product/judge versioning and automated drift alerts.',
+        'Meridian’s 32-analyst counterbalanced crossover study (128 crossed sessions across 48 confirmatory packets) shows a +0.40-point quality gain (95% CI [+0.18, +0.62]) and 0 confidentiality breaches in 100 audited runs (one-sided 95% upper bound ≈ 3% under binomial assumptions)—but unsupported claims rose by +1.6 pp (95% CI [+0.2, +3.0]), failing the pre-specified +1.0 pp non-inferiority gate due to junior-analyst overreliance. Consistent with the decision rule, you hold the 4-week pilot until citation-verification UX is redesigned and re-tested on a fresh confirmatory sample.',
       keyDecisions: [
         'Account for clustering (multiple briefs per analyst) in confidence intervals.',
         'Assign a named Product Owner for pilot authorization and a separate Risk Reviewer with authority to halt on incidents.',

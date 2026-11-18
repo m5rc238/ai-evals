@@ -238,13 +238,13 @@ ${CAPSTONE_SCENARIO.requiredSections
               How a Researcher Interprets These Mixed Results
             </div>
             <p>
-              <strong>1. Direct comparison &amp; effect size:</strong> Synthesis quality improved by +0.40 points (cluster-adjusted 95% CI [+0.18, +0.62], <em>d</em> = 0.59), meeting the pre-specified quality criterion. However, <strong>improvement on one outcome does not mean overall success</strong>: unsupported claims rose by +1.6 pp (95% CI [+0.2, +3.0]), exceeding the +1.0 pp non-inferiority margin.
+              <strong>1. Direct comparison, effect size &amp; decision-rule failure:</strong> Synthesis quality improved by +0.40 points (crossed mixed-effects 95% CI [+0.18, +0.62], <em>d</em> = 0.59), satisfying the quality gate (lower 95% CI &gt; 0 and point estimate ≥ +0.40 target). However, <em>d</em> = 0.59 does not by itself establish practical importance—practical value depends on context-specific thresholds and trade-offs. Here, unsupported claims rose by <strong>+1.6 pp</strong> (95% CI [+0.2, +3.0]), exceeding the pre-specified +1.0 pp non-inferiority margin. <strong>This gate fails.</strong>
             </p>
             <p>
-              <strong>2. Subgroup disparity &amp; reliance:</strong> Disaggregating by experience reveals the unsupported-claim increase is concentrated among junior analysts (+3.1 pp, 95% CI [+0.8, +5.4]), whereas senior analysts showed virtually no change (+0.1 pp). Verification time nearly doubled (+12.5 min), offsetting drafting speedups so total time changed inconclusively (−2.5 min, 95% CI [−7.2, +2.2]).
+              <strong>2. Subgroup disparity &amp; reliance:</strong> Disaggregating by experience reveals the unsupported-claim increase is concentrated among junior analysts (+3.1 pp, 95% CI [+0.8, +5.4]), whereas senior analysts showed no clear change (+0.1 pp). Verification time nearly doubled (+12.5 min), offsetting drafting speedups so total time changed inconclusively (−2.5 min, 95% CI [−7.2, +2.2]).
             </p>
             <p>
-              <strong>3. Rare-event &amp; deployment discipline:</strong> Zero confidentiality breaches in 100 runs yields a ~3.0% one-sided 95% upper bound (rule of three)—not proof of 0% risk. Because the pre-registered unsupported-claim threshold failed, <strong>broad deployment is not justified</strong>.
+              <strong>3. Rare-event qualification &amp; deployment decision:</strong> Zero confidentiality breaches in 100 audited runs yields an approximate 3.0% one-sided 95% upper bound under the rule of three (3/100)—assuming independent, representative Bernoulli trials, a fixed failure rate, and accurate breach detection. It does not prove 0% risk or hold under distribution shift. Because the pre-specified unsupported-claim non-inferiority rule failed, <strong>do NOT authorize the pilot</strong>.
             </p>
           </div>
         </section>
@@ -264,16 +264,16 @@ ${CAPSTONE_SCENARIO.requiredSections
           </div>
 
           {[
-            ['Executive Summary', 'In a fictional 32-analyst counterbalanced study (128 paired briefs), Meridian Assistant v2.1 improved blinded synthesis quality (+0.40/5) but increased unsupported claims (+1.6 pp) and verification time (+12.5 min), failing the pre-specified non-inferiority gate due to junior-analyst overreliance. Broad deployment is not recommended until citation-verification UX is redesigned.'],
-            ['Evaluation Purpose', 'Determine whether Meridian Assistant v2.1 warrants a 4-week monitored pilot for internal empirical-paper synthesis.'],
-            ['Methods', 'Within-subject crossover RCT (32 analysts × 4 tasks, randomized order) on 48 stratified English packets + 16 challenge packets; dual specialist ground truth; blinded rubric scoring (weighted κ = 0.81); cluster-robust mixed-effects analysis.'],
-            ['Results (Direct Observations)', 'Quality: 4.05 vs. 3.65 (+0.40, 95% CI [+0.18, +0.62]). Unsupported claims: 4.8% vs. 3.2% (+1.6 pp). Junior subgroup: 6.9% vs. 3.8% (+3.1 pp). Total time: 71.5 vs. 74.0 min. Confidentiality breaches: 0/100 audited runs.'],
-            ['Statistical Interpretation', 'Quality gain is statistically and practically meaningful (d = 0.59), but the unsupported-claim increase breaches the pre-set +1.0 pp margin, driven by junior analysts. Total time is inconclusive; 0/100 breaches permits up to ~3% risk at 95% confidence.'],
+            ['Executive Summary', 'In a fictional 32-analyst counterbalanced crossover study (128 participant-task sessions across 48 confirmatory packets), Meridian Assistant v2.1 improved blinded synthesis quality (+0.40/5) but increased unsupported claims (+1.6 pp, 95% CI [+0.2, +3.0]) and verification time (+12.5 min). Because the +1.6 pp increase violates the pre-specified +1.0 pp non-inferiority gate, the 4-week pilot is NOT authorized.'],
+            ['Evaluation Purpose', 'Determine whether Meridian Assistant v2.1 meets all pre-specified gates to authorize a 4-week monitored pilot for internal empirical-paper synthesis.'],
+            ['Methods', 'Counterbalanced within-subject crossover on 48 stratified English confirmatory packets across 32 analysts (64 Assistant + 64 Manual = 128 crossed sessions, not 128 independent pairs; 16 challenge packets analyzed separately); dual specialist ground truth; blinded rubric scoring (weighted κ = 0.81); crossed linear mixed-effects analysis sized via simulation-based power analysis.'],
+            ['Results (Direct Observations)', 'Quality: 4.05 vs. 3.65 (+0.40, 95% CI [+0.18, +0.62]). Unsupported claims: 4.8% vs. 3.2% (+1.6 pp, 95% CI [+0.2, +3.0]). Junior subgroup: 6.9% vs. 3.8% (+3.1 pp). Total time: 71.5 vs. 74.0 min. Confidentiality breaches: 0/100 audited runs.'],
+            ['Statistical Interpretation', 'Although quality improved (+0.40, d = 0.59), practical significance depends on context-specific thresholds and cannot be inferred from d alone. Crucially, the unsupported-claim increase (+1.6 pp, upper CI +3.0 pp) fails the +1.0 pp non-inferiority rule, driven by junior analysts. Total time is inconclusive. Under binomial assumptions (independent, representative runs, fixed rate, accurate detection), 0/100 breaches implies a ~3.0% one-sided 95% upper bound—not 0% risk.'],
             ['Validity Considerations', 'Strong internal validity (randomized crossover) and inter-rater reliability (κ = 0.81). Ecological validity is moderate: 90-minute timed sessions may differ from multi-week workflows.'],
             ['Limitations', 'English-only empirical PDFs; single-session tasks do not measure familiarization or multi-week skill retention; small subgroup size (n = 16 per tier).'],
-            ['Risks', 'Automation bias among junior analysts accepting plausible-sounding unsupported claims; hidden confidential-leakage tail risk (~3% upper bound).'],
-            ['Conclusions', 'Assistant v2.1 improves synthesis structure/coverage when verified by senior analysts, but increases unsupported-claim risk for junior analysts under current UI affordances.'],
-            ['Recommendations (Action & Owner)', 'Hold general pilot. Product Lead to add inline claim-level verification prompts and re-test on a fresh confirmatory set; Risk Reviewer to maintain non-confidential restriction until unsupported-claim upper bound ≤ +1.0 pp.'],
+            ['Risks', 'Automation bias among junior analysts accepting plausible-sounding unsupported claims; residual confidential-leakage tail risk (~3.0% upper bound under study assumptions) and vulnerability to distribution shift.'],
+            ['Conclusions', 'Assistant v2.1 improves synthesis structure/coverage when verified by senior analysts, but violates the unsupported-claim safety gate due to junior-analyst overreliance under current UI affordances.'],
+            ['Recommendations (Action & Owner)', 'Do NOT authorize the 4-week pilot. Product Lead to redesign inline claim-level verification prompts and re-test on a fresh confirmatory sample; Risk Reviewer to keep deployment blocked until unsupported-claim upper 95% CI ≤ +1.0 pp.'],
           ].map(([sec, body]) => (
             <div key={sec} className="space-y-0.5">
               <div className="font-semibold text-[#C8552D]">{sec}</div>
