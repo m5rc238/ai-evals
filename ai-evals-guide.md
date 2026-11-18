@@ -1,20 +1,59 @@
 # A Complete Guide to AI Evaluation
 
-> [!NOTE]
-> **Course Synchronization:** This Markdown document serves as the companion prose reference to the interactive 7-module study guide (`src/data/curriculum.ts` and `src/data/evalsData.ts` are the authoritative sources for module structure, exercises, knowledge checks, and the Meridian Research Assistant capstone).
->
-> | Study Guide Module | Companion Guide Sections | Original 9-Lesson Consolidation |
-> |---|---|---|
-> | **Module 1: Foundations & The Evaluation Landscape** | Sections 1–2 | Lesson 1 |
-> | **Module 2: Human–AI Interaction & SPHERE** | Sections 4, 9 (with **Zhao et al., 2025** SPHERE card) | Lessons 2 & 4 (participant/synthetic aspects) |
-> | **Module 3: Framing: Purpose, Scope, Targets & Context** | Sections 3–6 | Lessons 3 & 4 (context/coverage aspects) |
-> | **Module 4: Criteria, Evidence Collection & Sampling** | Sections 7–8 | Lesson 5 |
-> | **Module 5: Real Human Outcomes, Grading & Aggregation** | Sections 9–10 | Lesson 6 |
-> | **Module 6: Statistics, Validity, Lifecycle & Protocol** | Sections 11–13, 17 | Lessons 7, 8 & 9 (protocol aspects) |
-> | **Module 7: How AI Benchmarks and Leaderboards Can Mislead** | Section 16 & critical auditing | Lesson 9 (reporting calibration) + new audit curriculum |
-> | **Final Capstone Project** | Section 15 (Meridian Research Assistant) + 22-element proposal | Lesson 9 (expanded worked example) |
+**An AI eval is a structured test of how an AI model or application performs on a specific task.**
 
-**AI evaluation** is the systematic inquiry that collects and interprets evidence about an AI model, system, its use, or its effects, against explicit questions and criteria, to inform understanding or support a decision.
+Every eval has three parts:
+- **Test cases** are the situations you try.
+- **Scoring criteria** define a good answer or a failure.
+- **The scoring method** is how a person or program applies those criteria.
+
+---
+
+### First Worked Example: Return-Policy Assistant (Illustrative, 5-Minute Eval)
+
+Before reading any taxonomy or framework, walk through one complete eval.
+
+- **Policy:** Unused items can be returned within 30 days.
+- **Scoring rule:** Before promising a return, the answer must check any policy condition the customer has left unspecified.
+
+**Case 1 (Condition unspecified)**
+- **Customer:** “I bought this 12 days ago. Can I return it?”
+- **Answer A:** “Yes, you’re within the return window.” → **Fail** (promises a return without checking whether the item is unused).
+- **Answer B:** “You’re within the 30-day window. Has the item been used?” → **Pass** (confirms the 30-day rule and checks the missing unused condition).
+
+**Case 2 (Condition already specified)**
+- **Customer:** “I bought this 12 days ago and haven’t opened or used it. Can I return it?”
+- **Answer A:** “Yes—since it’s unused and within 30 days, you can return it.” → **Pass** (both conditions are already met).
+- **Answer B:** “You’re within the 30-day window. Has the item been used?” → **Fail** (repeats a question the customer already answered).
+
+*Why Case 2 matters:* A naive rubric that rewards *any* follow-up question passes a broken bot that ignores what the customer just said. Good criteria check *the missing condition*, not a surface phrasing habit.
+
+**Comparing two prompt versions (Illustrative):**
+
+| Test Case | Prompt v1 | Prompt v2 | What changed |
+|---|---|---|---|
+| **Case 1** (unused unspecified) | Fail (promised without checking) | Pass (asked if unused) | Fixed missing check |
+| **Case 2** (already stated unused) | Pass (approved return directly) | Fail (asked “Has it been used?” again) | Introduced regression |
+| **Total score** | **1 / 2 (50%)** | **1 / 2 (50%)** | **Tied total hides a real trade-off** |
+
+Prompt v2 fixed Case 1 by blindly adding a follow-up question to every reply, breaking Case 2. Always inspect individual cases—not just the summary score—when comparing versions.
+
+**First misconception to avoid:** Passing return-policy cases tells you about return-policy answers—not whether the bot handles lost accounts, angry billing disputes, or saves support agents time overall.
+
+---
+
+### Choose Your Depth
+
+Use this companion guide alongside the interactive 7-module study guide according to what you need right now:
+1. **Run a first eval (5–20 min):** Start with the return-policy example above, then read Sections 7 (Criteria) and 10 (Grading & Aggregation).
+2. **Decide whether AI helps with a real task:** Read Sections 3–4 (Framing & Scope—comparing current workflow, simpler non-AI fixes, and AI), Section 9 (Human Outcomes), and Section 11 (Comparisons & Cost).
+3. **Design a formal study:** Read Sections 11–17 (Statistics, Validity, Governance, the Meridian worked example, and the 12-field Evaluation Protocol).
+
+---
+
+### From One Small Eval to Broader Evaluation Questions
+
+In formal settings, **AI evaluation** is the systematic inquiry that collects and interprets evidence about an AI model, system, its use, or its effects, against explicit questions and criteria, to inform understanding or support a decision.
 
 Consider a concrete starting question: **“Should our research team use an AI assistant to summarize papers?”** That broad question splits into several answerable ones—*Did the retriever find the relevant passages? Did the summary represent them accurately? Did analysts produce better briefs than with their manual workflow? How much time did they spend checking citations?* Each question needs different evidence and leads to a different decision. Likewise, distinguish **what is being evaluated** (model → configured system → application → human–AI workflow → organizational outcome) from **what kind of evaluation is being conducted** (concerns like capability, behavior, safety, and robustness vs. study features like comparative, benchmark-based, and longitudinal, which often overlap).
 
@@ -422,7 +461,7 @@ Match the analysis to the inference target and study design:
 - **Sample size:** Base sample sizes on the decision, expected variation, precision needs, subgroups, and consequences of error. No universal number guarantees rigor.
 - **Rare failures (Rule of Three):** Observing zero failures in 100 independent, representative Bernoulli trials (assuming accurate detection) yields an exact one-sided 95% upper confidence bound of approximately 3% (approximated by the rule of three: $3/N = 3/100 = 3\%$)—and establishes nothing about untested conditions, distribution shift, or measurement bias.
 - **Comparisons & overlapping CIs:** The overlap or non-overlap of two separate 95% confidence intervals is **not**, by itself, a formal statistical test of the difference between two systems. Estimate the difference directly and construct an appropriate CI for that difference, accounting for pairing, repeated measures, or clustering. Report effect sizes and practical significance alongside uncertainty; explain missing data; account for multiple comparisons.
-- **Inconclusive vs. equivalent:** A statistically detectable difference can be practically unimportant, and an inconclusive difference does not establish equivalence. Equivalence or noninferiority claims require an appropriate design and justified margins.
+- **Inconclusive vs. equivalent:** A statistically detectable difference can be practically unimportant, and an inconclusive difference does not establish equivalence. Equivalence or noninferiority claims require an appropriate design and justified margins. For example (illustrative), if Model B scores +0.10 points higher than Model A on a 5-point scale (paired 95% CI [+0.01, +0.19]) but costs 9× as much and runs 5.4× slower, the gain is statistically detectable on the tested items yet unlikely to justify deployment unless that +0.10 shift eliminates consequential failures.
 
 Confidence intervals quantify sampling or model-specific uncertainty under stated assumptions; they do not summarize the credibility of the entire evaluation.
 
@@ -591,3 +630,20 @@ A protocol makes a specific evaluation inspectable. Keep **prospective planning*
 > We recommend **[action and conditions]** because **[reason connecting evidence, consequences, and priorities]**. The accountable decision-maker is **[role]**.
 >
 > We will reconsider this interpretation or decision if **[specified change, failure, incident, or new evidence]** occurs.
+
+---
+
+### Appendix: Course Synchronization & Historical Lesson Mapping
+
+This Markdown document serves as the companion prose reference to the interactive 7-module study guide (`src/data/curriculum.ts`, `src/data/evalsData.ts`, and `src/data/advancedTracks.ts`). For readers tracking how earlier 9-lesson drafts were consolidated into the current 7-module structure:
+
+| Study Guide Module | Primary Job | Companion Guide Sections | Historical 9-Lesson Mapping |
+|---|---|---|---|
+| **Module 1: Foundations: Run Your First Eval** | Run and interpret one concrete eval in 5 minutes; learn the landscape after practice. | Opening Example & Sections 1–2 | Lesson 1 (vendor-claim classification moved to Module 7) |
+| **Module 2: Human–AI Interaction: Does AI Help People?** | Test whether a person using AI does better work or finishes sooner than with their current workflow (counting checking/correction time). | Sections 4, 9 (with **Zhao et al., 2025** SPHERE card) | Lessons 2 & 4 (human-outcomes material consolidated here) |
+| **Module 3: Framing: Do We Need AI for This Problem?** | Compare current workflow, a credible simpler non-AI change, and AI assistance; keep scientific capability studies distinct from deployment decisions. | Sections 3–6 | Lessons 3 & 4 (framing & context) |
+| **Module 4: Cases & Criteria: Writing Cases That Test Your Rules** | Write expected behavior for ordinary, ambiguous, and escalation cases; separate challenge sets from everyday failure rates. | Sections 7–8 (RAG retrieval metrics & 100-item RAG exercise moved to Advanced Track A) | Lesson 5 |
+| **Module 5: Grading: Resolving Disagreement & Average Traps** | Resolve two-reviewer disagreement by revising an ambiguous rule, rescore, and prevent averages from hiding severe failures. | Section 10 | Lesson 6 |
+| **Module 6: Interpreting a Comparison: Gain, Uncertainty & Cost** | Compare two options on the same cases using direct difference CIs and practical worth (e.g., +0.10 gain at 9× cost and 5.4× latency). | Sections 11–14, 17 | Lessons 7, 8 & 9 (protocol aspects) |
+| **Module 7: Auditing a Public Claim: What Was Actually Tested?** | Classify vendor claims and audit an AI press release across 8 dimensions using strictly supplied facts. | Section 16 | Lesson 9 + vendor-claim audit from Module 1 |
+| **Final Capstone Project** | Full 22-element Meridian Research Assistant proposal & decision review. | Section 15 | Lesson 9 (expanded worked example) |

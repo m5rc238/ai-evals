@@ -21,7 +21,9 @@ interface ModuleRendererProps {
   totalModules: number;
   onPrev?: () => void;
   onNext?: () => void;
+  onSelectModule?: (idx: number) => void;
   onOpenCapstone?: () => void;
+  onOpenTracks?: () => void;
   onOpenTool?: (tool: 'sphere-tool' | 'framework-tool') => void;
 }
 
@@ -30,11 +32,30 @@ export function ModuleRenderer({
   totalModules,
   onPrev,
   onNext,
+  onSelectModule,
   onOpenCapstone,
+  onOpenTracks,
   onOpenTool,
 }: ModuleRendererProps) {
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [showExample, setShowExample] = useState(false);
+
+  const learningObjectivesSection = (
+    <section className="vintage-box rounded-md p-5 space-y-2.5">
+      <div className="flex items-center gap-2 font-display text-base font-bold text-[#231F1A]">
+        <Target className="h-4 w-4 text-[#C8552D]" />
+        Learning Objectives
+      </div>
+      <ul className="space-y-1.5 text-xs leading-relaxed text-[#231F1A]">
+        {module.objectives.map((obj) => (
+          <li key={obj} className="flex items-start gap-2">
+            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C8552D]" />
+            <span>{obj}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 
   return (
     <article className="mx-auto max-w-3xl space-y-8 pb-16">
@@ -47,30 +68,116 @@ export function ModuleRenderer({
           {module.title}
         </h2>
         <p className="text-sm leading-relaxed text-[#231F1A]">{module.overview}</p>
+        {module.number === 1 && onSelectModule && (
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 pt-1 text-xs text-[#5C5346]">
+            <span className="font-mono text-[11px] font-semibold uppercase tracking-wide text-[#231F1A]">
+              Choose your route:
+            </span>
+            <a href="#first-eval" className="font-semibold text-[#C8552D] underline">
+              1. Run a first eval (below)
+            </a>
+            <span aria-hidden="true">·</span>
+            <button
+              type="button"
+              onClick={() => onSelectModule(2)}
+              className="font-semibold text-[#335C81] underline hover:text-[#231F1A]"
+            >
+              2. Decide if AI helps (Module 3 → 2 → 6)
+            </button>
+            <span aria-hidden="true">·</span>
+            <button
+              type="button"
+              onClick={() => onSelectModule(5)}
+              className="font-semibold text-[#2A422D] underline hover:text-[#231F1A]"
+            >
+              3. Design a formal study (Module 6 → Capstone)
+            </button>
+          </div>
+        )}
       </header>
 
-      {/* 2. Learning Objectives */}
-      <section className="vintage-box rounded-md p-5 space-y-2.5">
-        <div className="flex items-center gap-2 font-display text-base font-bold text-[#231F1A]">
-          <Target className="h-4 w-4 text-[#C8552D]" />
-          Learning Objectives
-        </div>
-        <ul className="space-y-1.5 text-xs leading-relaxed text-[#231F1A]">
-          {module.objectives.map((obj) => (
-            <li key={obj} className="flex items-start gap-2">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C8552D]" />
-              <span>{obj}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* On Module 1, open directly with the plain-language definition and first eval before objectives or diagrams */}
+      {module.number !== 1 && learningObjectivesSection}
 
-      {/* 3. Core Concepts */}
-      <section className="space-y-4">
-        <h3 className="font-display text-xl font-bold text-[#231F1A]">
-          Core Concepts &amp; Methodology
-        </h3>
-        <ModuleDeepContent moduleId={module.id} />
+      {/* Core Concepts */}
+      <section id={module.number === 1 ? 'first-eval' : undefined} className="space-y-4">
+        {module.number !== 1 && (
+          <h3 className="font-display text-xl font-bold text-[#231F1A]">
+            Core Concepts &amp; Methodology
+          </h3>
+        )}
+        <ModuleDeepContent
+          moduleId={module.id}
+          onSelectModule={onSelectModule}
+          onOpenTracks={onOpenTracks}
+        />
+
+        {/* On Module 1, show clear route cards & learning objectives after the opening lesson */}
+        {module.number === 1 && onSelectModule && (
+          <div className="vintage-box rounded-md p-4 space-y-3 text-xs">
+            <div className="font-display text-base font-bold text-[#231F1A]">
+              Where to Go Next (Choose the Depth You Need)
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div className="rounded border border-[#231F1A]/20 bg-[#F5EFE2] p-3 space-y-1.5">
+                <div className="font-semibold text-[#C8552D]">1. Run a first eval</div>
+                <p className="text-[#5C5346]">
+                  Write concrete test cases and fix grader disagreement in under an hour.
+                </p>
+                <div className="flex flex-wrap gap-2 pt-1 font-semibold">
+                  <button type="button" onClick={() => onSelectModule(3)} className="underline text-[#231F1A]">
+                    Module 4 →
+                  </button>
+                  <button type="button" onClick={() => onSelectModule(4)} className="underline text-[#231F1A]">
+                    Module 5 →
+                  </button>
+                </div>
+              </div>
+              <div className="rounded border border-[#231F1A]/20 bg-[#F5EFE2] p-3 space-y-1.5">
+                <div className="font-semibold text-[#335C81]">2. Decide whether AI helps</div>
+                <p className="text-[#5C5346]">
+                  Compare AI against your current workflow and simpler non-AI fixes, then weigh cost and uncertainty.
+                </p>
+                <div className="flex flex-wrap gap-2 pt-1 font-semibold">
+                  <button type="button" onClick={() => onSelectModule(2)} className="underline text-[#231F1A]">
+                    Module 3 →
+                  </button>
+                  <button type="button" onClick={() => onSelectModule(1)} className="underline text-[#231F1A]">
+                    Module 2 →
+                  </button>
+                  <button type="button" onClick={() => onSelectModule(5)} className="underline text-[#231F1A]">
+                    Module 6 →
+                  </button>
+                </div>
+              </div>
+              <div className="rounded border border-[#231F1A]/20 bg-[#F5EFE2] p-3 space-y-1.5">
+                <div className="font-semibold text-[#2A422D]">3. Design a formal study</div>
+                <p className="text-[#5C5346]">
+                  Use worked statistical examples, review the full Meridian proposal, and draft a pre-registered protocol.
+                </p>
+                <div className="flex flex-wrap gap-2 pt-1 font-semibold">
+                  <button type="button" onClick={() => onSelectModule(5)} className="underline text-[#231F1A]">
+                    Module 6 →
+                  </button>
+                  {onOpenCapstone && (
+                    <button type="button" onClick={onOpenCapstone} className="underline text-[#231F1A]">
+                      Capstone →
+                    </button>
+                  )}
+                  {onOpenTool && (
+                    <button
+                      type="button"
+                      onClick={() => onOpenTool('framework-tool')}
+                      className="underline text-[#231F1A]"
+                    >
+                      Protocol Tool →
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Contextual link to secondary tools only where pedagogically relevant */}
         {module.number === 2 && onOpenTool && (
@@ -102,6 +209,8 @@ export function ModuleRenderer({
           </div>
         )}
       </section>
+
+      {module.number === 1 && learningObjectivesSection}
 
       {/* 4. Research & Evidence */}
       {module.researchEvidence.length > 0 && (

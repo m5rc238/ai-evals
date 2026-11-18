@@ -56,11 +56,11 @@ export const ADVANCED_TRACKS: AdvancedTrack[] = [
     title: 'Retrieval-Augmented Generation (RAG) Evaluation',
     summary: 'Evaluate retrieval and generation separately and together so indexing failures are not misdiagnosed as model failures.',
     topics: [
-      { name: 'Retrieval quality', detail: 'Recall@k, Precision@k, MRR, and NDCG@k against verified relevant passages.' },
+      { name: 'Retrieval metrics', detail: 'Precision@k, Recall@k, Mean Reciprocal Rank (MRR), and NDCG@k against verified relevant passages.' },
       { name: 'Context relevance', detail: 'Whether retrieved chunks actually contain the evidence needed without burying it in distractors.' },
       { name: 'Groundedness & faithfulness', detail: 'Whether every material claim is entailed by the retrieved context rather than parametric memory.' },
       { name: 'Citation accuracy', detail: 'Verify both citation existence and whether the cited passage supports the exact claim.' },
-      { name: 'End-to-end task success', detail: 'Combined retrieval + synthesis quality, including correct abstention when evidence is missing.' },
+      { name: '100-item RAG dataset exercise', detail: 'Design a 100-item RAG dataset: define sampling frame, split representative queries (e.g., 60) from challenge queries (e.g., 40 covering conflicting sources, unanswerable/out-of-corpus queries, and long contexts), specify dual-specialist ground truth, pair retrieval metrics (Recall@k, NDCG@k) with claim-level source fidelity, and document coverage exclusions.' },
     ],
     keyPitfall: 'Evaluating end-to-end answer quality without logging retrieved chunks makes it impossible to tell whether errors came from retrieval or generation.',
   },

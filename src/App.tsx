@@ -260,7 +260,9 @@ export function App() {
                     ? () => selectModule(activeIdx + 1)
                     : undefined
                 }
+                onSelectModule={selectModule}
                 onOpenCapstone={() => openView('capstone')}
+                onOpenTracks={() => openView('tracks')}
                 onOpenTool={(t) => openView(t)}
               />
             )}
