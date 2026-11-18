@@ -33,12 +33,98 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
   const [selectedStatIdx, setSelectedStatIdx] = useState(0);
   if (moduleId === 'm1') {
     return (
-      <div className="space-y-6 text-sm leading-relaxed text-[#231F1A]">
-        <div className="space-y-2.5">
-          <h4 className="font-display text-base font-bold">Statement Types &amp; Proposed 10-Element Landscape</h4>
-          <p className="text-xs text-[#5C5346]">
-            The 10-element architecture below is a <strong>proposed conceptual synthesis</strong>—not an established standard or empirically validated universal model.
+      <div className="space-y-7 text-sm leading-relaxed text-[#231F1A]">
+        {/* Accessible Opening Before First Diagram */}
+        <div className="space-y-3">
+          <h4 className="font-display text-lg font-bold">
+            Start with a Real Question: “Should our research team use an AI assistant to summarize papers?”
+          </h4>
+          <p>
+            An <strong>AI evaluation</strong> is a structured way to gather and interpret evidence about an AI tool so you can make a grounded decision. A broad question like “should we use this AI?” cannot be answered with a single test. Instead, you break it into smaller, answerable questions—each requiring different evidence and leading to a different action:
           </p>
+          <div className="grid gap-2.5 sm:grid-cols-2 text-xs">
+            <div className="vintage-box rounded-md p-3">
+              <div className="font-semibold text-[#C8552D]">1. Did the retriever find the right passages?</div>
+              <p className="mt-1 text-[#5C5346]">Tested by checking retrieved chunks against relevant sections of source PDFs. If retrieval fails, fix search indexing—don’t blame the language model.</p>
+            </div>
+            <div className="vintage-box rounded-md p-3">
+              <div className="font-semibold text-[#C8552D]">2. Did the summary represent them accurately?</div>
+              <p className="mt-1 text-[#5C5346]">Tested by comparing generated claims against cited passages. If summaries drop qualifiers or invent links, tighten prompts or add citation checks.</p>
+            </div>
+            <div className="vintage-box rounded-md p-3">
+              <div className="font-semibold text-[#C8552D]">3. Did analysts produce better briefs?</div>
+              <p className="mt-1 text-[#5C5346]">Tested by comparing completed analyst briefs using the AI against their existing manual workflow (the comparator). Even accurate summaries don’t guarantee better final briefs.</p>
+            </div>
+            <div className="vintage-box rounded-md p-3">
+              <div className="font-semibold text-[#C8552D]">4. How much time was spent checking citations?</div>
+              <p className="mt-1 text-[#5C5346]">Tested by timing both drafting and verification. If fast drafts require slow fact-checking, total task time may not improve at all.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* What is being evaluated vs What kind of evaluation */}
+        <div className="grid gap-4 sm:grid-cols-2 text-xs leading-relaxed">
+          <div className="vintage-box rounded-md p-4 space-y-2">
+            <h4 className="font-display text-base font-bold text-[#231F1A]">
+              What Is Being Evaluated?
+            </h4>
+            <p className="text-[#5C5346]">
+              Beginners often treat “the AI” as one object, but five distinct layers exist. In our paper-summary example, evaluating the <strong>model</strong> asks whether raw weights can paraphrase an abstract. Evaluating the <strong>configured system</strong> adds your retrieval index, system prompt, and citation rules. The <strong>application</strong> adds the user interface where links appear. The <strong>human–AI workflow</strong> asks whether analysts using that interface write stronger briefs and catch errors. Finally, <strong>organizational outcome</strong> asks whether the team’s overall output improves after accounting for review effort, cost, and maintenance.
+            </p>
+          </div>
+          <div className="vintage-box rounded-md p-4 space-y-2">
+            <h4 className="font-display text-base font-bold text-[#231F1A]">
+              What Kind of Evaluation Is Conducted?
+            </h4>
+            <p className="text-[#5C5346]">
+              Evaluation labels describe different facets of a study and frequently overlap. Terms like <em>capability</em>, <em>behavioral</em>, <em>safety</em>, and <em>robustness</em> name <strong>what concern</strong> you are testing (can it summarize, does it abstain when unsure, does it leak data, does it handle messy PDFs). Terms like <em>comparative</em>, <em>benchmark-based</em>, <em>human-centered</em>, and <em>longitudinal</em> describe <strong>how the study is structured</strong>. A four-week study comparing two citation assistants with real analysts is simultaneously <em>comparative</em>, <em>human-centered</em>, and <em>longitudinal</em>.
+            </p>
+          </div>
+        </div>
+
+        {/* 5 Common Misconceptions Near the Beginning */}
+        <div className="space-y-3">
+          <h4 className="font-display text-base font-bold">Common Misconceptions About AI Evaluation</h4>
+          <div className="space-y-2.5 text-xs">
+            {[
+              [
+                '1. A high benchmark score means the product is ready to deploy.',
+                'Why it is tempting: Leaderboards offer a crisp number that looks like overall quality.',
+                'Evidence needed: End-to-end tests of your configured system plus a comparative workflow study with your actual users and documents.',
+              ],
+              [
+                '2. A correct answer proves the model used the reasoning we attribute to it.',
+                'Why it is tempting: When a model solves a hard problem, it feels natural to infer human-like understanding.',
+                'Evidence needed: Perturbation, counterfactual, and out-of-distribution tests that rule out memorization, shortcuts, or tool crutches.',
+              ],
+              [
+                '3. Agreement between graders proves they are measuring the right thing.',
+                'Why it is tempting: High inter-rater agreement looks like objective truth.',
+                'Evidence needed: Construct validity evidence—checking that the shared rubric actually reflects real-world quality rather than a shared blind spot.',
+              ],
+              [
+                '4. Faster drafting means the user saves time overall.',
+                'Why it is tempting: Seeing a draft appear in five seconds feels like an immediate speedup.',
+                'Evidence needed: Total task time—measuring drafting plus reading, verification, and error-correction time against the manual baseline.',
+              ],
+              [
+                '5. Zero observed failures means the underlying risk is zero.',
+                'Why it is tempting: Passing 100 test cases with no errors feels reassuring.',
+                'Evidence needed: Statistical uncertainty bounds (e.g., 0/100 still permits up to ~3% failure rate at 95% confidence) plus targeted adversarial and distribution-shift tests.',
+              ],
+            ].map(([title, tempting, evidence]) => (
+              <div key={title} className="vintage-box rounded-md p-3.5 space-y-1">
+                <div className="font-semibold text-[#7D3016]">{title}</div>
+                <p className="text-[#5C5346]"><strong>Why tempting:</strong> {tempting.replace('Why it is tempting: ', '')}</p>
+                <p className="text-[#2A422D]"><strong>Evidence needed:</strong> {evidence.replace('Evidence needed: ', '')}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Statement Types & Diagram with Nearby Explanation */}
+        <div className="space-y-2.5">
+          <h4 className="font-display text-base font-bold">Statement Types &amp; How the Evaluation Landscape Fits Together</h4>
           <div className="grid gap-2.5 sm:grid-cols-3 text-xs">
             {STATEMENT_TYPES.map((st) => (
               <div key={st.type} className="vintage-box rounded-md p-3.5 space-y-1">
@@ -48,6 +134,9 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
               </div>
             ))}
           </div>
+          <p className="text-xs text-[#5C5346]">
+            <strong>How to read Figure 1.1:</strong> Follow the central chain from a specific decision and scope to criteria, evidence, and measurement, leading back to a bounded action. The dashed loops matter because inspecting early evidence often reveals flaws in your initial criteria or triggers reevaluation after deployment. The two outer frames remind you that governance (who decides and owns risk) applies at every step, and that evaluation quality governs how much confidence your final claim actually warrants. This 10-element architecture is a <strong>proposed conceptual synthesis</strong>, not an established standard.
+          </p>
           <LandscapeDiagram />
           <div className="overflow-x-auto vintage-box rounded-md">
             <table className="w-full text-left text-xs">
@@ -72,7 +161,7 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
         </div>
 
         <div className="space-y-2.5">
-          <h4 className="font-display text-base font-bold">Taxonomy of AI Evaluation &amp; Scope Levels</h4>
+          <h4 className="font-display text-base font-bold">Reference Taxonomy of Evaluation Categories</h4>
           <div className="grid gap-2 sm:grid-cols-2 text-xs">
             {EVAL_TAXONOMY.map((item) => (
               <div key={item.name} className="vintage-box rounded-md p-3">
@@ -81,9 +170,6 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
               </div>
             ))}
           </div>
-          <p className="text-xs text-[#5C5346]">
-            Distinguish five evaluation levels: <strong>Model</strong> (weights/API) → <strong>System</strong> (model + retrieval/tools/prompts) → <strong>Application</strong> (user-facing product) → <strong>Human–AI workflow</strong> (team task execution) → <strong>Organizational impact</strong> (net value after review, coordination, and cost).
-          </p>
         </div>
 
         <div className="space-y-2.5">
@@ -150,13 +236,16 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
             </a>
             ) is a <strong>proposed organizing framework</strong> bridging HCI and NLP—not a universally mandated standard. Extensions in this study guide (such as the Meridian case study) are guide-specific pedagogy rather than part of the original SPHERE publication.
           </p>
+          <p className="text-xs text-[#5C5346]">
+            <strong>How to read Figure 2.1:</strong> SPHERE frames Human–AI evaluation around four design choices—what is evaluated, how evidence is gathered, who participates, and over what time horizon—surrounded by a fifth meta-layer asking how those choices are validated. Extensions in this study guide (such as the Meridian case study) are guide-specific pedagogy rather than part of the original SPHERE publication.
+          </p>
           <SphereDiagram />
         </div>
 
         <div className="space-y-2.5">
           <h4 className="font-display text-base font-bold">Augmentation, Synergy &amp; Substitution</h4>
           <p className="text-xs text-[#5C5346]">
-            Compare three baselines: <strong>Human alone</strong>, <strong>AI alone</strong>, and <strong>Human+AI</strong>. <em>Augmentation</em> means Human+AI &gt; Human alone; <em>Synergy</em> means Human+AI &gt; max(Human alone, AI alone); <em>Substitution</em> replaces the human step when automation is reliable and appropriate.
+            Compare three baselines: <strong>Human alone</strong>, <strong>AI alone</strong>, and <strong>Human+AI</strong>. <em>Augmentation</em> means Human+AI &gt; Human alone; <em>Synergy</em> means Human+AI &gt; max(Human alone, AI alone); <em>Substitution</em> replaces the human step when automation is reliable and appropriate. <strong>How to read Figure 2.2:</strong> The contrast between the two panels shows why comparing only against an unassisted human can mislead—adding AI can help people beat their solo baseline while still underperforming what the AI or human could achieve alone on decision tasks.
           </p>
           <SynergyDiagram />
         </div>
@@ -215,6 +304,9 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
 
         <div className="space-y-2.5">
           <h4 className="font-display text-base font-bold">Nested Scopes, Harnesses &amp; Targets</h4>
+          <p className="text-xs text-[#5C5346]">
+            <strong>How to read Figure 3.1:</strong> Each outer ring depends on the inner components plus new human, organizational, or societal factors. Moving outward requires new evidence because inner-ring accuracy (like a model benchmark) cannot account for interface friction, verification burden, or workflow costs.
+          </p>
           <ScopeBoundaryDiagram />
           <div className="overflow-x-auto vintage-box rounded-md">
             <table className="w-full text-left text-xs">
@@ -298,6 +390,9 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
           </div>
         </div>
 
+        <p className="text-xs text-[#5C5346]">
+          <strong>How to read Figure 4.1:</strong> A layered pipeline uses fast, low-cost intrinsic checks early to catch obvious defects, reserves slower extrinsic user studies to test whether people actually benefit, and uses longitudinal monitoring to detect drift after deployment.
+        </p>
         <LayeredPipelineDiagram />
 
         <div className="grid gap-4 sm:grid-cols-2 text-xs">
@@ -374,6 +469,9 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
               </div>
             ))}
           </div>
+          <p className="text-xs text-[#5C5346]">
+            <strong>How to read Figure 5.1:</strong> These three empirical examples show why measuring only generated text misses real human impact: perceived speed can reverse when measured objectively, task completion can mask lower follow-up quiz mastery, and workflow offloading correlates differently depending on whether users delegate blindly or learn interactively.
+          </p>
           <OutcomesComparisonDiagram />
         </div>
 
@@ -398,7 +496,7 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
         <div className="space-y-2.5">
           <h4 className="font-display text-base font-bold">Aggregation, Subgroup Analysis &amp; Simpson’s Paradox</h4>
           <p className="text-xs text-[#5C5346]">
-            Report means alongside medians, distributions, subgroup error rates, confidence intervals, missing data, and outliers. Watch for <strong>Simpson’s paradox</strong> (where a trend reverses when subgroups are combined) and keep mandatory safety constraints separate from weighted averages:
+            Report means alongside medians, distributions, subgroup error rates, confidence intervals, missing data, and outliers. Watch for <strong>Simpson’s paradox</strong> (where a trend reverses when subgroups are combined). <strong>How to read Figure 5.2:</strong> A 95% overall pass rate treats every failure as equal, whereas disaggregating by severity separates minor formatting glitches from a single mandatory-constraint violation that should block release.
           </p>
           <AggregationTrapDiagram />
         </div>
@@ -473,7 +571,7 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
         <div className="space-y-3">
           <h4 className="font-display text-base font-bold">Section C: Three Distinct Categories of Evaluation Quality</h4>
           <p className="text-xs text-[#5C5346]">
-            Grounded in the <em>Standards for Educational and Psychological Testing</em> (2014) and argument-based validation, separate <strong>measurement validity</strong> (Category A), <strong>study design &amp; generalization</strong> (Category B), and <strong>reliability &amp; traceability</strong> (Category C).
+            Grounded in the <em>Standards for Educational and Psychological Testing</em> (2014) and argument-based validation, separate <strong>measurement validity</strong> (Category A), <strong>study design &amp; generalization</strong> (Category B), and <strong>reliability &amp; traceability</strong> (Category C). <strong>How to read Figure 6.2:</strong> These three pillars answer different questions and do not substitute for one another—a reproducible, reliable pipeline (C) in a randomized study (B) can still measure the wrong construct (A).
           </p>
           <ValidityCategoriesDiagram />
           <div className="space-y-3">
@@ -502,6 +600,9 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
         {/* Section D */}
         <div className="space-y-3">
           <h4 className="font-display text-base font-bold">Section D: Lifecycle, Governance &amp; Pre-Registered Protocols</h4>
+          <p className="text-xs text-[#5C5346]">
+            <strong>How to read Figure 6.1:</strong> Short-term demos capture immediate impressions and can reward sycophancy, whereas longitudinal studies reveal whether utility grows after familiarization or trust erodes over repeated use.
+          </p>
           <HorizonDiagram />
           <p className="text-xs text-[#5C5346]">
             Write an evaluation protocol <em>before</em> running confirmatory tests. Maintain <strong>audit trails</strong>, <strong>reproducibility</strong>, <strong>separate product and evaluator versioning</strong>, <strong>risk-based reevaluation triggers</strong>, <strong>escalation criteria</strong>, <strong>drift detection</strong>, and <strong>oversight checks</strong> (does the human reviewer have time, expertise, and authority?).
@@ -550,6 +651,9 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
   // Module 7
   return (
     <div className="space-y-6 text-sm leading-relaxed text-[#231F1A]">
+      <p className="text-xs text-[#5C5346]">
+        <strong>How to read Figure 7.1:</strong> Evaluation errors cluster into four recurring traps—mistaking benchmark scores for deployment readiness, confusing user preference with objective benefit, trusting uncalibrated judges or synthetic personas, and misreading statistical uncertainty.
+      </p>
       <FallaciesDiagram />
 
       <div className="space-y-2.5">

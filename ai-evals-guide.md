@@ -16,6 +16,10 @@
 
 **AI evaluation** is the systematic inquiry that collects and interprets evidence about an AI model, system, its use, or its effects, against explicit questions and criteria, to inform understanding or support a decision.
 
+Consider a concrete starting question: **“Should our research team use an AI assistant to summarize papers?”** That broad question splits into several answerable ones—*Did the retriever find the relevant passages? Did the summary represent them accurately? Did analysts produce better briefs than with their manual workflow? How much time did they spend checking citations?* Each question needs different evidence and leads to a different decision. Likewise, distinguish **what is being evaluated** (model → configured system → application → human–AI workflow → organizational outcome) from **what kind of evaluation is being conducted** (concerns like capability, behavior, safety, and robustness vs. study features like comparative, benchmark-based, and longitudinal, which often overlap).
+
+Five common misconceptions to avoid from the start: (1) a high benchmark score does not mean a product is ready to deploy; (2) a correct answer does not prove the model used the reasoning we attribute to it; (3) agreement between graders does not prove they are measuring the right thing; (4) faster drafting does not mean the user saves total task time; and (5) zero observed failures does not mean the underlying risk is zero.
+
 Evaluation can test whether a model solves a problem, whether a product behaves appropriately, or whether people benefit from using it. These questions require different evidence and support different conclusions. A benchmark score, an expert’s judgment, and a measured improvement in someone’s work each establish something different.
 
 > [!NOTE]
@@ -535,6 +539,8 @@ Conditional interpretations would follow the evidence:
 - Benefits limited to specific tasks or users -> consider a restricted pilot and targeted investigation.
 - Large uncertainty -> gather more informative evidence rather than declaring equivalence.
 
+For a reproducible small-sample synthetic dataset and script demonstrating the unsupported-claim non-inferiority calculation (analyst-level clustered CI vs. naive claim-level CI against the +1.0 pp margin), see `scripts/reproduce-unsupported-claims.mjs` (`node scripts/reproduce-unsupported-claims.mjs`).
+
 ---
 
 ### 16. Epistemic Discipline in Reporting
@@ -555,7 +561,7 @@ Keep confidence proportionate to evidence, state well-supported findings plainly
 
 ### 17. Companion Evaluation Protocol & Statement Template
 
-A protocol makes a specific evaluation inspectable. Scale its detail to the decision’s consequences:
+A protocol makes a specific evaluation inspectable. Keep **prospective planning** (question, design, criteria, and pre-specified decision rules before data exist) separate from **post-study reporting** (observed findings and recommendations). Scale its detail to the decision’s consequences:
 
 | Protocol field | Required content |
 |---|---|

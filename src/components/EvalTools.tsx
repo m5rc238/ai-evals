@@ -507,20 +507,45 @@ const EXAMPLE_FRAMEWORK: FrameworkState = {
 };
 
 export function FrameworkProtocolTool() {
-  const [form, setForm] = useState<FrameworkState>(EXAMPLE_FRAMEWORK);
+  const [form, setForm] = useState<FrameworkState>(EMPTY_FRAMEWORK);
+  const [isFictionalExample, setIsFictionalExample] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const statement = `We evaluated ${form.scope || '[system & version]'} (${form.mode} mode) for ${form.purpose || '[purpose, tasks & population]'}, compared with ${form.comparators || '[baseline]'}, using ${form.evidenceSampling || '[methods & sampling]'}.
+  const hasFindings = Boolean(form.boundedClaim.trim() || form.untestedClaim.trim());
+  const hasRecommendation = Boolean(form.recommendedAction.trim());
+  const isCompletedReport = hasFindings || hasRecommendation;
 
-We operationalized ${form.conceptual || '[constructs]'} via ${form.criteria || '[criteria & measurement procedure]'}.
+  const prospectiveSummary = `We plan to evaluate ${form.scope.trim() || '[system & scope]'} (${form.mode} mode) for ${form.purpose.trim() || '[purpose, tasks & population]'}, compared with ${form.comparators.trim() || '[baseline comparator]'}, using ${form.evidenceSampling.trim() || '[planned methods & sampling]'}.
 
-The findings support ${form.boundedClaim || '[bounded claim]'}, subject to exclusions (${form.contextExclusions || '[exclusions]'}) and uncertainty (${form.analysisUncertainty || '[uncertainty]'}). They do not establish ${form.untestedClaim || '[material untested claim]'}.
+We will operationalize ${form.conceptual.trim() || '[constructs]'} via ${form.criteria.trim() || '[criteria & measurement procedure]'}. Planned exclusions: ${form.contextExclusions.trim() || '[to be specified]'}. Planned analysis: ${form.analysisUncertainty.trim() || '[to be specified]'}.
 
-We recommend ${form.recommendedAction || '[action & conditions]'}. Accountable owner: ${form.ownerRole || '[role]'}. Reevaluation triggers: ${form.reevaluation || '[triggers]'}.`;
+Pre-specified decision rules: ${form.decisionRules.trim() || '[to be specified before inspecting confirmatory results]'}. Governance & owner: ${form.governance.trim() || form.ownerRole.trim() || '[to be assigned]'}. Reevaluation triggers: ${form.reevaluation.trim() || '[to be specified]'}.`;
 
-  const fullMarkdown = `# AI Evaluation Protocol & Decision Statement
+  const findingsAndDecisionBlock = isCompletedReport
+    ? `${
+        hasFindings
+          ? `\nFindings: ${form.boundedClaim.trim() ? `The observations support ${form.boundedClaim.trim()}.` : ''}${
+              form.untestedClaim.trim() ? ` They do not establish ${form.untestedClaim.trim()}.` : ''
+            }`
+          : ''
+      }${
+        hasRecommendation
+          ? `\nRecommendation: ${form.recommendedAction.trim()}.${
+              form.ownerRole.trim() ? ` Accountable owner: ${form.ownerRole.trim()}.` : ''
+            }`
+          : ''
+      }`
+    : '';
 
-## Evaluation & Decision Statement
+  const statement = `${prospectiveSummary}${findingsAndDecisionBlock ? `\n${findingsAndDecisionBlock}` : ''}`;
+
+  const exampleBanner = isFictionalExample
+    ? '> **NOTE: FICTIONAL ILLUSTRATIVE EXAMPLE** — The entries below are fictional design placeholders, not measured empirical results.\n\n'
+    : '';
+
+  const fullMarkdown = `# AI Evaluation ${isCompletedReport ? 'Protocol & Decision Report' : 'Study Protocol (Prospective Plan)'}
+
+${exampleBanner}## ${isCompletedReport ? 'Evaluation & Decision Statement' : 'Prospective Study Summary (No Results Yet)'}
 ${statement}
 
 ---
@@ -539,6 +564,41 @@ ${statement}
 11. **Governance & Accountability:** ${form.governance || '—'}
 12. **Reevaluation Triggers:** ${form.reevaluation || '—'}
 `;
+
+  const exportJsonPayload = {
+    status: isCompletedReport ? 'completed-report' : 'prospective-plan',
+    isFictionalExample,
+    planning: {
+      mode: form.mode,
+      purpose: form.purpose,
+      conceptual: form.conceptual,
+      scope: form.scope,
+      unitOfAnalysis: form.unitOfAnalysis,
+      contextExclusions: form.contextExclusions,
+      criteria: form.criteria,
+      comparators: form.comparators,
+      evidenceSampling: form.evidenceSampling,
+      evaluatorValidation: form.evaluatorValidation,
+      analysisUncertainty: form.analysisUncertainty,
+      decisionRules: form.decisionRules,
+      governance: form.governance,
+      reevaluation: form.reevaluation,
+    },
+    ...(isCompletedReport
+      ? {
+          reporting: {
+            boundedClaim: form.boundedClaim,
+            untestedClaim: form.untestedClaim,
+            recommendedAction: form.recommendedAction,
+            ownerRole: form.ownerRole,
+          },
+        }
+      : {}),
+  };
+
+  const updateField = (k: keyof FrameworkState, val: string) => {
+    setForm((prev) => ({ ...prev, [k]: val }));
+  };
 
   const copyMd = async () => {
     await navigator.clipboard.writeText(fullMarkdown);
@@ -568,15 +628,21 @@ ${statement}
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
-            onClick={() => setForm(EXAMPLE_FRAMEWORK)}
+            onClick={() => {
+              setForm(EXAMPLE_FRAMEWORK);
+              setIsFictionalExample(true);
+            }}
             className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-medium text-[#231F1A] hover:bg-stone-100"
           >
             <Sparkles className="h-3.5 w-3.5 text-[#C8552D]" />
-            Load Example
+            Load Example (Fictional)
           </button>
           <button
             type="button"
-            onClick={() => setForm(EMPTY_FRAMEWORK)}
+            onClick={() => {
+              setForm(EMPTY_FRAMEWORK);
+              setIsFictionalExample(false);
+            }}
             className="inline-flex items-center gap-1.5 vintage-box rounded-md px-3 py-1.5 text-xs font-medium text-[#5C5346] hover:bg-stone-50"
           >
             <RotateCcw className="h-3.5 w-3.5" />
@@ -655,10 +721,15 @@ ${statement}
           </div>
 
           <div className="vintage-box rounded-md p-5 space-y-3">
-            <div className="text-sm font-bold text-[#231F1A]">Bounded Decision Statement</div>
+            <div className="text-sm font-bold text-[#231F1A]">
+              Post-Study Results &amp; Decision (Optional — Leave Blank When Planning)
+            </div>
+            <p className="text-xs text-[#5C5346]">
+              Leave these fields blank to export a prospective study protocol before any results exist. Fill them in only after data collection is complete.
+            </p>
             {(
               [
-                ['boundedClaim', 'Bounded Finding Supported'],
+                ['boundedClaim', 'Observed Bounded Finding Supported'],
                 ['untestedClaim', 'Material Untested Claim (What this does NOT establish)'],
                 ['recommendedAction', 'Recommended Action & Conditions'],
                 ['ownerRole', 'Accountable Decision-Maker (Role)'],
@@ -668,7 +739,7 @@ ${statement}
                 {label}
                 <input
                   value={form[k]}
-                  onChange={(e) => setForm({ ...form, [k]: e.target.value })}
+                  onChange={(e) => updateField(k, e.target.value)}
                   className="mt-1 w-full rounded-lg border border-stone-300 px-3 py-1.5 text-xs text-[#231F1A] focus:border-indigo-500 focus:outline-none"
                 />
               </label>
@@ -680,11 +751,18 @@ ${statement}
         <div className="lg:col-span-5">
           <div className="sticky top-24 vintage-card rounded-md p-5 shadow-sm space-y-4">
             <div className="border-b border-stone-100 pb-3">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#C8552D]">
-                Live Protocol &amp; Decision Statement
-              </span>
-              <h3 className="text-base font-bold text-[#231F1A]">
-                {form.mode} Evaluation Protocol
+              <div className="flex flex-wrap items-center justify-between gap-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#C8552D]">
+                  {isCompletedReport ? 'Completed Evaluation Report' : 'Prospective Study Protocol (Planning)'}
+                </span>
+                {isFictionalExample && (
+                  <span className="rounded border border-[#D49B2A] bg-[#F6ECD5] px-1.5 py-0.5 font-mono text-[10px] font-semibold text-[#6E4E12]">
+                    FICTIONAL EXAMPLE
+                  </span>
+                )}
+              </div>
+              <h3 className="text-base font-bold text-[#231F1A] mt-0.5">
+                {form.mode} Evaluation {isCompletedReport ? 'Report' : 'Plan'}
               </h3>
             </div>
 
@@ -733,7 +811,7 @@ ${statement}
               </button>
               <button
                 type="button"
-                onClick={() => downloadFile('ai-eval-protocol.json', JSON.stringify(form, null, 2), 'application/json')}
+                onClick={() => downloadFile('ai-eval-protocol.json', JSON.stringify(exportJsonPayload, null, 2), 'application/json')}
                 className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-medium text-[#231F1A] hover:bg-stone-50"
               >
                 <Download className="h-3.5 w-3.5" />
