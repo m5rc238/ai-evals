@@ -89,16 +89,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
         'Separate observable citation accuracy from claims about whether the model "understands" research methods.',
       ],
     },
-    misconceptions: [
-      {
-        myth: '“A high benchmark score proves the AI is ready for our product.”',
-        reality: 'Benchmarks test isolated capabilities under fixed prompts; real usefulness depends on retrieval, UI, user expertise, and error-recovery workflows.',
-      },
-      {
-        myth: '“Evaluation is purely objective math—no value judgments involved.”',
-        reality: 'Choosing which metrics matter, where to set failure thresholds, and which harms are unacceptable are normative decisions.',
-      },
-    ],
+    misconceptions: [],
     exercise: {
       title: 'Assignment 1: Classify AI Claims & Identify Required Evidence',
       objective: 'Classify ambiguous AI statements by claim type and specify the evidence needed to substantiate each.',
@@ -158,7 +149,6 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       'Model performance, system performance, and human–AI workflow impact are distinct levels of evaluation.',
     ],
     furtherReading: [
-      { label: 'NIST AI Risk Management Framework (AI RMF 1.0)', type: 'Technical report / Framework', url: 'https://www.nist.gov/itl/ai-risk-management-framework' },
       { label: 'Google People + AI Guidebook', type: 'Industry guidance', url: 'https://pair.withgoogle.com/guidebook/' },
     ],
     transition: 'With the evaluation landscape mapped, Module 2 examines what happens when real humans interact with AI systems.',
@@ -280,9 +270,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       'Appropriate reliance requires measuring when humans accept correct outputs, verify uncertain ones, and reject errors.',
     ],
     furtherReading: [
-      { label: 'Zhao et al. (2025), SPHERE: An Evaluation Card for Human-AI Systems (ACL 2025 Findings)', type: 'Conference paper (Peer-reviewed)', url: 'https://doi.org/10.18653/v1/2025.findings-acl.70' },
       { label: 'SPHERE Interactive Card Site', type: 'Research tool', url: 'https://sphere-eval.github.io/' },
-      { label: 'Vaccaro, Almaatouq & Malone (2024), Nature Human Behaviour', type: 'Meta-analysis (Peer-reviewed)', url: 'https://doi.org/10.1038/s41562-024-02024-1' },
     ],
     transition: 'Once you know how humans and AI interact, Module 3 shows how to translate broad goals into a tightly scoped, leak-free evaluation question.',
   },
@@ -394,10 +382,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       'Distinguish internal validity (causal attribution in the study), external validity (generalization), and ecological validity (real-world realism).',
       'Audit for training, test-set, prompt, and temporal leakage before trusting benchmark scores.',
     ],
-    furtherReading: [
-      { label: 'HELM: Holistic Evaluation of Language Models', type: 'Peer-reviewed study', url: 'https://crfm.stanford.edu/helm/' },
-      { label: 'Anthropic: Demystifying Evals for AI Agents', type: 'Technical report', url: 'https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents' },
-    ],
+    furtherReading: [],
     transition: 'With a sharp question and clean scope, Module 4 turns to operationalizing criteria, choosing task-appropriate metrics, and designing datasets.',
   },
   {
@@ -518,7 +503,6 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       'Always test robustness to distribution shift, ambiguity, missing evidence, and prompt variation.',
     ],
     furtherReading: [
-      { label: 'NIST ARIA Program', type: 'Technical report / Framework', url: 'https://ai-challenges.nist.gov/aria' },
       { label: 'Husain & Shankar: Error & Trace Analysis Guidance', type: 'Industry guidance', url: 'https://hamel.dev/blog/posts/evals/' },
     ],
     transition: 'Once you have criteria and evidence, Module 5 examines how to grade outputs reliably, validate LLM judges, and measure real human outcomes.',
@@ -648,10 +632,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       'Validate LLM judges on held-out human labels and inspect rare-failure false negatives and systematic biases.',
       'Never let a composite average or Simpson’s paradox obscure critical subgroup or safety failures.',
     ],
-    furtherReading: [
-      { label: 'METR (2025), Early-2025 AI Experienced OS Developer Study', type: 'Technical report', url: 'https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/' },
-      { label: 'Shen & Tamkin (Jan 29, 2026), How AI assistance impacts the formation of coding skills', type: 'Industry research report', url: 'https://www.anthropic.com/research/AI-assistance-coding-skills' },
-    ],
+    furtherReading: [],
     transition: 'Once outputs and human outcomes are measured, Module 6 teaches how to analyze statistical uncertainty, design causal studies, build validity arguments, and govern the lifecycle.',
   },
   {
@@ -818,8 +799,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       'Lifecycle governance requires pre-registered protocols, separate product/evaluator versioning, and clear escalation triggers.',
     ],
     furtherReading: [
-      { label: 'Standards for Educational and Psychological Testing (AERA/APA/NCME)', type: 'Standards' },
-      { label: 'NIST AI RMF & Automated Benchmark Guidance', type: 'Technical report / Framework', url: 'https://www.nist.gov/itl/ai-risk-management-framework' },
+      { label: 'NIST Automated Benchmark Guidance (Draft)', type: 'Technical report / Framework', url: 'https://www.nist.gov/itl/ai-risk-management-framework' },
     ],
     transition: 'With rigorous design and statistical foundations in place, Module 7 equips you to audit public benchmarks, leaderboards, and overclaimed AI announcements.',
   },
@@ -837,16 +817,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       'Explain why scores from two different benchmarks cannot be directly equated or averaged without justification.',
       'Rewrite an overstated AI performance claim into a scientifically defensible, bounded statement.',
     ],
-    researchEvidence: [
-      {
-        citation: 'Goodhart, C. A. E. (1975) / Strathern, M. (1997). "When a measure becomes a target, it ceases to be a good measure."',
-        sourceType: 'Technical report / Framework',
-        sampleOrScope: 'Foundational principle in measurement and institutional evaluation.',
-        finding: 'Optimizing directly for a proxy leaderboard score degrades its correlation with the underlying real-world capability or goal.',
-        limitations: 'Conceptual principle; severity depends on how tightly benchmarks are gamed.',
-        doesNotEstablish: 'Does not imply all benchmarks are useless—only that static public targets lose diagnostic power once optimized against.',
-      },
-    ],
+    researchEvidence: [],
     caseStudy: {
       stageTitle: 'Stage 7 (Fictional Case Study): Auditing a Vendor Press Release at Meridian',
       narrative:
@@ -856,16 +827,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
         'Require held-out, harness-matched, and human-outcome evidence on Meridian’s own tasks.',
       ],
     },
-    misconceptions: [
-      {
-        myth: '“If Model A scores 82% on Benchmark X and Model B scores 79% on Benchmark Y, Model A is better.”',
-        reality: 'Different benchmarks measure different constructs, difficulties, and scoring rules; cross-benchmark comparisons without shared baselines are invalid.',
-      },
-      {
-        myth: '“A saturated benchmark (95%+) means the AI has mastered the domain.”',
-        reality: 'Saturation often reflects benchmark ceiling effects, memorization, or narrow phrasing rather than mastery of complex real-world edge cases.',
-      },
-    ],
+    misconceptions: [],
     exercise: {
       title: 'Assignment 7: Audit a Fictional AI Press Release',
       objective: 'Audit a misleading AI announcement across 10 methodological dimensions and draft a defensible revision.',
@@ -919,10 +881,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       'Never equate a narrow benchmark score with general intelligence or real-world deployment readiness.',
       'Use calibrated evidence language: "The study found...", "The evidence suggests...", "This remains uncertain...".',
     ],
-    furtherReading: [
-      { label: 'Standards for Educational and Psychological Testing (Validity & Score Use)', type: 'Standards' },
-      { label: 'HELM: Transparency on Coverage & Scenarios', type: 'Peer-reviewed study', url: 'https://crfm.stanford.edu/helm/' },
-    ],
+    furtherReading: [],
     transition: 'Now apply all seven modules together in the Final Capstone Project—or explore the optional Advanced Learning Tracks (RAG, Agents, Safety, Multimodal, Advanced Measurement, Organizational Eval).',
   },
 ];

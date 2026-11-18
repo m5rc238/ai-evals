@@ -94,33 +94,33 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
             <strong>How to read Figure 1.1:</strong> Follow the central chain from a concrete decision and scope to criteria, evidence, and measurement, leading back to a bounded action. The dashed loops show that early observations often reshape your criteria or trigger reevaluation after deployment. Governance applies across every step, and the outer quality layer asks how much confidence the evidence genuinely warrants. This 10-element architecture is a <strong>proposed conceptual synthesis</strong>, not an established standard.
           </p>
           <LandscapeDiagram />
-          <div className="overflow-x-auto vintage-box rounded-md">
-            <table className="w-full text-left text-xs">
-              <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
-                <tr>
-                  <th className="px-3.5 py-2 font-semibold">Element</th>
-                  <th className="px-3.5 py-2 font-semibold">Core Question</th>
-                  <th className="px-3.5 py-2 font-semibold">Practical Output</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#231F1A]/15">
-                {FLOW_NODES.map((n) => (
-                  <tr key={n.id}>
-                    <td className="px-3.5 py-2 font-medium">{n.number}. {n.title}</td>
-                    <td className="px-3.5 py-2">{n.question}</td>
-                    <td className="px-3.5 py-2 text-[#5C5346]">{n.practicalOutput}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </section>
 
         <details className="vintage-box rounded-md p-4 text-xs">
           <summary className="cursor-pointer font-semibold text-[#231F1A]">
-            Reference: Evaluation Taxonomy (10 Types), Glossary (15 Terms), Evidence Hierarchy &amp; Disciplines
+            Reference: 10-Element Table, Evaluation Taxonomy, Glossary (15 Terms), Evidence Hierarchy &amp; Disciplines
           </summary>
           <div className="mt-4 space-y-5">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
+                  <tr>
+                    <th className="px-3 py-1.5 font-semibold">Element</th>
+                    <th className="px-3 py-1.5 font-semibold">Core Question</th>
+                    <th className="px-3 py-1.5 font-semibold">Practical Output</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#231F1A]/15">
+                  {FLOW_NODES.map((n) => (
+                    <tr key={n.id}>
+                      <td className="px-3 py-1.5 font-medium">{n.number}. {n.title}</td>
+                      <td className="px-3 py-1.5">{n.question}</td>
+                      <td className="px-3 py-1.5 text-[#5C5346]">{n.practicalOutput}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             <div>
               <div className="font-semibold mb-1.5">Evaluation Taxonomy</div>
               <ul className="space-y-1 text-[#5C5346]">
@@ -229,26 +229,6 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
             <strong>How to read Figure 3.1:</strong> Each outer ring introduces new human, interface, or organizational factors. Evidence at an inner ring (such as a model benchmark) cannot automatically justify claims at an outer ring (such as team productivity).
           </p>
           <ScopeBoundaryDiagram />
-          <div className="overflow-x-auto vintage-box rounded-md">
-            <table className="w-full text-left text-xs">
-              <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
-                <tr>
-                  <th className="px-3.5 py-2 font-semibold">Scope</th>
-                  <th className="px-3.5 py-2 font-semibold">Boundary</th>
-                  <th className="px-3.5 py-2 font-semibold">Transfer Warning</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#231F1A]/15">
-                {SCOPES.map((s) => (
-                  <tr key={s.id}>
-                    <td className="px-3.5 py-2 font-semibold">{s.name}</td>
-                    <td className="px-3.5 py-2 text-[#5C5346]">{s.boundary}</td>
-                    <td className="px-3.5 py-2 text-[#7D3016]">{s.transferWarning}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
           <p>
             Remember that every evaluation result is <strong>conditional</strong> on the exact model snapshot, prompts, tools, dataset, and operating environment. Audit early for <strong>contamination and leakage</strong>—training-data contamination, test-set or prompt leakage, memorization, duplicate items, and temporal leakage (where future facts leak into historical predictions). Document explicit exclusions so readers know which tasks, languages, and populations remain untested.
           </p>
@@ -259,13 +239,35 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
 
         <details className="vintage-box rounded-md p-4 text-xs">
           <summary className="cursor-pointer font-semibold text-[#231F1A]">
-            Reference: 12 Evaluation Target Categories
+            Reference: 6 Scope Boundaries &amp; 12 Evaluation Target Categories
           </summary>
-          <ul className="mt-3 grid gap-2 sm:grid-cols-2 text-[#5C5346]">
-            {TARGET_INVENTORY.map((t) => (
-              <li key={t.name}><strong className="text-[#231F1A]">{t.name}:</strong> {t.concerns}</li>
-            ))}
-          </ul>
+          <div className="mt-3 space-y-4">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
+                  <tr>
+                    <th className="px-3 py-1.5 font-semibold">Scope</th>
+                    <th className="px-3 py-1.5 font-semibold">Boundary</th>
+                    <th className="px-3 py-1.5 font-semibold">Transfer Warning</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#231F1A]/15">
+                  {SCOPES.map((s) => (
+                    <tr key={s.id}>
+                      <td className="px-3 py-1.5 font-semibold">{s.name}</td>
+                      <td className="px-3 py-1.5 text-[#5C5346]">{s.boundary}</td>
+                      <td className="px-3 py-1.5 text-[#7D3016]">{s.transferWarning}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <ul className="grid gap-2 sm:grid-cols-2 text-[#5C5346]">
+              {TARGET_INVENTORY.map((t) => (
+                <li key={t.name}><strong className="text-[#231F1A]">{t.name}:</strong> {t.concerns}</li>
+              ))}
+            </ul>
+          </div>
         </details>
       </div>
     );
@@ -482,12 +484,12 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
             <strong>How to read Figure 6.2:</strong> Each pillar answers a different question—whether scores mean what you claim (A), whether the study design supports causal/transfer claims (B), and whether the pipeline is consistent and inspectable (C).
           </p>
           <ValidityCategoriesDiagram />
-          <div className="space-y-3">
+          <div className="space-y-4 text-xs">
             {VALIDITY_CATEGORIES.map((cat) => (
-              <div key={cat.id} className="vintage-box rounded-md p-4 space-y-2 text-xs">
+              <div key={cat.id} className="space-y-1">
                 <div className="font-display text-sm font-bold text-[#231F1A]">{cat.label}</div>
                 <p className="text-[#5C5346]">{cat.corePrinciple}</p>
-                <ul className="space-y-1 text-[#231F1A]">
+                <ul className="list-disc pl-5 space-y-0.5 text-[#231F1A]">
                   {cat.items.map((item) => (
                     <li key={item.name}>
                       <strong>{item.name}:</strong> <span className="text-[#5C5346]">{item.question}</span>
@@ -567,27 +569,16 @@ export function ModuleDeepContent({ moduleId }: { moduleId: string }) {
       </section>
 
       <section className="space-y-3">
-        <h4 className="font-display text-base font-bold">18 Recurring Pitfalls to Audit</h4>
-        <div className="grid gap-x-6 gap-y-2 sm:grid-cols-2 text-xs text-[#5C5346]">
-          <div><strong className="text-[#7D3016]">1. Benchmark saturation:</strong> Ceiling scores (95%+) mask real-world edge-case failures.</div>
-          <div><strong className="text-[#7D3016]">2. Data contamination:</strong> Test items appear in pretraining or tuning corpora.</div>
-          <div><strong className="text-[#7D3016]">3. Training/test leakage:</strong> Validation or test items leak into prompt engineering.</div>
-          <div><strong className="text-[#7D3016]">4. Benchmark overfitting:</strong> Tuning specifically for public benchmark quirks.</div>
-          <div><strong className="text-[#7D3016]">5. Leaderboard optimization:</strong> Chasing rank via undisclosed retries or compute.</div>
-          <div><strong className="text-[#7D3016]">6. Prompt &amp; harness sensitivity:</strong> Scaffolds swing scores more than base models.</div>
-          <div><strong className="text-[#7D3016]">7. Model version drift:</strong> Comparing across unpinned or silently updated snapshots.</div>
-          <div><strong className="text-[#7D3016]">8. Environment differences:</strong> Mismatched timeouts, sandboxes, or packages.</div>
-          <div><strong className="text-[#7D3016]">9. Hidden test-set flaws:</strong> Mislabeled ground truth or broken grading scripts.</div>
-          <div><strong className="text-[#7D3016]">10. Synthetic benchmark limits:</strong> LM-generated items mirror generator blind spots.</div>
-          <div><strong className="text-[#7D3016]">11. Reporting bias:</strong> Publishing favorable benchmarks while hiding failed internal evals.</div>
-          <div><strong className="text-[#7D3016]">12. Cherry-picking:</strong> Highlighting best-of-N examples or favorable slices.</div>
-          <div><strong className="text-[#7D3016]">13. Multiple comparisons:</strong> Testing dozens of metrics and reporting only winners.</div>
-          <div><strong className="text-[#7D3016]">14. Misleading averages:</strong> Hiding critical failures inside high composite means.</div>
-          <div><strong className="text-[#7D3016]">15. False equivalence:</strong> Equating scores across incompatible benchmarks.</div>
-          <div><strong className="text-[#7D3016]">16. Narrow-task extrapolation:</strong> Claiming general intelligence from narrow tests.</div>
-          <div><strong className="text-[#7D3016]">17. Correlation as causation:</strong> Inferring causal impact from observational usage.</div>
-          <div><strong className="text-[#7D3016]">18. Score as real-world impact:</strong> Assuming offline accuracy guarantees user benefit.</div>
-        </div>
+        <h4 className="font-display text-base font-bold">Core Pitfalls to Audit Before Trusting a Score</h4>
+        <ul className="list-disc pl-5 space-y-1.5 text-xs text-[#5C5346]">
+          <li><strong className="text-[#231F1A]">Contamination, leakage &amp; saturation:</strong> Test items appearing in pretraining/prompts, or ceiling scores (95%+) hiding real-world edge-case failures.</li>
+          <li><strong className="text-[#231F1A]">Overfitting &amp; undisclosed harnesses:</strong> Leaderboard optimization via hidden retries, extra compute, or prompt/tool scaffolds that swing scores more than base models.</li>
+          <li><strong className="text-[#231F1A]">Version drift &amp; environment mismatch:</strong> Unpinned API snapshots, different sandboxes/timeouts, or broken grading scripts across compared runs.</li>
+          <li><strong className="text-[#231F1A]">Synthetic benchmark blind spots:</strong> LM-generated test sets that mirror generator biases and lack real-world messiness.</li>
+          <li><strong className="text-[#231F1A]">Selective reporting &amp; multiple comparisons:</strong> Cherry-picking favorable slices, publishing wins while hiding failures, or testing dozens of metrics without correction.</li>
+          <li><strong className="text-[#231F1A]">Misleading averages &amp; false equivalence:</strong> Hiding critical failures inside high means, or equating scores across incompatible benchmarks.</li>
+          <li><strong className="text-[#231F1A]">Extrapolation &amp; causal leaps:</strong> Claiming general intelligence from narrow tests, inferring causation from observational correlations, or equating offline accuracy with real-world user impact.</li>
+        </ul>
       </section>
 
       <section className="space-y-2.5">

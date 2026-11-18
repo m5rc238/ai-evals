@@ -40,14 +40,9 @@ export function ModuleRenderer({
     <article className="mx-auto max-w-3xl space-y-8 pb-16">
       {/* 1. Module Header & Overview */}
       <header className="space-y-3 border-b-2 border-[#231F1A] pb-5">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#C8552D]">
-            Module 0{module.number} / 0{totalModules}
-          </span>
-          <span className="rounded-md border border-[#231F1A]/25 bg-[#EFE7D6] px-2.5 py-0.5 font-mono text-[11px] text-[#5C5346]">
-            {module.integratedLessons}
-          </span>
-        </div>
+        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#C8552D]">
+          Module 0{module.number} / 0{totalModules}
+        </span>
         <h2 className="font-display text-2xl font-bold tracking-tight text-[#231F1A] sm:text-3xl">
           {module.title}
         </h2>
@@ -109,49 +104,51 @@ export function ModuleRenderer({
       </section>
 
       {/* 4. Research & Evidence */}
-      <section className="space-y-3">
-        <h3 className="font-display text-xl font-bold text-[#231F1A]">
-          Research &amp; Evidence Base
-        </h3>
-        <div className="space-y-3">
-          {module.researchEvidence.map((ref) => (
-            <div key={ref.citation} className="vintage-box rounded-md p-4 text-xs space-y-2">
-              <div className="flex flex-wrap items-start justify-between gap-2">
-                <div className="font-semibold text-[#231F1A] flex-1">
-                  {ref.citation}
-                  {ref.url && (
-                    <a
-                      href={ref.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ml-1.5 inline-flex items-center gap-0.5 text-[#C8552D] underline"
-                    >
-                      Source <ExternalLink className="h-3 w-3" />
-                    </a>
-                  )}
+      {module.researchEvidence.length > 0 && (
+        <section className="space-y-3">
+          <h3 className="font-display text-xl font-bold text-[#231F1A]">
+            Research &amp; Evidence Base
+          </h3>
+          <div className="space-y-3">
+            {module.researchEvidence.map((ref) => (
+              <div key={ref.citation} className="vintage-box rounded-md p-4 text-xs space-y-2">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div className="font-semibold text-[#231F1A] flex-1">
+                    {ref.citation}
+                    {ref.url && (
+                      <a
+                        href={ref.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-1.5 inline-flex items-center gap-0.5 text-[#C8552D] underline"
+                      >
+                        Source <ExternalLink className="h-3 w-3" />
+                      </a>
+                    )}
+                  </div>
+                  <span className="rounded border border-[#231F1A]/30 bg-[#EFE7D6] px-2 py-0.5 font-mono text-[10px] font-semibold">
+                    {ref.sourceType}
+                  </span>
                 </div>
-                <span className="rounded border border-[#231F1A]/30 bg-[#EFE7D6] px-2 py-0.5 font-mono text-[10px] font-semibold">
-                  {ref.sourceType}
-                </span>
-              </div>
-              <div className="text-[#5C5346]">
-                <strong>Sample / Scope:</strong> {ref.sampleOrScope}
-              </div>
-              <div className="text-[#231F1A]">
-                <strong>Main finding:</strong> {ref.finding}
-              </div>
-              <div className="grid gap-2 sm:grid-cols-2 pt-1">
-                <div className="rounded bg-[#F5EFE2] p-2 text-[#5C5346]">
-                  <strong>Limitations:</strong> {ref.limitations}
+                <div className="text-[#5C5346]">
+                  <strong>Sample / Scope:</strong> {ref.sampleOrScope}
                 </div>
-                <div className="rounded bg-[#F7E4DC]/70 p-2 text-[#7D3016]">
-                  <strong>Does not establish:</strong> {ref.doesNotEstablish}
+                <div className="text-[#231F1A]">
+                  <strong>Main finding:</strong> {ref.finding}
+                </div>
+                <div className="grid gap-2 sm:grid-cols-2 pt-1">
+                  <div className="rounded bg-[#F5EFE2] p-2 text-[#5C5346]">
+                    <strong>Limitations:</strong> {ref.limitations}
+                  </div>
+                  <div className="rounded bg-[#F7E4DC]/70 p-2 text-[#7D3016]">
+                    <strong>Does not establish:</strong> {ref.doesNotEstablish}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* 5. Continuous Case Study */}
       <section className="rounded-md border-2 border-[#335C81] bg-[#E3EAF0]/60 p-5 space-y-2.5">
@@ -173,24 +170,26 @@ export function ModuleRenderer({
       </section>
 
       {/* 6. Common Misconceptions */}
-      <section className="space-y-3">
-        <h3 className="font-display text-xl font-bold text-[#231F1A]">
-          Common Misconceptions
-        </h3>
-        <div className="grid gap-3 sm:grid-cols-2 text-xs">
-          {module.misconceptions.map((m) => (
-            <div key={m.myth} className="vintage-box rounded-md p-4 space-y-1.5">
-              <div className="flex items-start gap-1.5 font-semibold text-[#7D3016]">
-                <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-                <span>{m.myth}</span>
+      {module.misconceptions.length > 0 && (
+        <section className="space-y-3">
+          <h3 className="font-display text-xl font-bold text-[#231F1A]">
+            Common Misconceptions
+          </h3>
+          <div className="grid gap-3 sm:grid-cols-2 text-xs">
+            {module.misconceptions.map((m) => (
+              <div key={m.myth} className="vintage-box rounded-md p-4 space-y-1.5">
+                <div className="flex items-start gap-1.5 font-semibold text-[#7D3016]">
+                  <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                  <span>{m.myth}</span>
+                </div>
+                <p className="text-[#5C5346] leading-relaxed">
+                  <strong className="text-[#2A422D]">Reality:</strong> {m.reality}
+                </p>
               </div>
-              <p className="text-[#5C5346] leading-relaxed">
-                <strong className="text-[#2A422D]">Reality:</strong> {m.reality}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* 7. Practical Exercise */}
       <section className="vintage-card rounded-md p-5 space-y-3">
@@ -325,34 +324,36 @@ export function ModuleRenderer({
         </ul>
       </section>
 
-      {/* 10. Further Reading */}
-      <section className="vintage-box rounded-md p-4 space-y-2">
-        <div className="flex items-center gap-2 font-display text-base font-bold text-[#231F1A]">
-          <BookMarked className="h-4 w-4 text-[#C8552D]" />
-          Further Reading
-        </div>
-        <ul className="space-y-1 text-xs">
-          {module.furtherReading.map((fr) => (
-            <li key={fr.label} className="flex flex-wrap items-center gap-2">
-              <span className="rounded bg-[#EFE7D6] px-1.5 py-0.5 font-mono text-[10px]">
-                {fr.type}
-              </span>
-              {fr.url ? (
-                <a
-                  href={fr.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#335C81] underline hover:text-[#231F1A]"
-                >
-                  {fr.label}
-                </a>
-              ) : (
-                <span>{fr.label}</span>
-              )}
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* 10. Further Reading (only additional links not already in Research & Evidence) */}
+      {module.furtherReading.length > 0 && (
+        <section className="vintage-box rounded-md p-4 space-y-2">
+          <div className="flex items-center gap-2 font-display text-base font-bold text-[#231F1A]">
+            <BookMarked className="h-4 w-4 text-[#C8552D]" />
+            Additional Reading
+          </div>
+          <ul className="space-y-1 text-xs">
+            {module.furtherReading.map((fr) => (
+              <li key={fr.label} className="flex flex-wrap items-center gap-2">
+                <span className="rounded bg-[#EFE7D6] px-1.5 py-0.5 font-mono text-[10px]">
+                  {fr.type}
+                </span>
+                {fr.url ? (
+                  <a
+                    href={fr.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#335C81] underline hover:text-[#231F1A]"
+                  >
+                    {fr.label}
+                  </a>
+                ) : (
+                  <span>{fr.label}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* 11. Transition & Navigation */}
       <div className="space-y-4 border-t-2 border-[#231F1A] pt-5">
