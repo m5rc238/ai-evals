@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Award, BookOpen, ClipboardCheck, ExternalLink, Layers, Menu, TableProperties, X } from 'lucide-react';
+import { Award, BookOpen, ClipboardCheck, ExternalLink, Github, Layers, Menu, TableProperties, X } from 'lucide-react';
 import { MODULES_CURRICULUM } from './data/curriculum';
 import { ModuleRenderer } from './components/ModuleRenderer';
 import { CapstoneView } from './components/CapstoneView';
@@ -137,6 +137,18 @@ export function App() {
               className="vintage-btn inline-flex items-center gap-1 rounded-md bg-[#F6ECD5] px-2.5 py-1.5 font-mono text-[11px] font-semibold text-[#231F1A]"
             >
               SPHERE
+              <ExternalLink className="h-3 w-3" />
+            </a>
+            <a
+              href="https://github.com/m5rc238/ai-evals"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Collaborate on GitHub"
+              aria-label="Collaborate on GitHub"
+              className="vintage-btn inline-flex items-center gap-1 rounded-md bg-[#F6ECD5] px-2.5 py-1.5 font-mono text-[11px] font-semibold text-[#231F1A]"
+            >
+              <Github className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">GitHub</span>
               <ExternalLink className="h-3 w-3" />
             </a>
           </div>
@@ -299,6 +311,25 @@ export function App() {
           </main>
         </div>
       )}
+
+      {/* Footer */}
+      <footer className="border-t-2 border-[#231F1A]/20 bg-[#FBF7EE] px-4 py-4 sm:px-6">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 text-xs text-[#5C5346]">
+          <p>
+            Open-source study guide &amp; evaluation tools. Want to collaborate, suggest edits, or contribute?
+          </p>
+          <a
+            href="https://github.com/m5rc238/ai-evals"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold text-[#231F1A] underline decoration-[#231F1A]/40 underline-offset-4 hover:decoration-[#231F1A]"
+          >
+            <Github className="h-3.5 w-3.5" />
+            github.com/m5rc238/ai-evals
+            <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
