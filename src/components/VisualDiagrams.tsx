@@ -95,7 +95,7 @@ export function LayeredPipelineDiagram() {
         </defs>
       </svg>
       <figcaption className="mt-2.5 text-center font-mono text-[11px] text-[#5C5346]">
-        FIG 3.1 — Layered evaluation pipeline: fast trace/regression gates → representative workflow trials → live monitoring.
+        FIG 2.1 — Layered evaluation pipeline: fast trace/regression gates → representative workflow trials → live monitoring.
       </figcaption>
     </figure>
   );
@@ -129,7 +129,7 @@ export function AggregationTrapDiagram() {
         </defs>
       </svg>
       <figcaption className="mt-2.5 text-center font-mono text-[11px] text-[#5C5346]">
-        FIG 4.1 — Keep frequency, severity, detectability, affected populations, and mandatory release blockers distinct.
+        FIG 3.1 — Keep frequency, severity, detectability, affected populations, and mandatory release blockers distinct.
       </figcaption>
     </figure>
   );
@@ -161,7 +161,7 @@ export function ValidityCategoriesDiagram() {
         <text x="556" y="128" fontSize="10" fontWeight="600" fill="#6E4E12">Necessary, not sufficient for validity</text>
       </svg>
       <figcaption className="mt-2.5 text-center font-mono text-[11px] text-[#5C5346]">
-        FIG 5.1 — Three distinct pillars: Measurement Validity (A), Study Design &amp; Generalization (B), and Reliability &amp; Traceability (C).
+        FIG 4.1 — Three distinct pillars: Measurement Validity (A), Study Design &amp; Generalization (B), and Reliability &amp; Traceability (C).
       </figcaption>
     </figure>
   );
@@ -193,7 +193,7 @@ export function OutcomesComparisonDiagram() {
         <text x="540" y="124" fontSize="10.5" fill="#5C5346">Check synergy if claiming &gt; solo AI.</text>
       </svg>
       <figcaption className="mt-2.5 text-center font-mono text-[11px] text-[#5C5346]">
-        FIG 6.1 — Why real workflow outcomes must be timed and measured directly instead of trusting offline accuracy or user intuition.
+        FIG 5.1 — Why real workflow outcomes must be timed and measured directly instead of trusting offline accuracy or user intuition.
       </figcaption>
     </figure>
   );
@@ -218,7 +218,7 @@ export function HorizonDiagram() {
         <text x="422" y="136" fontSize="10.5" fontWeight="600" fill="#2A422D">Goal: Clear reevaluation triggers &amp; owners</text>
       </svg>
       <figcaption className="mt-2.5 text-center font-mono text-[11px] text-[#5C5346]">
-        FIG 6.2 — Short-term pilots and ongoing production monitoring catch different failures; version product and judges separately.
+        FIG 5.2 — Short-term pilots and ongoing production monitoring catch different failures; version product and judges separately.
       </figcaption>
     </figure>
   );
@@ -253,7 +253,7 @@ export function FallaciesDiagram() {
         <text x="426" y="210" fontSize="10.5" fill="#5C5346">• Tuning on the test set &amp; claiming confirmation</text>
       </svg>
       <figcaption className="mt-2.5 text-center font-mono text-[11px] text-[#5C5346]">
-        FIG 7.1 — Four families of AI evaluation fallacies that cause teams to overstate readiness or misread real-world impact.
+        FIG 6.1 — Four families of AI evaluation fallacies that cause teams to overstate readiness or misread real-world impact.
       </figcaption>
     </figure>
   );

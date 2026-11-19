@@ -80,7 +80,7 @@ Before diving into formal designs, walk through one complete eval:
 
 ## 1. Start With the Decision: Scope, Baseline, Harnesses & Contamination
 
-*Corresponds to Module 2.*
+*Corresponds to Module 2 (Chapters 2.1–2.2).*
 
 ### Ask Whether You Need AI First
 
@@ -105,7 +105,7 @@ A score is only interpretable when the exact system configuration and study mode
 
 ## 2. Datasets & Error Analysis: Building Real Test Cases
 
-*Corresponds to Module 3.*
+*Corresponds to Module 2 (Chapters 2.3–2.4).*
 
 ### Treat the Eval as the Spec
 
@@ -146,7 +146,7 @@ Pair fast automated/trace checks early (Stage 1), representative workflow/user v
 
 ## 3. Rubrics, Judges & Aggregation: Scoring Without Fooling Yourself
 
-*Corresponds to Module 4.*
+*Corresponds to Module 3 (Chapters 3.1–3.3).*
 
 ### Turn Ambiguous Rules Into Observable Checks
 
@@ -177,7 +177,7 @@ When scaling human annotation, raw percent agreement overstates reliability when
 
 ## 4. Comparing Versions: Uncertainty, Clustering, Goodhart’s Law & Validity Pillars
 
-*Corresponds to Module 5.*
+*Corresponds to Module 4 (Chapters 4.1–4.3).*
 
 ### Direct Paired Differences & Clustering at the Unit of Analysis
 
@@ -208,7 +208,7 @@ Grounded in the *Standards for Educational and Psychological Testing* (AERA, APA
 
 ## 5. Real-World Performance: Workflows, Human–AI Testing & Production Monitoring
 
-*Corresponds to Module 6.*
+*Corresponds to Module 5 (Chapters 5.1–5.3).*
 
 ### Layer 4: Verify Actual Environment State
 
@@ -236,7 +236,7 @@ Evaluations decay as models, prompts, retrieval corpora, and user behaviors shif
 
 ## 6. Auditing Benchmarks, Vendor Claims & Bounded Reporting
 
-*Corresponds to Module 7.*
+*Corresponds to Module 6 (Chapters 6.1–6.2).*
 
 Audit every public leaderboard, vendor pitch, or internal deck with four questions:
 1. **What layer, unit, and cases were actually tested?**
