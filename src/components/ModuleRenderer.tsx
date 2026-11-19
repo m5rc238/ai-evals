@@ -68,35 +68,9 @@ export function ModuleRenderer({
           {module.title}
         </h2>
         <p className="text-sm leading-relaxed text-[#231F1A]">{module.overview}</p>
-        {module.number === 1 && onSelectModule && (
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 pt-1 text-xs text-[#5C5346]">
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-wide text-[#231F1A]">
-              Choose your route:
-            </span>
-            <a href="#first-eval" className="font-semibold text-[#C8552D] underline">
-              1. Run a first eval (below)
-            </a>
-            <span aria-hidden="true">·</span>
-            <button
-              type="button"
-              onClick={() => onSelectModule(2)}
-              className="font-semibold text-[#335C81] underline hover:text-[#231F1A]"
-            >
-              2. Decide if AI helps (Module 3 → 2 → 6)
-            </button>
-            <span aria-hidden="true">·</span>
-            <button
-              type="button"
-              onClick={() => onSelectModule(5)}
-              className="font-semibold text-[#2A422D] underline hover:text-[#231F1A]"
-            >
-              3. Design a formal study (Module 6 → Capstone)
-            </button>
-          </div>
-        )}
       </header>
 
-      {/* On Module 1, open directly with the plain-language definition and first eval before objectives or diagrams */}
+      {/* On Module 1, open directly with what evals are, layers/units, and first eval before listing objectives */}
       {module.number !== 1 && learningObjectivesSection}
 
       {/* Core Concepts */}
@@ -112,92 +86,11 @@ export function ModuleRenderer({
           onOpenTracks={onOpenTracks}
         />
 
-        {/* On Module 1, show clear route cards & learning objectives after the opening lesson */}
-        {module.number === 1 && onSelectModule && (
-          <div className="vintage-box rounded-md p-4 space-y-3 text-xs">
-            <div className="font-display text-base font-bold text-[#231F1A]">
-              Where to Go Next (Choose the Depth You Need)
-            </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded border border-[#231F1A]/20 bg-[#F5EFE2] p-3 space-y-1.5">
-                <div className="font-semibold text-[#C8552D]">1. Run a first eval</div>
-                <p className="text-[#5C5346]">
-                  Write concrete test cases and fix grader disagreement in under an hour.
-                </p>
-                <div className="flex flex-wrap gap-2 pt-1 font-semibold">
-                  <button type="button" onClick={() => onSelectModule(3)} className="underline text-[#231F1A]">
-                    Module 4 →
-                  </button>
-                  <button type="button" onClick={() => onSelectModule(4)} className="underline text-[#231F1A]">
-                    Module 5 →
-                  </button>
-                </div>
-              </div>
-              <div className="rounded border border-[#231F1A]/20 bg-[#F5EFE2] p-3 space-y-1.5">
-                <div className="font-semibold text-[#335C81]">2. Decide whether AI helps</div>
-                <p className="text-[#5C5346]">
-                  Compare AI against your current workflow and simpler non-AI fixes, then weigh cost and uncertainty.
-                </p>
-                <div className="flex flex-wrap gap-2 pt-1 font-semibold">
-                  <button type="button" onClick={() => onSelectModule(2)} className="underline text-[#231F1A]">
-                    Module 3 →
-                  </button>
-                  <button type="button" onClick={() => onSelectModule(1)} className="underline text-[#231F1A]">
-                    Module 2 →
-                  </button>
-                  <button type="button" onClick={() => onSelectModule(5)} className="underline text-[#231F1A]">
-                    Module 6 →
-                  </button>
-                </div>
-              </div>
-              <div className="rounded border border-[#231F1A]/20 bg-[#F5EFE2] p-3 space-y-1.5">
-                <div className="font-semibold text-[#2A422D]">3. Design a formal study</div>
-                <p className="text-[#5C5346]">
-                  Use worked statistical examples, review the full Meridian proposal, and draft a pre-registered protocol.
-                </p>
-                <div className="flex flex-wrap gap-2 pt-1 font-semibold">
-                  <button type="button" onClick={() => onSelectModule(5)} className="underline text-[#231F1A]">
-                    Module 6 →
-                  </button>
-                  {onOpenCapstone && (
-                    <button type="button" onClick={onOpenCapstone} className="underline text-[#231F1A]">
-                      Capstone →
-                    </button>
-                  )}
-                  {onOpenTool && (
-                    <button
-                      type="button"
-                      onClick={() => onOpenTool('framework-tool')}
-                      className="underline text-[#231F1A]"
-                    >
-                      Protocol Tool →
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Contextual link to secondary tools only where pedagogically relevant */}
-        {module.number === 2 && onOpenTool && (
+        {/* Contextual link to practice tools where relevant */}
+        {module.number === 1 && onOpenTool && (
           <div className="rounded-md border border-[#335C81] bg-[#E3EAF0] p-3.5 text-xs flex flex-wrap items-center justify-between gap-2">
             <span>
-              <strong>Supplementary Practice Tool:</strong> After studying SPHERE’s five dimensions, you can draft a SPHERE card using the optional builder.
-            </span>
-            <button
-              type="button"
-              onClick={() => onOpenTool('sphere-tool')}
-              className="vintage-btn rounded-md bg-[#FBF7EE] px-3 py-1 font-semibold text-[#231F1A]"
-            >
-              Open SPHERE Card Tool →
-            </button>
-          </div>
-        )}
-        {module.number === 4 && onOpenTool && (
-          <div className="rounded-md border border-[#335C81] bg-[#E3EAF0] p-3.5 text-xs flex flex-wrap items-center justify-between gap-2">
-            <span>
-              <strong>Supplementary Practice Tool:</strong> Browse and filter 25 evaluation metrics across Machine Learning, Systems &amp; Agentic AI, and Human–AI Interaction.
+              <strong>Supplementary Practice Tool:</strong> Explore 29 metrics organized by the exact 7 layers and units of analysis above.
             </span>
             <button
               type="button"
@@ -208,10 +101,10 @@ export function ModuleRenderer({
             </button>
           </div>
         )}
-        {module.number === 6 && onOpenTool && (
+        {module.number === 5 && onOpenTool && (
           <div className="rounded-md border border-[#335C81] bg-[#E3EAF0] p-3.5 text-xs flex flex-wrap items-center justify-between gap-2">
             <span>
-              <strong>Supplementary Practice Tool:</strong> Use the optional 12-field Protocol Builder to draft a pre-registered evaluation plan.
+              <strong>Supplementary Practice Tool:</strong> Use the 12-field Protocol Builder to draft a pre-registered evaluation plan and bounded decision statement.
             </span>
             <button
               type="button"
@@ -219,6 +112,20 @@ export function ModuleRenderer({
               className="vintage-btn rounded-md bg-[#FBF7EE] px-3 py-1 font-semibold text-[#231F1A]"
             >
               Open Eval Protocol Tool →
+            </button>
+          </div>
+        )}
+        {module.number === 6 && onOpenTool && (
+          <div className="rounded-md border border-[#335C81] bg-[#E3EAF0] p-3.5 text-xs flex flex-wrap items-center justify-between gap-2">
+            <span>
+              <strong>Optional HCI Practice Tool:</strong> Running a formal Human–AI user study? Open the optional SPHERE Card Tool (see also Advanced Track G).
+            </span>
+            <button
+              type="button"
+              onClick={() => onOpenTool('sphere-tool')}
+              className="vintage-btn rounded-md bg-[#FBF7EE] px-3 py-1 font-semibold text-[#231F1A]"
+            >
+              Open SPHERE Card Tool →
             </button>
           </div>
         )}
@@ -469,6 +376,14 @@ export function ModuleRenderer({
                   >
                     {fr.label}
                   </a>
+                ) : fr.type === 'Optional Advanced Track' && onOpenTracks ? (
+                  <button
+                    type="button"
+                    onClick={onOpenTracks}
+                    className="text-[#335C81] underline hover:text-[#231F1A]"
+                  >
+                    {fr.label}
+                  </button>
                 ) : (
                   <span>{fr.label}</span>
                 )}

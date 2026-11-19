@@ -130,4 +130,17 @@ export const ADVANCED_TRACKS: AdvancedTrack[] = [
     ],
     keyPitfall: 'Declaring organizational ROI from faster first-draft generation while ignoring increased downstream review and error-remediation time.',
   },
+  {
+    id: 'track-g',
+    code: 'Track G',
+    title: 'Deep Human–AI Research & SPHERE',
+    summary: 'Academic Human–AI interaction frameworks, synergy meta-analyses, cognitive offloading, and longitudinal reliance literature.',
+    topics: [
+      { name: 'SPHERE Evaluation Card (Zhao et al., ACL 2025)', detail: 'Proposed 5-dimension card (What, How, Who, When, Meta-Validation) for transparent Human–AI studies (sphere-eval.github.io · DOI: 10.18653/v1/2025.findings-acl.70).' },
+      { name: 'Augmentation vs. Synergy (Vaccaro et al., 2024)', detail: 'Across 106 studies (370 effect sizes), Human+AI beat humans alone (g = +0.64) but averaged negative synergy vs. max(Human, AI) (g = -0.23) on decision tasks.' },
+      { name: 'Skill formation, offloading & opinion drift', detail: 'Covers Shen & Tamkin (2026) coding-skill retention (~50% vs. ~67% quiz gap), Padmakumar et al. (2026) Offloading Score, Jakesch et al. (2023) co-writing shift, Long et al. (2024) familiarization, and Ibrahim et al. (2026) sycophancy.' },
+      { name: 'Persona simulation limits (Cheng et al., 2023)', detail: 'CoMPosT demonstrated that LLM-simulated sociocultural personas caricature groups and miss real verification friction.' },
+    ],
+    keyPitfall: 'Treating simulated personas, immediate chat preference, or Human+AI > Human alone as proof of human–AI synergy or long-term benefit.',
+  },
 ] as const;

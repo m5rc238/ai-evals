@@ -1,7 +1,12 @@
-import { AlertTriangle, Layers } from 'lucide-react';
+import { AlertTriangle, ExternalLink, Layers } from 'lucide-react';
 import { ADVANCED_TRACKS } from '../data/advancedTracks';
+import { SphereDiagram, SynergyDiagram } from './VisualDiagrams';
 
-export function AdvancedTracksView() {
+export function AdvancedTracksView({
+  onOpenSphereTool,
+}: {
+  onOpenSphereTool?: () => void;
+}) {
   return (
     <article className="mx-auto max-w-4xl space-y-8 pb-16">
       <header className="space-y-3 border-b-2 border-[#231F1A] pb-5">
@@ -9,10 +14,10 @@ export function AdvancedTracksView() {
           Optional Supplementary Tracks
         </span>
         <h2 className="font-display text-2xl font-bold tracking-tight text-[#231F1A] sm:text-3xl">
-          Advanced Learning Tracks (Tracks A–F)
+          Advanced Learning Tracks (Tracks A–G)
         </h2>
         <p className="text-sm leading-relaxed text-[#5C5346]">
-          Complete the seven foundational modules first. These optional tracks extend the core methodology to specialized system architectures and measurement problems.
+          Complete the seven foundational modules first. These optional tracks extend the core methodology to specialized system architectures, measurement problems, and formal Human–AI interaction research.
         </p>
       </header>
 
@@ -48,9 +53,42 @@ export function AdvancedTracksView() {
                 <strong>Common pitfall:</strong> {track.keyPitfall}
               </span>
             </div>
+
+            {track.id === 'track-g' && (
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                {onOpenSphereTool && (
+                  <button
+                    type="button"
+                    onClick={onOpenSphereTool}
+                    className="vintage-btn rounded-md bg-[#F6ECD5] px-3 py-1.5 font-semibold text-[#231F1A]"
+                  >
+                    Open SPHERE Card Tool →
+                  </button>
+                )}
+                <a
+                  href="https://sphere-eval.github.io/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold text-[#335C81] underline"
+                >
+                  sphere-eval.github.io
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+            )}
           </section>
         ))}
       </div>
+
+      <details className="vintage-box rounded-md p-4 text-xs space-y-4">
+        <summary className="cursor-pointer font-semibold text-[#231F1A]">
+          Track G Visual Reference: SPHERE Evaluation Card (FIG G.1) &amp; Synergy Meta-Analysis (FIG G.2)
+        </summary>
+        <div className="mt-4 space-y-4">
+          <SphereDiagram />
+          <SynergyDiagram />
+        </div>
+      </details>
     </article>
   );
 }

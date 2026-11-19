@@ -52,7 +52,7 @@ export function App() {
                 AI Evaluation Study Guide
               </h1>
               <p className="hidden font-mono text-[11px] text-[#5C5346] sm:block">
-                7-Module Curriculum · Case Study, Exercises, Capstone &amp; SPHERE
+                Practical 7-Module Guide · Layers, Methods, Tools &amp; Capstone
               </p>
             </div>
           </div>
@@ -99,14 +99,14 @@ export function App() {
             <div className="hidden sm:inline-flex items-center gap-1.5 border-l border-[#231F1A]/25 pl-2.5 text-[11px]">
               <span className="font-mono text-[#5C5346]">Practice tools:</span>
               <button
-                onClick={() => openView('sphere-tool')}
+                onClick={() => openView('taxonomy-tool')}
                 className={`rounded border px-2 py-1 font-medium transition ${
-                  viewMode === 'sphere-tool'
+                  viewMode === 'taxonomy-tool'
                     ? 'border-[#231F1A] bg-[#231F1A] text-[#FBF7EE]'
                     : 'border-[#231F1A]/30 bg-[#FBF7EE] text-[#231F1A] hover:border-[#231F1A]'
                 }`}
               >
-                SPHERE Card
+                Metrics Taxonomy
               </button>
               <button
                 onClick={() => openView('framework-tool')}
@@ -119,26 +119,17 @@ export function App() {
                 Eval Protocol
               </button>
               <button
-                onClick={() => openView('taxonomy-tool')}
+                onClick={() => openView('sphere-tool')}
                 className={`rounded border px-2 py-1 font-medium transition ${
-                  viewMode === 'taxonomy-tool'
+                  viewMode === 'sphere-tool'
                     ? 'border-[#231F1A] bg-[#231F1A] text-[#FBF7EE]'
                     : 'border-[#231F1A]/30 bg-[#FBF7EE] text-[#231F1A] hover:border-[#231F1A]'
                 }`}
               >
-                Metrics Taxonomy
+                SPHERE Card
               </button>
             </div>
 
-            <a
-              href="https://sphere-eval.github.io/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="vintage-btn inline-flex items-center gap-1 rounded-md bg-[#F6ECD5] px-2.5 py-1.5 font-mono text-[11px] font-semibold text-[#231F1A]"
-            >
-              SPHERE
-              <ExternalLink className="h-3 w-3" />
-            </a>
             <a
               href="https://github.com/m5rc238/ai-evals"
               target="_blank"
@@ -160,11 +151,16 @@ export function App() {
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 space-y-4">
           <div className="rounded-md border border-[#335C81] bg-[#E3EAF0] px-4 py-2.5 text-xs text-[#1E3A54] flex flex-wrap items-center justify-between gap-2">
             <span>
-              <strong>Supplementary Tool (Linked to Module 2):</strong> Practice structuring a Human–AI evaluation using the proposed SPHERE card.
+              <strong>Optional HCI Tool (Linked to Module 6 &amp; Track G):</strong> Structure a formal Human–AI interaction study using the SPHERE evaluation card.
             </span>
-            <button onClick={() => selectModule(1)} className="font-semibold underline">
-              ← Return to Module 2
-            </button>
+            <div className="flex items-center gap-3">
+              <button onClick={() => openView('tracks')} className="font-semibold underline">
+                Open Track G
+              </button>
+              <button onClick={() => selectModule(5)} className="font-semibold underline">
+                ← Return to Module 6
+              </button>
+            </div>
           </div>
           <SphereCardTool />
         </main>
@@ -172,10 +168,10 @@ export function App() {
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 space-y-4">
           <div className="rounded-md border border-[#335C81] bg-[#E3EAF0] px-4 py-2.5 text-xs text-[#1E3A54] flex flex-wrap items-center justify-between gap-2">
             <span>
-              <strong>Supplementary Tool (Linked to Module 6):</strong> Draft a 12-field evaluation protocol and bounded decision statement.
+              <strong>Supplementary Tool (Linked to Module 5):</strong> Draft a 12-field evaluation protocol and bounded decision statement.
             </span>
-            <button onClick={() => selectModule(5)} className="font-semibold underline">
-              ← Return to Module 6
+            <button onClick={() => selectModule(4)} className="font-semibold underline">
+              ← Return to Module 5
             </button>
           </div>
           <FrameworkProtocolTool />
@@ -184,10 +180,10 @@ export function App() {
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 space-y-4">
           <div className="rounded-md border border-[#335C81] bg-[#E3EAF0] px-4 py-2.5 text-xs text-[#1E3A54] flex flex-wrap items-center justify-between gap-2">
             <span>
-              <strong>Supplementary Tool (Linked to Module 4):</strong> Explore how evaluation metrics map across Machine Learning, Systems &amp; Agentic AI, and Human–AI Interaction.
+              <strong>Supplementary Tool (Linked to Module 1 &amp; Module 3):</strong> Explore 29 evaluation metrics mapped across the 7 layers and units of analysis.
             </span>
-            <button onClick={() => selectModule(3)} className="font-semibold underline">
-              ← Return to Module 4
+            <button onClick={() => selectModule(0)} className="font-semibold underline">
+              ← Return to Module 1
             </button>
           </div>
           <MetricsTaxonomyTool />
@@ -251,21 +247,21 @@ export function App() {
                   }`}
                 >
                   <Layers className="h-3.5 w-3.5 shrink-0" />
-                  Optional Advanced Tracks (A–F)
+                  Optional Advanced Tracks (A–G)
                 </button>
               </div>
 
               {/* Mobile-accessible secondary tool links */}
               <div className="pt-2 border-t border-[#231F1A]/20 sm:hidden space-y-1.5">
                 <div className="px-1 font-mono text-[10px] uppercase text-[#5C5346]">
-                  Supplementary Tools
+                  Practice Tools
                 </div>
                 <button
-                  onClick={() => openView('sphere-tool')}
+                  onClick={() => openView('taxonomy-tool')}
                   className="flex w-full items-center gap-2 rounded-md border border-[#231F1A]/25 bg-[#FBF7EE] p-2 text-xs font-medium"
                 >
-                  <ClipboardCheck className="h-3.5 w-3.5" />
-                  SPHERE Card Tool
+                  <TableProperties className="h-3.5 w-3.5" />
+                  Metrics Taxonomy Tool
                 </button>
                 <button
                   onClick={() => openView('framework-tool')}
@@ -275,11 +271,11 @@ export function App() {
                   Eval Protocol Tool
                 </button>
                 <button
-                  onClick={() => openView('taxonomy-tool')}
+                  onClick={() => openView('sphere-tool')}
                   className="flex w-full items-center gap-2 rounded-md border border-[#231F1A]/25 bg-[#FBF7EE] p-2 text-xs font-medium"
                 >
-                  <TableProperties className="h-3.5 w-3.5" />
-                  Metrics Taxonomy Tool
+                  <ClipboardCheck className="h-3.5 w-3.5" />
+                  SPHERE Card Tool
                 </button>
               </div>
             </div>
@@ -290,7 +286,7 @@ export function App() {
             {viewMode === 'capstone' ? (
               <CapstoneView />
             ) : viewMode === 'tracks' ? (
-              <AdvancedTracksView />
+              <AdvancedTracksView onOpenSphereTool={() => openView('sphere-tool')} />
             ) : (
               <ModuleRenderer
                 key={activeModule.id}

@@ -193,7 +193,9 @@ export function FirstEvalExercise() {
         {revealed2 && (
           <div className="space-y-3">
             <div className="rounded border border-[#4A6B4E] bg-[#E6EDE2] p-3 space-y-1">
-              <div><strong>Why Case 2 matters:</strong> A naive rubric that simply rewards “asked a follow-up question” would score Answer B as a pass even though it ignored what the customer already said.</div>
+              <div>
+                <strong>Construct validity warning:</strong> A naive rubric that simply rewards “asked a follow-up question” scores Answer B as a pass even though it ignored what the customer already said—measuring surface phrasing instead of the actual goal.
+              </div>
             </div>
 
             <div className="overflow-x-auto rounded border border-[#231F1A]">
@@ -225,7 +227,7 @@ export function FirstEvalExercise() {
               </table>
             </div>
             <p className="text-[#5C5346]">
-              <strong>Spotting a regression:</strong> Both versions scored 1/2 overall, yet Prompt v2 broke Case 2 while fixing Case 1. Looking only at the total score hides regressions. And notice the first misconception right away: even if a version passes both return cases, that tells us something about 30-day returns—and <strong>very little about lost accounts, billing disputes, or other support topics</strong>.
+              <strong>Regression &amp; external validity:</strong> Both versions scored 1/2 overall, yet Prompt v2 broke Case 2 while fixing Case 1—looking only at the aggregate score hides regressions. And notice the <strong>external validity</strong> limit: passing clean 30-day return cases tells you nothing about lost accounts, billing disputes, messy inputs, or time-pressured customers.
             </p>
           </div>
         )}

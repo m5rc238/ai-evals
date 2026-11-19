@@ -3,22 +3,17 @@ import {
   AggregationTrapDiagram,
   FallaciesDiagram,
   HorizonDiagram,
-  LandscapeDiagram,
   LayeredPipelineDiagram,
   OutcomesComparisonDiagram,
   ScopeBoundaryDiagram,
-  SphereDiagram,
-  SynergyDiagram,
   ValidityCategoriesDiagram,
 } from './VisualDiagrams';
 import { FirstEvalExercise } from './FirstEvalExercise';
 import {
-  DISCIPLINES,
   ESSENTIAL_GLOSSARY,
-  EVAL_TAXONOMY,
-  EVIDENCE_HIERARCHY,
   EVIDENCE_METHODS,
-  FLOW_NODES,
+  JUDGE_MECHANISMS,
+  OPERATING_RULES,
   PROTOCOL_FIELDS,
   REPORTING_CLAIMS,
   SAMPLING_PURPOSES,
@@ -27,7 +22,6 @@ import {
   VALIDITY_CATEGORIES,
 } from '../data/evalsData';
 import { STATS_WORKED_EXAMPLES } from '../data/statsWorkedExamples';
-import { LESSON_CONSOLIDATION_MAP } from '../data/curriculum';
 
 export function ModuleDeepContent({
   moduleId,
@@ -43,87 +37,173 @@ export function ModuleDeepContent({
   if (moduleId === 'm1') {
     return (
       <div className="space-y-6 text-sm leading-relaxed text-[#231F1A]">
-        {/* Immediate Plain-Language Definition + 3 Core Parts */}
+        {/* 1. What an AI Eval Is + Contrast with Unit Tests */}
         <section className="space-y-3">
+          <h4 className="font-display text-lg font-bold">
+            What an AI Eval Is (and Why Unit Tests Aren’t Enough)
+          </h4>
           <p className="text-base font-semibold leading-snug text-[#231F1A]">
-            An AI eval is a structured test of how an AI model or application performs on a specific task.
+            An AI evaluation (eval) is a systematic process for judging how an AI model or AI-enabled system performs under defined conditions.
           </p>
           <p>
-            Every eval has three parts: <strong>test cases</strong> are the situations you try, <strong>scoring criteria</strong> define a good answer or a failure, and <strong>the scoring method</strong> is how a person or program applies those criteria. Try one complete eval below before reading any framework or glossary.
+            You give the system tasks or observe it in use, collect evidence, and apply explicit criteria to determine whether it meets a goal. <strong>Evals complement unit tests:</strong> unit tests check fixed deterministic requirements such as whether an output matches a JSON schema, whereas evals measure performance across a distribution of cases and—when outputs vary—across repeated runs. You can score every run pass/fail and still learn from the overall pass rate and the specific kinds of failures you observe.
           </p>
         </section>
 
-        {/* First Exercise Immediately */}
-        <FirstEvalExercise />
+        {/* 2. The Three Components */}
+        <section className="space-y-3">
+          <h4 className="font-display text-base font-bold">The Three Explicit Components</h4>
+          <div className="grid gap-3 sm:grid-cols-3 text-xs">
+            <div className="vintage-box rounded-md p-3.5 space-y-1">
+              <div className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[#C8552D]">
+                1. Dataset (Stimulus)
+              </div>
+              <p className="text-[#231F1A]">
+                The inputs, scenarios, or real-world logs used to elicit or observe system behavior.
+              </p>
+            </div>
+            <div className="vintage-box rounded-md p-3.5 space-y-1">
+              <div className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[#335C81]">
+                2. Rubric (Criteria)
+              </div>
+              <p className="text-[#231F1A]">
+                The explicit definition of what counts as accurate, useful, safe, or failing.
+              </p>
+            </div>
+            <div className="vintage-box rounded-md p-3.5 space-y-1">
+              <div className="font-mono text-[10px] font-semibold uppercase tracking-wider text-[#2A422D]">
+                3. Judge (Scorer)
+              </div>
+              <p className="text-[#231F1A]">
+                The mechanism applying the criteria—deterministic code, an LLM grader, or a human reviewer.
+              </p>
+            </div>
+          </div>
+          <p className="text-xs text-[#5C5346] border-l-2 border-[#335C81] pl-3">
+            <strong>Where production telemetry fits:</strong> Production logs and user interactions (such as whether an analyst corrected a generated citation) supply raw <em>evidence</em>, not a ready-made score. An explicit <strong>scoring rule</strong> still determines how that evidence counts.
+          </p>
+        </section>
 
-        {/* Bridge to Real Decisions & Misconceptions */}
+        {/* 3. Layers & Units of Analysis (Inline, never buried) */}
         <section className="space-y-3">
           <h4 className="font-display text-base font-bold">
-            From One Small Eval to Real Team Decisions
+            The Seven Layers &amp; Units of Analysis
           </h4>
-          <p>
-            Now apply the same thinking to a broader team question: <strong>“Should our research team use an AI assistant to summarize papers?”</strong> That question splits into smaller tests—each needing different evidence: did the retriever find the right passages, did the summary represent them accurately, did analysts produce better briefs than with their manual workflow, and how much time did they spend checking citations?
-          </p>
-          <p>
-            Notice two distinctions that prevent confusion. First, <strong>what is being evaluated</strong> moves outward in layers: the raw <em>model</em>, the <em>configured system</em> (prompts + retrieval), the <em>application</em> UI, the <em>human–AI workflow</em>, and the <em>organizational outcome</em>. Second, <strong>evaluation categories overlap</strong>: words like <em>capability</em>, <em>safety</em>, and <em>robustness</em> name what concern you test, while <em>comparative</em>, <em>benchmark-based</em>, and <em>longitudinal</em> describe how the study is structured. A four-week comparison of two citation tools with real analysts is comparative, human-centered, and longitudinal at once.
-          </p>
-          <p className="text-xs text-[#5C5346] border-l-2 border-[#C8552D] pl-3">
-            <strong>Practical note:</strong> Keep <em>empirical observations</em> (what happened on the test), <em>normative choices</em> (what failures your team refuses to accept), and <em>recommendations</em> separate. Passing return-policy cases tells you about returns—not lost accounts or overall user benefit.
-          </p>
-        </section>
-
-        {/* Landscape Diagram After the Exercise */}
-        <section className="space-y-3">
-          <h4 className="font-display text-base font-bold">How the Bigger Evaluation Landscape Fits Together</h4>
           <p className="text-xs text-[#5C5346]">
-            When a quick check grows into a formal study, the diagram below (a <strong>proposed synthesis</strong>, not an established standard) shows how decisions connect to scope, criteria, evidence, and measurement—with feedback loops when early results reshape your criteria, governance across every step, and an outer quality layer asking what claims the evidence actually supports.
+            Two scoping choices determine what an eval actually measures: the <strong>layer</strong> (where in the system you evaluate) and the <strong>unit of analysis</strong> (what each item represents when you aggregate or compare results).
           </p>
-          <LandscapeDiagram />
+          <div className="overflow-x-auto vintage-box rounded-md">
+            <table className="w-full text-left text-xs">
+              <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
+                <tr>
+                  <th className="px-3 py-2 font-semibold"># · Layer</th>
+                  <th className="px-3 py-2 font-semibold">Core Question (Meridian Example)</th>
+                  <th className="px-3 py-2 font-semibold">Possible Unit of Analysis</th>
+                  <th className="px-3 py-2 font-semibold">Cross-Layer Caution</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#231F1A]/15">
+                {SCOPES.map((s, idx) => (
+                  <tr key={s.id}>
+                    <td className="px-3 py-2 font-semibold whitespace-nowrap">
+                      {idx + 1}. {s.name}
+                    </td>
+                    <td className="px-3 py-2">{s.question}</td>
+                    <td className="px-3 py-2 font-mono text-[11px] text-[#335C81]">{s.unit}</td>
+                    <td className="px-3 py-2 text-[#5C5346]">{s.transferWarning}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <ScopeBoundaryDiagram />
+          <div className="grid gap-3 sm:grid-cols-2 text-xs">
+            <div className="rounded-md border border-[#231F1A]/25 bg-[#FBF7EE] p-3.5 space-y-1">
+              <div className="font-semibold text-[#231F1A]">One layer can hold multiple units</div>
+              <p className="text-[#5C5346]">
+                If 20 analysts each complete 10 tasks, you record <strong>200 task outcomes</strong>. If you compare each analyst’s success rate across two interfaces, the <strong>analyst</strong> is your unit of analysis.
+              </p>
+            </div>
+            <div className="rounded-md border border-[#C8552D]/40 bg-[#F7E4DC]/50 p-3.5 space-y-1">
+              <div className="font-semibold text-[#7D3016]">Passing a lower layer never guarantees higher-layer success</div>
+              <p className="text-[#231F1A]">
+                A workflow can meet its goal if verification catches a model error—while a factually accurate model can still fall short in practice if the interface makes verification too costly.
+              </p>
+            </div>
+          </div>
         </section>
 
-        {/* Compact Reference Drawer */}
+        {/* 4. Validity & Four Operating Rules */}
+        <section className="space-y-3">
+          <h4 className="font-display text-base font-bold">
+            Validity: What a Score Supports &amp; Four Operating Rules
+          </h4>
+          <p className="text-xs text-[#5C5346]">
+            A test can produce repeatable results and still measure the wrong thing. Start with two core validity questions (expanded into the full 3-pillar framework in{' '}
+            {onSelectModule ? (
+              <button
+                type="button"
+                onClick={() => onSelectModule(4)}
+                className="font-semibold text-[#335C81] underline"
+              >
+                Module 5
+              </button>
+            ) : (
+              <strong>Module 5</strong>
+            )}
+            ):
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 text-xs">
+            <div className="rounded-md border border-[#4A6B4E]/50 bg-[#E6EDE2]/60 p-3.5 space-y-1">
+              <div className="font-semibold text-[#2A422D]">Construct validity</div>
+              <p className="text-[#231F1A]">
+                Does the test measure the actual goal? A rubric meant to assess factual accuracy may inadvertently reward polish, length, or asking irrelevant follow-up questions.
+              </p>
+            </div>
+            <div className="rounded-md border border-[#335C81]/50 bg-[#E3EAF0]/60 p-3.5 space-y-1">
+              <div className="font-semibold text-[#1E3A54]">External validity</div>
+              <p className="text-[#231F1A]">
+                Do results generalize to the conditions you care about? Clean prompts and single-turn cases tell you little about messy inputs, shifting distributions, or time-pressured users.
+              </p>
+            </div>
+          </div>
+
+          <div className="vintage-box rounded-md p-4 space-y-2.5 text-xs">
+            <div className="font-display text-sm font-bold text-[#231F1A]">Four Operating Rules</div>
+            <ol className="space-y-2">
+              {OPERATING_RULES.map((rule) => (
+                <li key={rule.id} className="flex items-start gap-2.5">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#231F1A] font-mono text-[10px] font-bold text-[#FBF7EE]">
+                    {rule.number}
+                  </span>
+                  <div>
+                    <strong className="text-[#231F1A]">{rule.title}.</strong>{' '}
+                    <span className="text-[#5C5346]">{rule.rule}</span>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* 5. First Hands-On Exercise */}
+        <FirstEvalExercise />
+
+        {/* 6. Compact Reference Drawer */}
         <details className="vintage-box rounded-md p-4 text-xs">
           <summary className="cursor-pointer font-semibold text-[#231F1A]">
-            Reference: 5 Misconceptions, 10-Element Table, Taxonomy, Glossary (15 Terms) &amp; Evidence Hierarchy
+            Quick Reference: 5 Common Misconceptions &amp; Essential Glossary
           </summary>
           <div className="mt-4 space-y-5">
             <div>
               <div className="font-semibold mb-1.5">Five Common Misconceptions</div>
               <ol className="list-decimal pl-5 space-y-1.5 text-[#5C5346]">
-                <li><strong className="text-[#231F1A]">High benchmark score = ready to deploy:</strong> Needs configured-system and real-user workflow evidence.</li>
+                <li><strong className="text-[#231F1A]">High benchmark score = ready to deploy:</strong> Layer 2 scores need configured-harness and workflow validation.</li>
                 <li><strong className="text-[#231F1A]">Correct answer = human-like reasoning:</strong> Memorization or shortcuts can produce the same answer; test perturbations.</li>
                 <li><strong className="text-[#231F1A]">Grader agreement = measuring the right thing:</strong> Raters can agree on a flawed rubric; check construct validity.</li>
                 <li><strong className="text-[#231F1A]">Faster drafting = faster overall:</strong> Measure total task time including checking and correction.</li>
                 <li><strong className="text-[#231F1A]">Zero observed failures = zero risk:</strong> 0/100 still permits up to ~3% failure rate at 95% confidence.</li>
               </ol>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
-                  <tr>
-                    <th className="px-3 py-1.5 font-semibold">Element</th>
-                    <th className="px-3 py-1.5 font-semibold">Core Question</th>
-                    <th className="px-3 py-1.5 font-semibold">Practical Output</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#231F1A]/15">
-                  {FLOW_NODES.map((n) => (
-                    <tr key={n.id}>
-                      <td className="px-3 py-1.5 font-medium">{n.number}. {n.title}</td>
-                      <td className="px-3 py-1.5">{n.question}</td>
-                      <td className="px-3 py-1.5 text-[#5C5346]">{n.practicalOutput}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div>
-              <div className="font-semibold mb-1.5">Evaluation Taxonomy</div>
-              <ul className="space-y-1 text-[#5C5346]">
-                {EVAL_TAXONOMY.map((item) => (
-                  <li key={item.name}><strong className="text-[#231F1A]">{item.name}:</strong> {item.focus}</li>
-                ))}
-              </ul>
             </div>
             <div>
               <div className="font-semibold mb-1.5">Essential Terminology</div>
@@ -136,19 +216,6 @@ export function ModuleDeepContent({
                 ))}
               </dl>
             </div>
-            <div>
-              <div className="font-semibold mb-1.5">Practical Evidence Hierarchy &amp; Disciplines</div>
-              <ul className="space-y-1 text-[#5C5346] mb-3">
-                {EVIDENCE_HIERARCHY.map((e) => (
-                  <li key={e.level}><strong className="text-[#231F1A]">{e.level}:</strong> {e.role}</li>
-                ))}
-              </ul>
-              <ul className="space-y-1 text-[#5C5346]">
-                {DISCIPLINES.map((d) => (
-                  <li key={d.name}><strong className="text-[#231F1A]">{d.name}:</strong> {d.role}</li>
-                ))}
-              </ul>
-            </div>
           </div>
         </details>
       </div>
@@ -160,104 +227,53 @@ export function ModuleDeepContent({
       <div className="space-y-6 text-sm leading-relaxed text-[#231F1A]">
         <section className="space-y-3">
           <h4 className="font-display text-lg font-bold">
-            One Core Question: Does a Person Using AI Do Better Work or Finish Sooner?
+            Operating Rule 1: Start With the Decision—and Ask If You Need AI
           </h4>
           <p>
-            When evaluating an assistant or copilot for real work, start with a two-condition comparison: <strong>your team’s current workflow</strong> versus <strong>the same people using the AI tool</strong>. Measure completed work quality and <strong>total task time</strong>—which always includes drafting, reading, citation checking, and fixing mistakes. Faster drafting is not a net time saving if verification eats back the minutes.
+            The decision you need to make determines the <strong>layer</strong>, the <strong>unit of analysis</strong>, the <strong>comparator baseline</strong>, and the rigor required. For a workplace or product decision, always put three legitimate options on the table: <strong>(1) keeping the current workflow</strong>, <strong>(2) shipping a credible simpler non-AI fix</strong> (such as full-text search, cleaner permissions, or a checklist), and <strong>(3) testing AI assistance against that improved baseline</strong>.
           </p>
           <p>
-            When do you need a third <strong>AI-alone</strong> condition? Add it when your claim is <strong>synergy</strong>—that the human–AI team outperforms <em>both</em> the human alone and the AI alone. As Vaccaro et al. (2024) found across 106 studies (370 effect sizes), Human+AI often beats humans alone (augmentation) while still losing to the better solo actor on decision-making tasks.
+            Choosing the simpler fix is a strong, disciplined outcome—not a failure. Testing AI becomes justified when the simpler baseline still leaves a real bottleneck (such as synthesizing dense methods across five papers) and you want to verify whether AI beats that baseline without adding unacceptable errors or review cost.
           </p>
-          <p className="text-xs text-[#5C5346]">
-            <strong>Why direct human-outcome testing matters:</strong> Perceived speed can reverse when timed objectively (METR, 2025), and immediate task completion does not guarantee skill acquisition when learning something new (Anthropic, Jan 29, 2026).
-          </p>
-          <OutcomesComparisonDiagram />
           <p className="text-xs text-[#5C5346] border-l-2 border-[#C8552D] pl-3">
-            <strong>Practical note:</strong> Test with real target users rather than LLM-simulated personas (which CoMPosT, 2023 showed can caricature demographic groups), and watch for <em>automation bias</em> (rubber-stamping fluent errors) versus <em>algorithm aversion</em> (abandoning helpful tools after visible mistakes).
+            <strong>Scientific vs. product evals:</strong> Not every evaluation is a launch gate. A capability study at Layer 2 can test a clear scientific question (e.g., sensitivity to prompt perturbations) without claiming workplace readiness.
           </p>
         </section>
 
-        <details className="vintage-box rounded-md p-4 text-xs space-y-4">
-          <summary className="cursor-pointer font-semibold text-[#231F1A]">
-            Extensions: Human–AI Synergy Meta-Analysis (FIG 2.2) &amp; SPHERE Evaluation Card (Zhao et al., 2025)
-          </summary>
-          <div className="mt-4 space-y-4">
-            <p className="text-[#5C5346]">
-              <strong>Synergy vs. Augmentation:</strong> Compare Human+AI against Human alone (augmentation) and against max(Human, AI) (synergy).
-            </p>
-            <SynergyDiagram />
-            <p className="text-[#5C5346]">
-              <strong>SPHERE</strong> (Zhao et al., ACL 2025 Findings;{' '}
-              <a href="https://doi.org/10.18653/v1/2025.findings-acl.70" target="_blank" rel="noopener noreferrer" className="text-[#C8552D] underline">
-                DOI: 10.18653/v1/2025.findings-acl.70
-              </a>
-              {' · '}
-              <a href="https://sphere-eval.github.io/" target="_blank" rel="noopener noreferrer" className="text-[#335C81] underline">
-                sphere-eval.github.io
-              </a>
-              ) is a <strong>proposed organizing card</strong> structuring Human–AI evaluation around What, How, Who, When, and Meta-Validation.
-            </p>
-            <SphereDiagram />
+        <section className="space-y-3">
+          <h4 className="font-display text-base font-bold">
+            Pinning the Harness, Separating Modes &amp; Defending Against Contamination
+          </h4>
+          <div className="grid gap-3 sm:grid-cols-3 text-xs">
+            <div className="vintage-box rounded-md p-3.5 space-y-1">
+              <div className="font-semibold text-[#231F1A]">Pin the full harness</div>
+              <p className="text-[#5C5346]">
+                For systems and agents (Layer 4), evaluate the model together with its prompts, retrieval index, tools, permissions, memory, and retry/stopping rules.
+              </p>
+            </div>
+            <div className="vintage-box rounded-md p-3.5 space-y-1">
+              <div className="font-semibold text-[#231F1A]">Explore vs. confirm</div>
+              <p className="text-[#5C5346]">
+                Use exploratory analysis to uncover bugs and refine your rubric, then lock primary metrics and thresholds <em>before</em> running on a held-out confirmatory set.
+              </p>
+            </div>
+            <div className="vintage-box rounded-md p-3.5 space-y-1">
+              <div className="font-semibold text-[#231F1A]">Private refreshed cases</div>
+              <p className="text-[#5C5346]">
+                Public benchmarks leak into training corpora (Operating Rule 3). For real deployment decisions, rely on private, periodically refreshed domain cases.
+              </p>
+            </div>
           </div>
-        </details>
-      </div>
-    );
-  }
-
-  if (moduleId === 'm3') {
-    return (
-      <div className="space-y-6 text-sm leading-relaxed text-[#231F1A]">
-        <section className="space-y-3">
-          <h4 className="font-display text-lg font-bold">
-            What Problem Are We Trying to Solve—and Do We Need AI for It?
-          </h4>
-          <p>
-            Before designing an AI evaluation for a workplace tool, compare three equally legitimate options: <strong>(1) keeping the current workflow</strong>, <strong>(2) shipping a credible simpler non-AI change</strong> (such as full-text search, cleaner folders, or a 1-page review checklist), and <strong>(3) testing AI assistance</strong>. In our Meridian example, if analysts lose 25 minutes hunting for PDFs and forget to write a Limitations section because there is no template, better search and a checklist may solve the core bottleneck at a fraction of the cost and zero hallucination risk.
-          </p>
-          <p>
-            Choosing the simpler fix is a strong, disciplined outcome—not a failure. Testing AI becomes justified when the simpler baseline still leaves a real bottleneck (such as synthesizing dense methods across five papers) and you want to test whether AI improves on that upgraded baseline.
-          </p>
-          <p className="text-xs text-[#5C5346] border-l-2 border-[#C8552D] pl-3">
-            <strong>Scientific studies note:</strong> Not every evaluation is a deployment decision. A capability study can have a valid scientific purpose—such as probing how a model handles reasoning perturbations—independent of shipping a product.
-          </p>
-        </section>
-
-        <section className="space-y-3">
-          <h4 className="font-display text-base font-bold">For Formal Studies: Scopes, Harnesses &amp; Contamination</h4>
-          <p>
-            When moving from an informal check to a formal study, specify a falsifiable research question, lock primary outcomes and thresholds <em>before</em> inspecting confirmatory data (separating exploratory trace analysis from confirmatory testing), and pin the entire agent harness (prompts, retrieval index, tools, permissions, stopping rules). Audit for training, test-set, prompt, and temporal leakage so results are not inflated by memorized answers.
-          </p>
-          <ScopeBoundaryDiagram />
         </section>
 
         <details className="vintage-box rounded-md p-4 text-xs">
           <summary className="cursor-pointer font-semibold text-[#231F1A]">
-            Reference: 10-Field Formal Framing Brief, 6 Scope Boundaries &amp; 12 Target Categories
+            Reference: 10-Field Scoping Brief &amp; 12 Target Categories
           </summary>
           <div className="mt-3 space-y-4">
             <p className="text-[#5C5346]">
-              <strong>10-field formal brief:</strong> Target population, task, AI system &amp; harness, comparator, context/exclusions, primary &amp; secondary outcomes, measurement period, hypothesis, key confounders, and limits of generalization.
+              <strong>10-field scoping brief:</strong> Decision &amp; layer, unit of analysis, target population, task &amp; coverage exclusions, pinned AI system &amp; harness, baseline comparator, primary &amp; tradeoff metrics, measurement period, hypothesis/threshold, and contamination/confounder checks.
             </p>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
-                  <tr>
-                    <th className="px-3 py-1.5 font-semibold">Scope</th>
-                    <th className="px-3 py-1.5 font-semibold">Boundary</th>
-                    <th className="px-3 py-1.5 font-semibold">Transfer Warning</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#231F1A]/15">
-                  {SCOPES.map((s) => (
-                    <tr key={s.id}>
-                      <td className="px-3 py-1.5 font-semibold">{s.name}</td>
-                      <td className="px-3 py-1.5 text-[#5C5346]">{s.boundary}</td>
-                      <td className="px-3 py-1.5 text-[#7D3016]">{s.transferWarning}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
             <ul className="grid gap-2 sm:grid-cols-2 text-[#5C5346]">
               {TARGET_INVENTORY.map((t) => (
                 <li key={t.name}><strong className="text-[#231F1A]">{t.name}:</strong> {t.concerns}</li>
@@ -269,26 +285,41 @@ export function ModuleDeepContent({
     );
   }
 
-  if (moduleId === 'm4') {
+  if (moduleId === 'm3') {
     return (
       <div className="space-y-6 text-sm leading-relaxed text-[#231F1A]">
         <section className="space-y-3">
           <h4 className="font-display text-lg font-bold">
-            Writing Three Kinds of Test Cases: Ordinary, Ambiguous, and Escalation
+            Operating Rule 2: Treat the Eval as the Spec
           </h4>
           <p>
-            Right after running your first two-case eval in Module 1, the fastest way to make your test suite useful is to cover three situations with explicit, observable expected behavior:
+            Before tuning prompts or adding complex retrieval pipelines, inspect 30–50 real inputs and execution traces to see how the system actually fails. Define failure modes and grading criteria on a small set of real examples first, then expand your Dataset (Stimulus) across three explicit situations:
           </p>
           <ul className="list-disc pl-5 space-y-1.5">
-            <li><strong>Ordinary case:</strong> All facts are clear and within policy (e.g., unused item bought 10 days ago → confirm return directly without redundant questions).</li>
-            <li><strong>Ambiguous case:</strong> A crucial detail is missing or borderline (e.g., “I opened the outer box to check the color” → ask or clarify before promising a return).</li>
-            <li><strong>Escalation / abstention case:</strong> High-stakes exception or missing evidence (e.g., a $650 damaged item or out-of-corpus question → escalate to a human or abstain rather than guess).</li>
+            <li><strong>Ordinary cases:</strong> All facts are clear and within policy (e.g., unused item bought 10 days ago → confirm return directly without redundant questions).</li>
+            <li><strong>Ambiguous cases:</strong> A crucial detail is missing or borderline (e.g., “I opened the outer box to check the color” → clarify before promising a return).</li>
+            <li><strong>Escalation / abstention cases:</strong> High-stakes exception or missing evidence (e.g., a $650 damaged item or out-of-corpus paper question → escalate or abstain rather than guess).</li>
           </ul>
-          <p>
-            Deliberately difficult <strong>challenge cases</strong> are invaluable because they surface failure modes quickly—but <strong>their failure rate cannot be read as your everyday failure rate</strong>. Only a representative sample of typical traffic estimates how often everyday users encounter an error. Keep challenge sets and representative sets reported separately.
+        </section>
+
+        <section className="space-y-3">
+          <h4 className="font-display text-base font-bold">
+            Keep Sampling Purposes Strictly Separate
+          </h4>
+          <p className="text-xs text-[#5C5346]">
+            A deliberately tough challenge suite is essential for exposing brittle edge cases, but <strong>its failure rate cannot be read as your everyday production failure rate</strong>. Only a representative traffic sample estimates prevalence. Likewise, synthetic cases can probe targeted scenarios, but their realism and domain coverage must be checked—synthetic origin never proves real-world prevalence.
           </p>
+          <div className="grid gap-2.5 sm:grid-cols-2 text-xs">
+            {SAMPLING_PURPOSES.map((sp) => (
+              <div key={sp.name} className="vintage-box rounded-md p-3 space-y-1">
+                <div className="font-semibold text-[#231F1A]">{sp.name}</div>
+                <div className="text-[#5C5346]">{sp.role}</div>
+                <div className="text-[11px] font-medium text-[#7D3016]">{sp.warning}</div>
+              </div>
+            ))}
+          </div>
           <p className="text-xs text-[#5C5346] border-l-2 border-[#C8552D] pl-3">
-            <strong>Practical note:</strong> Building a retrieval-augmented generation (RAG) system? Retrieval-specific metrics (<code>Precision@k</code>, <code>Recall@k</code>, <code>MRR</code>, <code>NDCG@k</code>) and the 100-item RAG dataset assignment live in{' '}
+            <strong>Building RAG?</strong> Retrieval-specific metrics (<code>Precision@k</code>, <code>Recall@k</code>, <code>MRR</code>, <code>NDCG@k</code>) and the 100-item RAG dataset assignment live in{' '}
             {onOpenTracks ? (
               <button type="button" onClick={onOpenTracks} className="font-semibold text-[#C8552D] underline">
                 Optional Advanced Track A (RAG Evaluation)
@@ -301,58 +332,42 @@ export function ModuleDeepContent({
         </section>
 
         <section className="space-y-3">
-          <h4 className="font-display text-base font-bold">Layered Evidence &amp; Task-Matched Metrics</h4>
-          <p className="text-xs text-[#5C5346]">
-            Pair fast intrinsic case checks early with extrinsic user studies before deployment and monitoring after release. Choose metrics for the construct—classification (precision/recall/F1 under imbalance), generative rubrics (source fidelity, instruction adherence), probability calibration (Brier score, ECE), and operational cost/latency.
-          </p>
+          <h4 className="font-display text-base font-bold">Staged Evidence Pipeline &amp; Collection Methods</h4>
           <LayeredPipelineDiagram />
-        </section>
-
-        <details className="vintage-box rounded-md p-4 text-xs">
-          <summary className="cursor-pointer font-semibold text-[#231F1A]">
-            Reference: 8 Evidence Collection Methods &amp; 4 Sampling Purposes
-          </summary>
-          <div className="mt-3 space-y-4">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
-                  <tr>
-                    <th className="px-3 py-1.5 font-semibold">Method</th>
-                    <th className="px-3 py-1.5 font-semibold">Establishes</th>
-                    <th className="px-3 py-1.5 font-semibold">Main Limitation</th>
+          <div className="overflow-x-auto vintage-box rounded-md">
+            <table className="w-full text-left text-xs">
+              <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
+                <tr>
+                  <th className="px-3 py-1.5 font-semibold">Method</th>
+                  <th className="px-3 py-1.5 font-semibold">What It Establishes</th>
+                  <th className="px-3 py-1.5 font-semibold">Main Limitation</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#231F1A]/15">
+                {EVIDENCE_METHODS.map((m) => (
+                  <tr key={m.name}>
+                    <td className="px-3 py-1.5 font-medium">{m.name}</td>
+                    <td className="px-3 py-1.5">{m.establishes}</td>
+                    <td className="px-3 py-1.5 text-[#5C5346]">{m.limitation}</td>
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-[#231F1A]/15">
-                  {EVIDENCE_METHODS.map((m) => (
-                    <tr key={m.name}>
-                      <td className="px-3 py-1.5 font-medium">{m.name}</td>
-                      <td className="px-3 py-1.5">{m.establishes}</td>
-                      <td className="px-3 py-1.5 text-[#5C5346]">{m.limitation}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <ul className="space-y-1 text-[#5C5346]">
-              {SAMPLING_PURPOSES.map((sp) => (
-                <li key={sp.name}><strong className="text-[#231F1A]">{sp.name}:</strong> {sp.role} <em>({sp.warning})</em></li>
-              ))}
-            </ul>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </details>
+        </section>
       </div>
     );
   }
 
-  if (moduleId === 'm5') {
+  if (moduleId === 'm4') {
     return (
       <div className="space-y-6 text-sm leading-relaxed text-[#231F1A]">
         <section className="space-y-3">
           <h4 className="font-display text-lg font-bold">
-            Start with Two Reviewers Disagreeing on One Concrete Answer
+            Sharpen Your Rubric Before Scaling Any Judge
           </h4>
           <p>
-            Before calculating agreement statistics or building an LLM judge, look at why two careful human reviewers often disagree on the same output (<em>illustrative example</em>):
+            Before computing agreement statistics or writing an LLM-judge prompt, look at why two careful human reviewers often disagree on the exact same output (<em>illustrative example</em>):
           </p>
           <div className="vintage-box rounded-md p-4 text-xs space-y-2">
             <div><strong>Source excerpt:</strong> “In a 2024 survey of 400 employees, teams with flexible hours reported 12% lower turnover than fixed-hour teams; no randomized assignment was used.”</div>
@@ -370,48 +385,63 @@ export function ModuleDeepContent({
               <strong>Revised observable rule:</strong> “Fail if the summary uses causal verbs (reduced, boosted, caused) for an observational/non-randomized finding.” → <strong>Rescore: FAIL</strong> (both reviewers now agree).
             </div>
           </div>
-          <p>
-            Once individual grades are reliable, avoid the second grading trap: collapsing distinct failures into one average.
-          </p>
-          <AggregationTrapDiagram />
-          <p className="text-xs text-[#5C5346] border-l-2 border-[#C8552D] pl-3">
-            <strong>Practical note:</strong> Looking for human-outcomes studies (METR developer timing, Anthropic coding-skills formation, reliance)? Those are consolidated in{' '}
-            {onSelectModule ? (
-              <button type="button" onClick={() => onSelectModule(1)} className="font-semibold text-[#C8552D] underline">
-                Module 2 (Human–AI Interaction)
-              </button>
-            ) : (
-              <strong>Module 2 (Human–AI Interaction)</strong>
-            )}
-            .
-          </p>
         </section>
 
-        <details className="vintage-box rounded-md p-4 text-xs space-y-3">
-          <summary className="cursor-pointer font-semibold text-[#231F1A]">
-            Scaling Grading: Agreement Statistics (κ, α, ICC), Simpson’s Paradox &amp; LLM-Judge Validation
-          </summary>
-          <div className="mt-3 space-y-2.5 text-[#5C5346]">
-            <p>
-              <strong className="text-[#231F1A]">Chance-corrected inter-rater reliability:</strong> Raw percent agreement overstates consistency when one label dominates. Use <strong>Cohen’s κ</strong> (2 raters, nominal), <strong>weighted κ</strong> (ordinal scales), <strong>Krippendorff’s α</strong> (2+ raters or missing labels), or <strong>ICC</strong> (continuous scores).
-            </p>
-            <p>
-              <strong className="text-[#231F1A]">LLM-as-a-judge validation:</strong> Never treat an LLM judge as ground truth without held-out calibration against adjudicated human labels. Separate tuning/calibration data from independent validation data, check recall on rare critical errors (false negatives), and test for position, verbosity, self-preference, and model-family biases.
-            </p>
-            <p>
-              <strong className="text-[#231F1A]">Subgroups &amp; Simpson’s paradox:</strong> Always disaggregate by difficulty, language, or user group so an unbalanced task mix cannot reverse the apparent winner.
-            </p>
+        <section className="space-y-3">
+          <h4 className="font-display text-base font-bold">Choosing &amp; Validating Your Judge (Scorer)</h4>
+          <div className="overflow-x-auto vintage-box rounded-md">
+            <table className="w-full text-left text-xs">
+              <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
+                <tr>
+                  <th className="px-3 py-2 font-semibold">Judge Mechanism</th>
+                  <th className="px-3 py-2 font-semibold">Best Used For</th>
+                  <th className="px-3 py-2 font-semibold">Validation Check Needed</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#231F1A]/15">
+                {JUDGE_MECHANISMS.map((jm) => (
+                  <tr key={jm.name}>
+                    <td className="px-3 py-2 font-semibold">{jm.name}</td>
+                    <td className="px-3 py-2">{jm.suitableFor}</td>
+                    <td className="px-3 py-2 text-[#5C5346]">{jm.checkNeeded}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </details>
+
+          <div className="grid gap-3 sm:grid-cols-2 text-xs">
+            <div className="rounded-md border border-[#335C81]/40 bg-[#E3EAF0]/60 p-3.5 space-y-1">
+              <div className="font-semibold text-[#1E3A54]">Validating LLM-as-a-Judge</div>
+              <p className="text-[#231F1A]">
+                Separate judge-tuning examples from a held-out human-adjudicated validation set. Audit recall on rare critical errors (false negatives)—high overall agreement can hide missed disasters—and test sensitivity to response length, ordering, and self-preference.
+              </p>
+            </div>
+            <div className="rounded-md border border-[#4A6B4E]/40 bg-[#E6EDE2]/60 p-3.5 space-y-1">
+              <div className="font-semibold text-[#2A422D]">Scaling Human Review Reliability</div>
+              <p className="text-[#231F1A]">
+                Raw % agreement overstates reliability when one class dominates. Use chance-corrected <strong>Cohen’s κ</strong> (2 raters), <strong>weighted κ</strong> (ordinal scales), <strong>Krippendorff’s α</strong> (2+ raters or missing labels), or <strong>ICC</strong> (continuous scores).
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="space-y-3">
+          <h4 className="font-display text-base font-bold">Avoid Average Traps &amp; Simpson’s Paradox</h4>
+          <p className="text-xs text-[#5C5346]">
+            Never let a single pass rate bury a severe error or a subgroup failure. Report critical safety/privacy failures as mandatory release blockers and disaggregate metrics by difficulty, language, or user group so an unbalanced task mix cannot reverse the winner (<em>Simpson’s paradox</em>).
+          </p>
+          <AggregationTrapDiagram />
+        </section>
       </div>
     );
   }
 
-  if (moduleId === 'm6') {
+  if (moduleId === 'm5') {
     const activeStat = STATS_WORKED_EXAMPLES[selectedStatIdx] ?? STATS_WORKED_EXAMPLES[0];
     return (
       <div className="space-y-6 text-sm leading-relaxed text-[#231F1A]">
-        {/* Concrete Main Lesson First */}
+        {/* Core Comparison Case */}
         <section className="space-y-3">
           <h4 className="font-display text-lg font-bold">
             Core Case: Is a +0.10-Point Gain Worth 9× the Cost?
@@ -420,11 +450,30 @@ export function ModuleDeepContent({
             Suppose you test <strong>System A</strong> and <strong>System B</strong> on the exact same 200 research tasks (completed by 25 analysts, 8 tasks each; <em>fictional comparison</em>). System A averages <strong>4.10/5</strong> (95% CI [4.02, 4.18]) at $0.02/task and 1.2s latency. System B averages <strong>4.20/5</strong> (95% CI [4.10, 4.30]) at $0.18/task (9× cost) and 6.5s latency (5.4× slower).
           </p>
           <p>
-            Two rules govern how to read this comparison. First, <strong>never judge statistical significance by whether the two separate 95% CIs overlap</strong>. Because both systems ran on the same 200 tasks, estimate the paired difference directly: <strong>+0.10 points</strong>, with a cluster-robust 95% CI of <strong>[+0.01, +0.19]</strong>. That tells us the small gain is statistically detectable above sampling noise (though it does not measure rubric or rater noise). Second, <strong>statistical detectability is not practical worth</strong>: +0.10 on a 5-point scale rarely justifies 9× cost and 5.4× latency unless that 0.10 shift prevents high-severity errors. Finally, check subgroups: on Non-English queries (<em>n</em> = 15), System A dropped to 2.80 vs. 3.90—a strong warning sign that needs a larger Non-English sample before deploying System A there.
+            Three rules govern how to read this comparison:
           </p>
+          <ul className="list-disc pl-5 space-y-1.5 text-xs text-[#231F1A]">
+            <li>
+              <strong>Estimate the direct difference—never eyeball overlapping CIs:</strong> Because both systems ran on the same 200 tasks, compute the paired difference directly: <strong>+0.10 points</strong>.
+            </li>
+            <li>
+              <strong>Cluster at your unit of analysis:</strong> Remember{' '}
+              {onSelectModule ? (
+                <button type="button" onClick={() => onSelectModule(0)} className="font-semibold text-[#C8552D] underline">
+                  Module 1
+                </button>
+              ) : (
+                <strong>Module 1</strong>
+              )}
+              : 8 tasks per analyst are correlated, so treating 200 tasks as independent shrinks error bars artificially. The cluster-robust 95% CI is <strong>[+0.01, +0.19]</strong>—statistically detectable above sampling noise, though it still excludes rubric/rater error.
+            </li>
+            <li>
+              <strong>Watch for Goodhart’s Law (Operating Rule 4):</strong> Statistical detectability ≠ practical value. Chasing +0.10 on a 5-point scale at 9× cost and 5.4× latency makes no sense unless it prevents severe errors—and on Non-English queries (<em>n</em> = 15), System A dropped to 2.80 vs. 3.90, flagging a subgroup gap that requires a larger sample before deploying there.
+            </li>
+          </ul>
         </section>
 
-        {/* 12 Worked Examples Organized by Question */}
+        {/* 12 Worked Examples */}
         <section className="space-y-3">
           <h4 className="font-display text-base font-bold">
             Statistical Reference: 12 Worked Examples (Pick the Question You Need to Answer)
@@ -479,7 +528,7 @@ export function ModuleDeepContent({
         <section className="space-y-3">
           <h4 className="font-display text-base font-bold">Three Distinct Pillars: Validity, Study Design &amp; Reliability</h4>
           <p>
-            Grounded in the <em>Standards for Educational and Psychological Testing</em> (2014), separate <strong>measurement validity</strong> (do scores mean what you claim?), <strong>study design &amp; generalization</strong> (is the difference causal and transferable?), and <strong>reliability &amp; traceability</strong> (is scoring consistent and auditable?). Reliability and validity are distinct: a reproducible pipeline can consistently measure the wrong thing.
+            Grounded in the <em>Standards for Educational and Psychological Testing</em> (2014), keep <strong>measurement validity</strong> (do scores support the claim?), <strong>study design &amp; generalization</strong> (is the effect causal and transferable?), and <strong>reliability &amp; traceability</strong> (is scoring consistent and auditable?) separate. A reproducible pipeline can consistently measure the wrong construct.
           </p>
           <ValidityCategoriesDiagram />
           <div className="space-y-4 text-xs">
@@ -499,45 +548,58 @@ export function ModuleDeepContent({
           </div>
         </section>
 
-        {/* Formal Study & Deployment Material */}
-        <details className="vintage-box rounded-md p-4 text-xs space-y-4">
+        <details className="vintage-box rounded-md p-4 text-xs space-y-3">
           <summary className="cursor-pointer font-semibold text-[#231F1A]">
-            Deployment &amp; Formal Study Material: Lifecycle Governance (FIG 6.1), 12-Field Protocol &amp; 9→7 Map
+            Reference: 12-Field Pre-Registered Evaluation Protocol Checklist
           </summary>
-          <div className="mt-4 space-y-4">
-            <p className="text-[#5C5346]">
-              Before deployment, write a pre-registered protocol, version product and evaluator separately, assign named risk/halt owners, and monitor over realistic horizons (short-term demos can reward sycophancy, whereas longitudinal studies reveal familiarization or trust erosion).
-            </p>
-            <HorizonDiagram />
-            <ul className="space-y-1 text-[#5C5346]">
-              {PROTOCOL_FIELDS.map((f) => (
-                <li key={f.id}><strong className="text-[#231F1A]">{f.label}:</strong> {f.placeholder}</li>
-              ))}
-            </ul>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-[11px]">
-                <thead className="border-b border-[#231F1A] bg-[#EFE7D6]">
-                  <tr>
-                    <th className="px-2.5 py-1.5 font-semibold">Original Lesson</th>
-                    <th className="px-2.5 py-1.5 font-semibold">New Module</th>
-                    <th className="px-2.5 py-1.5 font-semibold">Content Retained</th>
-                    <th className="px-2.5 py-1.5 font-semibold">Changes Made</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#231F1A]/15">
-                  {LESSON_CONSOLIDATION_MAP.map((row) => (
-                    <tr key={row.originalLesson}>
-                      <td className="px-2.5 py-1.5 font-medium">{row.originalLesson}</td>
-                      <td className="px-2.5 py-1.5">{row.newModule}</td>
-                      <td className="px-2.5 py-1.5 text-[#5C5346]">{row.contentRetained}</td>
-                      <td className="px-2.5 py-1.5 text-[#5C5346]">{row.changesMade}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <ul className="mt-3 space-y-1 text-[#5C5346]">
+            {PROTOCOL_FIELDS.map((f) => (
+              <li key={f.id}><strong className="text-[#231F1A]">{f.label}:</strong> {f.placeholder}</li>
+            ))}
+          </ul>
         </details>
+      </div>
+    );
+  }
+
+  if (moduleId === 'm6') {
+    return (
+      <div className="space-y-6 text-sm leading-relaxed text-[#231F1A]">
+        {/* Layer 4 & Layer 5 Workflow Testing */}
+        <section className="space-y-3">
+          <h4 className="font-display text-lg font-bold">
+            Testing Layers 4–5: Real Workflows, Environment State &amp; Total Human Time
+          </h4>
+          <p>
+            At <strong>Layer 4 (Workflow / Agent)</strong>, never trust an agent’s text response claiming an action succeeded—assert against the actual database, file, API, or citation state after the run finishes.
+          </p>
+          <p>
+            At <strong>Layer 5 (Human–AI Interaction)</strong>, ask one grounded operational question: <strong>does a real user with this AI tool produce better work or finish sooner than with the current workflow?</strong> Run a two-condition comparison (<em>current workflow</em> vs. <em>workflow + AI</em>) with actual target users—not LLM-simulated personas—and measure <strong>total task time</strong> (drafting + citation checking + error fixing). Add a third <strong>AI-alone</strong> condition only if claiming human–AI synergy over both solo baselines.
+          </p>
+          <OutcomesComparisonDiagram />
+        </section>
+
+        {/* Production Monitoring & Lifecycle */}
+        <section className="space-y-3">
+          <h4 className="font-display text-base font-bold">
+            Production Monitoring, Versioning &amp; Reevaluation Triggers
+          </h4>
+          <p className="text-xs text-[#5C5346]">
+            Pre-launch tests only describe a single configuration at one point in time. In production, turn live <strong>telemetry</strong> (overrides, edits, escalations, timeouts) into metrics via explicit <strong>scoring rules</strong> and periodic human audits. Version your product and evaluator separately, assign named risk/halt owners, and define clear triggers for reevaluation (model updates, prompt/retrieval edits, new user groups, or shifting input distributions).
+          </p>
+          <HorizonDiagram />
+          <p className="text-xs text-[#5C5346] border-l-2 border-[#335C81] pl-3">
+            <strong>Going deeper into HCI studies?</strong> The SPHERE 5-dimension card (Zhao et al., ACL 2025), synergy meta-analysis, offloading/skill-retention literature, and persona simulation research live in{' '}
+            {onOpenTracks ? (
+              <button type="button" onClick={onOpenTracks} className="font-semibold text-[#335C81] underline">
+                Optional Advanced Track G (Deep Human–AI Research &amp; SPHERE)
+              </button>
+            ) : (
+              <strong>Optional Advanced Track G (Deep Human–AI Research &amp; SPHERE)</strong>
+            )}
+            .
+          </p>
+        </section>
       </div>
     );
   }
@@ -548,7 +610,7 @@ export function ModuleDeepContent({
       <section className="space-y-3">
         <h4 className="font-display text-lg font-bold">Four Questions to Audit Any Public AI Claim</h4>
         <p>
-          When a leaderboard score becomes a marketing target, it stops being a reliable measure (<em>Goodhart’s law</em>). Audit every press release, vendor deck, or benchmark headline with four questions: <strong>(1) What was actually tested?</strong> <strong>(2) What comparison was made (and with what harness)?</strong> <strong>(3) What is unknown or omitted?</strong> <strong>(4) What wording does the supplied evidence actually support?</strong>
+          When a leaderboard score becomes a marketing target, it stops being a reliable measure (<em>Goodhart’s Law</em>). Audit every press release, vendor deck, or benchmark headline with four questions: <strong>(1) What layer, unit, and cases were actually tested?</strong> <strong>(2) What comparison was made (and with what pinned harness)?</strong> <strong>(3) What tradeoffs, subgroups, or uncertainties are omitted?</strong> <strong>(4) What wording does the supplied evidence actually support?</strong>
         </p>
         <FallaciesDiagram />
       </section>
@@ -556,12 +618,12 @@ export function ModuleDeepContent({
       <section className="space-y-3">
         <h4 className="font-display text-base font-bold">Recurring Pitfalls to Check</h4>
         <ul className="list-disc pl-5 space-y-1.5 text-xs text-[#5C5346]">
-          <li><strong className="text-[#231F1A]">Contamination, leakage &amp; saturation:</strong> Test items appearing in pretraining/prompts, or ceiling scores (95%+) hiding real-world edge-case failures.</li>
+          <li><strong className="text-[#231F1A]">Contamination, leakage &amp; saturation:</strong> Public test items appearing in pretraining/prompts, or ceiling scores (95%+) hiding real-world edge-case failures.</li>
           <li><strong className="text-[#231F1A]">Overfitting &amp; undisclosed harnesses:</strong> Leaderboard optimization via hidden retries, extra compute, or prompt/tool scaffolds that swing scores more than base models.</li>
           <li><strong className="text-[#231F1A]">Version drift &amp; environment mismatch:</strong> Unpinned API snapshots, different sandboxes/timeouts, or broken grading scripts across compared runs.</li>
           <li><strong className="text-[#231F1A]">Selective reporting &amp; multiple comparisons:</strong> Cherry-picking favorable slices, publishing wins while hiding failures, or testing dozens of metrics without correction.</li>
-          <li><strong className="text-[#231F1A]">Misleading averages &amp; false equivalence:</strong> Hiding critical failures inside high means, or equating scores across incompatible benchmarks.</li>
-          <li><strong className="text-[#231F1A]">Extrapolation &amp; causal leaps:</strong> Claiming general intelligence from narrow tests, inferring causation from observational correlations, or equating offline accuracy with real-world user impact.</li>
+          <li><strong className="text-[#231F1A]">Misleading averages &amp; Goodharted proxies:</strong> Hiding critical failures inside high means, optimizing a single score at the expense of latency/cost, or equating incompatible benchmarks.</li>
+          <li><strong className="text-[#231F1A]">Cross-layer leaps:</strong> Claiming general reasoning, enterprise safety, or analyst productivity (Layers 4–6) from narrow Layer 2 benchmark scores.</li>
         </ul>
       </section>
 

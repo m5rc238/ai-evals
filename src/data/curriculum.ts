@@ -58,56 +58,57 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
   {
     id: 'm1',
     number: 1,
-    title: 'Foundations: Run Your First Eval',
-    subtitle: 'Test cases, scoring rules, version regressions, and what a pass actually establishes',
-    integratedLessons: 'Lesson 1',
+    title: 'The Full Picture: What AI Evals Are, Layers & Units',
+    subtitle: 'What evals are vs. unit tests, the 3 components, 7 layers & units of analysis, validity, and your first hands-on eval',
+    integratedLessons: 'Foundations',
     overview:
-      'Learn how AI evaluation works by running a small, complete test first—scoring outputs against a clear rule, comparing two prompt versions to catch a regression, and seeing what a passing score can and cannot tell you.',
+      'Get the complete map before diving into details: what an AI evaluation is, how it complements unit tests, the three explicit components (Dataset, Rubric, Judge), the seven layers and units of analysis from raw inputs to real-world impact, and four practical operating rules—anchored in a 5-minute hands-on test.',
     objectives: [
-      'Define an AI eval in plain language using test cases, scoring criteria, and a scoring method.',
-      'Score illustrative outputs against a concrete policy rule and spot a version regression even when total scores tie.',
-      'Explain what passing a small task test establishes—and what it does not establish about other tasks.',
-      'Distinguish empirical observations, normative choices, and practical recommendations.',
+      'Define an AI eval using its three components—Dataset (Stimulus), Rubric (Criteria), and Judge (Scorer)—and explain how evals complement unit tests.',
+      'Locate any evaluation question across the 7 layers (Data & Inputs through Wider Impacts) and pick the matching unit of analysis.',
+      'Explain why passing a lower-layer eval does not guarantee higher-layer success, and how higher-layer verification can catch lower-layer errors.',
+      'Spot a prompt regression hidden by a tied aggregate score and distinguish construct validity from external validity.',
     ],
-    researchEvidence: [
-      {
-        citation: 'NIST (2023). Artificial Intelligence Risk Management Framework (AI RMF 1.0). NIST AI 100-1.',
-        sourceType: 'Technical report / Framework',
-        url: 'https://www.nist.gov/itl/ai-risk-management-framework',
-        sampleOrScope: 'National risk-management guidance across Govern, Map, Measure, and Manage functions.',
-        finding: 'Treats measurement and governance as iterative, cross-cutting functions rather than a single pre-release step.',
-        limitations: 'Provides high-level organizational principles rather than task-specific statistical thresholds.',
-        doesNotEstablish: 'Does not validate any specific vendor benchmark or proprietary evaluation score.',
-      },
-    ],
+    researchEvidence: [],
     caseStudy: {
-      stageTitle: 'Stage 1 (Fictional Case Study): First Check on the Meridian Research Assistant',
+      stageTitle: 'Stage 1 (Fictional Case Study): Mapping Meridian Across Layers Before Testing',
       narrative:
-        'Meridian Corp is considering an AI assistant to summarize empirical papers. Before buying or launching anything, you run a small check on 5 real paper excerpts with one crisp rule: every quantitative finding in a summary must match the source passage and preserve key qualifiers. That small eval reveals whether basic faithfulness works before investing in a larger study.',
+        'Meridian Corp wants an AI assistant to summarize empirical research papers for analysts. Before arguing over model leaderboards, you map the problem across layers: do our source packets represent real analyst PDFs (Data & Inputs), do generated claims match those sources (Isolated Model), does retrieval surface the right passages (Component), and can analysts catch unsupported claims without wasting time (Human–AI Interaction)? You start with one crisp Dataset + Rubric + Judge check on 5 real paper excerpts.',
       keyDecisions: [
-        'Write an explicit observable rule before scoring outputs.',
-        'Treat passing 5 excerpt checks as evidence about excerpt fidelity only—not proof that analysts save time.',
+        'Write an explicit observable rubric (every quantitative figure must match the source and keep its qualifiers) before iterating on prompts.',
+        'Treat passing 5 excerpt checks as Layer 2 (Isolated Model) evidence on claims—not proof that analysts save time at Layer 5.',
       ],
     },
-    misconceptions: [],
+    misconceptions: [
+      {
+        myth: '“Unit tests already cover our AI features.”',
+        reality:
+          'Unit tests check fixed deterministic requirements such as JSON schema validity. Evals measure probabilistic performance across distributions of cases and repeated runs—even when each run is scored pass/fail.',
+      },
+      {
+        myth: '“Passing a model benchmark means the product will work.”',
+        reality:
+          'Passing a lower-layer eval alone cannot establish higher-layer success: a factually accurate model can still fail in practice if retrieval misses key passages or the interface makes verification too costly.',
+      },
+    ],
     exercise: {
-      title: 'Assignment 1: Write One New Case & Interpret a Version Trade-Off',
-      objective: 'Add one new test case to the return-policy eval and state what a pass establishes.',
+      title: 'Assignment 1: Write Case 3, Name the Layer & Unit, and Spot a Regression',
+      objective: 'Add one new test case to the return-policy eval, identify its layer and unit of analysis, and state what a pass establishes.',
       scenario:
-        'Using the same return policy ("Unused items can be returned within 30 days"), you just tested Case 1 (customer bought 12 days ago, condition unspecified) and Case 2 (customer bought 12 days ago, item unused). Both Prompt v1 and Prompt v2 scored 1/2 overall, but v2 passed Case 1 and failed Case 2.',
+        'Using the return policy ("Unused items can be returned within 30 days"), you ran the interactive exercise above on Case 1 (12 days ago, condition unspecified) and Case 2 (12 days ago, item unused). Both Prompt v1 and Prompt v2 scored 1/2 overall, but v2 passed Case 1 and failed Case 2.',
       instructions: [
-        'Write one new test case (Case 3) that checks a different failure mode of this same policy (for example, an item bought 45 days ago, or an item the customer says they already wore).',
-        'State the expected passing behavior and one concrete failing answer for Case 3.',
-        'In 2 sentences, explain why Prompt v2 is not automatically an improvement over Prompt v1 despite fixing Case 1, and name one topic (such as lost accounts) that passing all three return cases does not test.',
+        'Write one new test case (Case 3) checking a different failure mode of this same policy (for example, an item bought 45 days ago, or an item the customer says they already wore).',
+        'State the expected passing behavior, one failing answer, the evaluation layer (from the 7 layers), and the unit of analysis.',
+        'In 2 sentences, explain why Prompt v2 is not automatically better than Prompt v1 despite fixing Case 1, and name one construct-validity or external-validity limit of passing all three return cases.',
       ],
-      requiredOutput: 'One new test case (customer message, pass rule, sample failure) plus a 2-sentence interpretation.',
+      requiredOutput: 'Case 3 (message, pass rule, sample failure, layer + unit) plus a 2-sentence interpretation.',
       evaluationCriteria: [
-        'Case 3 directly tests the stated 30-day / unused policy without inventing extra unstated rules.',
-        'Identifies the Case 2 regression hidden by the tied 1/2 total score and limits the claim to returns.',
+        'Case 3 directly tests the stated 30-day / unused policy without inventing unstated rules and names the correct layer/unit (e.g., Workflow or Isolated Model / response).',
+        'Identifies the Case 2 regression hidden by the tied 1/2 total score and bounds external validity to 30-day returns.',
       ],
       strongExample:
-        'Case 3 — Customer: "I bought this 45 days ago and never opened it. Can I return it?" Pass rule: Answer must state the item is outside the 30-day window and not promise a return. Sample failure: "Since it is unused, you can return it." Interpretation: Prompt v2 fixed Case 1 but regressed on Case 2, so the tied 1/2 total score hides a trade-off rather than clear progress; passing all three return cases only tests 30-day returns and tells us nothing about lost accounts or billing disputes.',
-      reflectionQuestion: 'What single case in your own work would immediately expose a flawed prompt if you tested it today?',
+        'Case 3 — Customer: "I bought this 45 days ago and never opened it. Can I return it?" Pass rule: State the item is outside the 30-day window and do not promise a return. Sample failure: "Since it is unused, you can return it." Layer & Unit: Isolated Model / Workflow response (each customer reply is 1 unit). Interpretation: Prompt v2 fixed Case 1 by regressing on Case 2, so the tied 1/2 aggregate score hides a real trade-off; externally, passing 30-day return cases tells us nothing about lost accounts, billing disputes, or messy multi-turn chats.',
+      reflectionQuestion: 'What single real input from your own system would expose a weak rubric or prompt regression if you tested it today?',
     },
     knowledgeChecks: [
       {
@@ -127,181 +128,43 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       },
       {
         id: 'm1-q2',
-        question: 'Which statement is a normative choice rather than an empirical observation?',
+        question: 'Suppose 20 analysts each complete 10 brief-writing tasks, and you compare each analyst’s success rate across two interfaces. What is the unit of analysis for that comparison?',
         options: [
-          'Prompt v2 passed Case 1 and failed Case 2.',
-          'Before promising a return, the assistant must verify any policy condition the customer left unspecified.',
-          'Prompt v1 scored 1/2 on the two illustrative return cases.',
+          'The 200 individual task outcomes treated as 200 independent analysts.',
+          'The analyst (20 analysts, each summarizing 10 tasks).',
+          'Individual words inside each brief.',
         ],
         correctIndex: 1,
-        correctExplanation: 'Setting the policy rule for what counts as an acceptable response is a normative/product choice; pass/fail counts are empirical observations.',
+        correctExplanation: 'Although you recorded 200 task outcomes, comparing each analyst’s rate across two interfaces makes the analyst the unit of analysis.',
         distractorNotes: [
-          'A and C report observed test outcomes.',
+          'A mistakes the number of logged task attempts (200) for independent analyst-level units (20).',
+          'C is below the task/analyst comparison unit.',
         ],
       },
     ],
     takeaways: [
-      'Every eval has three core parts: test cases, scoring criteria, and a scoring method.',
-      'Compare prompt versions on the same cases to catch regressions hidden by tied total scores.',
-      'Passing a small task eval tells you about that task—not unrelated tasks or real-world user benefit.',
+      'Evals complement unit tests by measuring performance across distributions of cases and repeated runs using explicit Datasets, Rubrics, and Judges.',
+      'Choose the layer (Data & Inputs → Wider Impacts) and unit of analysis to match your decision; passing a lower layer never guarantees higher-layer success.',
+      'Apply the 4 Operating Rules: start with the decision, treat the eval as the spec, defend against contamination with private refreshed sets, and watch for Goodhart’s Law.',
     ],
     furtherReading: [
       { label: 'Google People + AI Guidebook', type: 'Industry guidance', url: 'https://pair.withgoogle.com/guidebook/' },
     ],
-    transition: 'If you are following the "Run a first eval" route, jump to Module 4 (Cases & Criteria) next. Otherwise continue to Module 2 to test whether AI helps people on a real workflow.',
+    transition: 'Now that you have the full map, Module 2 starts at Operating Rule 1: scoping the exact decision, layer, unit of analysis, baseline, and harness.',
   },
   {
     id: 'm2',
     number: 2,
-    title: 'Human–AI Interaction: Does AI Help People?',
-    subtitle: 'Testing real work quality and total task time (drafting + checking + correction)',
-    integratedLessons: 'Lessons 2, 4 & 6 (Human Outcomes)',
+    title: 'Start With the Decision: Scoping Layer, Unit & Baseline',
+    subtitle: 'Choosing the right layer, unit of analysis, comparator baseline, harness boundary, and contamination controls',
+    integratedLessons: 'Scoping & Framing',
     overview:
-      'Teach one central question: does a person using AI do better work or finish sooner than with the current workflow? Count checking and correction time, use two conditions for adoption questions, and add an AI-alone condition only when claiming synergy over both solo baselines.',
+      'Operating Rule 1 says start with the decision. Before writing prompts or buying tools, clarify what decision you are making, whether a simpler non-AI fix solves the problem, which layer and unit of analysis match the claim, how to pin the full system harness, and how to separate exploratory tuning from confirmatory testing.',
     objectives: [
-      'Design a two-condition workflow comparison (current workflow vs. human with AI) measuring work quality and total task time.',
-      'Explain when a third AI-alone condition is required (testing human–AI synergy vs. augmentation).',
-      'Account for checking time, correction time, automation bias, and skill acquisition separately from immediate output quality.',
-      'Apply the proposed SPHERE evaluation card (Zhao et al., 2025) as an optional organizing extension for Human–AI studies.',
-    ],
-    researchEvidence: [
-      {
-        citation: 'Becker, J., Rush, N., Barnes, E., & Rein, D. (2025). Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity. METR Technical Report.',
-        sourceType: 'Technical report / Framework',
-        url: 'https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/',
-        sampleOrScope: 'RCT with 16 experienced open-source developers completing 246 tasks on large, complex repositories (~5 years prior experience).',
-        finding: 'Developers forecasted a ~20% speedup with AI tools, yet observed total task time was 19% slower when AI tools were allowed.',
-        limitations: 'Concerns early-2025 tools, experienced developers on familiar large repos, and specific task conditions.',
-        doesNotEstablish: 'Does not generalize to all AI coding tools, novice developers, or greenfield projects.',
-      },
-      {
-        citation: 'Shen, J. H., & Tamkin, A. (January 29, 2026). How AI assistance impacts the formation of coding skills. Anthropic Research.',
-        sourceType: 'Technical report / Framework',
-        url: 'https://www.anthropic.com/research/AI-assistance-coding-skills',
-        sampleOrScope: 'Randomized controlled trial of 52 software engineers learning a new Python library (Trio) with vs. without AI assistance.',
-        finding: 'On a follow-up mastery quiz (measuring conceptual understanding, code reading, and debugging), the AI-assisted group averaged approximately 50% compared with approximately 67% for the hand-coding group—a 17-percentage-point difference (largest on debugging), while immediate task completion time showed no statistically significant difference.',
-        limitations: 'Short-term experiment with 52 engineers learning one unfamiliar library; outcomes varied by interaction style (passive offloading vs. active questioning).',
-        doesNotEstablish: 'Does not establish universal or long-term skill degradation across all occupations, AI systems, user expertise levels, or learning contexts.',
-      },
-      {
-        citation: 'Vaccaro, M., Almaatouq, A., & Malone, T. W. (2024). When combinations of humans and AI are useful: A systematic review and meta-analysis. Nature Human Behaviour, 8(12), 2293–2303.',
-        sourceType: 'Meta-analysis (Peer-reviewed)',
-        url: 'https://doi.org/10.1038/s41562-024-02024-1',
-        sampleOrScope: 'Synthesizes 106 studies and 370 effect sizes comparing Human+AI against Human alone and AI alone.',
-        finding: 'Human–AI combinations outperformed humans alone on average (g = 0.64), but average human–AI synergy vs. the best solo actor was negative (g = -0.23). Gains appeared in content-creation tasks; losses occurred in decision-making tasks, especially when AI outperformed humans alone.',
-        limitations: 'Reflects historical tasks and mostly pre-frontier models across heterogeneous experimental designs.',
-        doesNotEstablish: 'Does not establish that all future human–AI systems fail at decision-making or succeed at creation.',
-      },
-      {
-        citation: 'Zhao, D., Ma, Q., Zhao, X., Si, C., Yang, C., Louie, R., Reiter, E., Yang, D., & Wu, T. (2025). SPHERE: An Evaluation Card for Human-AI Systems. Findings of the Association for Computational Linguistics: ACL 2025.',
-        sourceType: 'Conference paper (Peer-reviewed)',
-        url: 'https://doi.org/10.18653/v1/2025.findings-acl.70',
-        sampleOrScope: 'Proposed organizing framework bridging HCI and NLP evaluation practices.',
-        finding: 'Organizes Human–AI evaluation around What, How, Who, When, and Meta-Validation to improve methodological transparency.',
-        limitations: 'A proposed organizing card/taxonomy, not an empirically validated universal standard.',
-        doesNotEstablish: 'Does not guarantee study validity on its own without sound experimental design and measurement.',
-      },
-      {
-        citation: 'Cheng, M., Piccardi, T., & Yang, D. (2023). CoMPosT: Characterizing & Evaluating Caricature in LLM Simulations. EMNLP 2023.',
-        sourceType: 'Conference paper (Peer-reviewed)',
-        sampleOrScope: 'Evaluates LLM-simulated personas across political ideology, race/ethnicity, age, and gender.',
-        finding: 'LLM simulations of sociocultural groups produced exaggerated caricatures, particularly for marginalized personas and political/racial groups.',
-        limitations: 'Tested specific models and prompting setups in 2023.',
-        doesNotEstablish: 'Does not prove all synthetic simulation is useless for early pipeline sanity checks, but shows it cannot substitute for real human participants.',
-      },
-    ],
-    caseStudy: {
-      stageTitle: 'Stage 2 (Fictional Case Study): Testing Meridian’s Analyst Workflow',
-      narrative:
-        'Meridian wants to know whether analysts using the AI assistant write better briefs or finish sooner than with their current manual workflow. You run a two-condition comparison (Current manual workflow vs. Analyst + AI), timing drafting, citation checking, and error correction together as total task time. You recruit real Meridian analysts—not simulated personas.',
-      keyDecisions: [
-        'Use two conditions to test practical workflow value; add an AI-alone condition only if claiming the human–AI team beats solo AI too.',
-        'Measure total task time (drafting + checking + correction), not drafting speed alone.',
-      ],
-    },
-    misconceptions: [
-      {
-        myth: '“You always need three conditions (Human, AI, Human+AI) to evaluate a tool.”',
-        reality: 'To test whether AI improves on your team’s current workflow, two conditions (Current workflow vs. Human+AI) suffice. Add AI-alone when claiming true synergy over both solo options.',
-      },
-      {
-        myth: '“LLM-simulated users can replace real human participants.”',
-        reality: 'CoMPosT (2023) showed simulated personas caricature demographic groups and miss real workflow friction like checking citations under time pressure.',
-      },
-    ],
-    exercise: {
-      title: 'Assignment 2: Design a Two-Condition Workflow Comparison',
-      objective: 'Design a practical workflow test measuring work quality and total task time, and identify when to add an AI-alone condition.',
-      scenario: 'Your team wants to know if an AI drafting assistant helps support analysts write better research summaries or finish sooner than their current manual workflow.',
-      instructions: [
-        'Specify the two conditions (Current workflow vs. Analyst using AI) and who participates.',
-        'List the exact time components you must measure (drafting, citation checking, error correction) to compute total task time, plus one work-quality metric.',
-        'State one situation in which you would add a third AI-alone condition, and one conclusion a two-condition study cannot support.',
-      ],
-      requiredOutput: 'A brief 2-condition study plan plus a 2-sentence explanation of when to add AI-alone.',
-      evaluationCriteria: [
-        'Includes checking and correction time inside total task time.',
-        'Accurately distinguishes a two-condition workflow adoption test from a three-condition synergy test.',
-      ],
-      strongExample:
-        'Conditions: (1) Current manual workflow (analysts reading PDFs and writing briefs) vs. (2) Analysts using the AI assistant on comparable PDFs. Measures: blinded brief quality score (1–5), unsupported-claim count, and total task time broken into drafting time + citation-checking time + correction time. Add an AI-alone condition if leadership claims the human–AI team outperforms fully automated summaries; a two-condition test alone cannot establish whether the human adds value over solo AI.',
-      reflectionQuestion: 'In a tool you use today, how much of the time saved during drafting is spent checking and fixing outputs?',
-    },
-    knowledgeChecks: [
-      {
-        id: 'm2-q1',
-        question: 'When is a third AI-alone condition required alongside Current Workflow and Human+AI?',
-        options: [
-          'Always—two-condition workflow studies are never valid.',
-          'When you want to claim human–AI synergy (that the team outperforms both the human alone and the AI alone).',
-          'Only when using LLM-simulated personas.',
-        ],
-        correctIndex: 1,
-        correctExplanation: 'Two conditions answer whether AI helps people improve on their current workflow; adding AI-alone tests whether the combined team outperforms solo AI as well.',
-        distractorNotes: [
-          'A is false: two conditions directly answer the workflow-improvement question.',
-          'C is unrelated to condition design.',
-        ],
-      },
-      {
-        id: 'm2-q2',
-        question: 'In Anthropic’s study "How AI assistance impacts the formation of coding skills" (Shen & Tamkin, Jan 29, 2026), what is the accurate interpretation of the ~50% vs. ~67% quiz result?',
-        options: [
-          'AI tools universally destroy 17% of engineering skill across all occupations and workflows.',
-          'In that RCT of 52 engineers learning a new Python library, the AI-assisted group scored 17 percentage points lower on a follow-up mastery quiz (conceptual understanding, code reading, and debugging) than the hand-coding group, which does not establish universal long-term deskilling.',
-          'The AI-assisted group took 17 percentage points longer to finish the initial coding task.',
-        ],
-        correctIndex: 1,
-        correctExplanation: 'Reporting the result as a 17-percentage-point difference (~50% vs. ~67%) scoped to 52 engineers learning an unfamiliar library distinguishes immediate task completion from learning/skill acquisition without overgeneralizing.',
-        distractorNotes: [
-          'A confuses a 17-percentage-point difference with a 17% relative reduction and overgeneralizes.',
-          'C misstates the measured outcome.',
-        ],
-      },
-    ],
-    takeaways: [
-      'Ask one practical question first: does a person using AI do better work or finish sooner than with the current workflow?',
-      'Always count checking and correction time inside total task time.',
-      'Use two conditions for workflow improvement; add AI-alone when testing synergy over both solo baselines.',
-    ],
-    furtherReading: [
-      { label: 'SPHERE Interactive Card Site', type: 'Research tool', url: 'https://sphere-eval.github.io/' },
-    ],
-    transition: 'Before building or testing an AI tool at all, Module 3 asks a prior question: what problem are we solving, and would a simpler non-AI change solve it better?',
-  },
-  {
-    id: 'm3',
-    number: 3,
-    title: 'Framing: Do We Need AI for This Problem?',
-    subtitle: 'Comparing current workflow, simpler non-AI changes, and AI assistance before building',
-    integratedLessons: 'Lesson 3',
-    overview:
-      'Before designing an AI eval, ask: "What problem are we trying to solve, and do we need AI for it?" Compare your current workflow, a credible simpler change (such as better search or a checklist), and AI assistance—treating all three as legitimate outcomes.',
-    objectives: [
-      'Formulate a clear problem statement and compare three legitimate options: current workflow, a credible simpler non-AI change, and AI assistance.',
-      'Identify the evidence that would justify choosing a simpler non-AI fix versus running a test of AI.',
-      'Distinguish product-adoption evaluations from scientific capability studies, and keep exploratory discovery separate from confirmatory testing.',
-      'Define system scope (including agent harnesses), unit of analysis, and contamination/leakage risks for formal studies.',
+      'Formulate a decision-driven evaluation question naming the layer, unit of analysis, system/harness, task, population, and baseline.',
+      'Compare three legitimate product options: current workflow, a credible simpler non-AI change, and AI assistance.',
+      'Keep exploratory discovery distinct from confirmatory testing so repeated prompt/rubric tuning does not invalidate results.',
+      'Pin the full agent harness (prompts, retrieval, tools, permissions, memory, stopping rules) and defend against benchmark contamination using private, refreshed domain cases.',
     ],
     researchEvidence: [
       {
@@ -324,61 +187,61 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       },
     ],
     caseStudy: {
-      stageTitle: 'Stage 3 (Fictional Case Study): Does Meridian Actually Need AI?',
+      stageTitle: 'Stage 2 (Fictional Case Study): Scoping Meridian’s Decision & Baseline',
       narrative:
-        'Meridian analysts spend 74 minutes writing a 5-paper brief. Why? Interviews show 25 minutes are wasted hunting for PDFs in messy folders and guessing what headings executives want. Before testing an AI assistant, you put three legitimate options on the table: (1) keep the current workflow, (2) ship a simpler change—full-text search + a 1-page brief checklist, or (3) test AI assistance against that improved baseline.',
+        'Meridian analysts spend 74 minutes writing a 5-paper brief. Interviews reveal 25 minutes are wasted hunting for PDFs in messy folders and guessing executive headings. Before deploying an AI assistant, you compare three legitimate baselines: (1) current workflow, (2) a simpler non-AI fix (full-text PDF search + a 1-page brief checklist), and (3) a pinned AI assistant harness tested against that upgraded baseline using private, newly collected Meridian source packets so training contamination cannot inflate scores.',
       keyDecisions: [
-        'Treat keeping the current workflow, shipping better search + a checklist, and testing AI as three equally legitimate decisions.',
-        'Specify that any AI test must beat the simpler search/checklist baseline—not a broken folder setup.',
+        'Treat keeping the current workflow, shipping search + a checklist, and testing AI as three equally legitimate outcomes.',
+        'Pin the entire AI harness (model snapshot, retrieval index, prompts, tools, retry limit) and lock primary confirmatory thresholds before running the final test.',
       ],
     },
     misconceptions: [
       {
-        myth: '“The goal of an AI evaluation is to prove AI should be deployed.”',
-        reality: 'Concluding that better search, a template, or keeping the current workflow solves the problem faster and safer is a successful evaluation outcome.',
+        myth: '“The goal of an AI eval is to justify deploying AI.”',
+        reality: 'Concluding that better search, a checklist, or keeping the current workflow solves the problem faster and safer is a successful evaluation outcome.',
       },
       {
-        myth: '“Every AI evaluation must be tied to a product launch.”',
-        reality: 'A capability study can have a purely scientific purpose (e.g., testing how a model handles reasoning perturbations) independent of deployment.',
+        myth: '“Testing the base model is enough when evaluating an agent or RAG product.”',
+        reality: 'Prompts, retrieval, tool permissions, memory, and retry rules often change performance more than swapping base models—always pin and evaluate the full harness.',
       },
     ],
     exercise: {
-      title: 'Assignment 3: Choose Between Current Workflow, a Simpler Change, and AI',
-      objective: 'Evaluate whether a simpler non-AI change solves the problem and state what evidence would justify testing AI.',
+      title: 'Assignment 2: Scope a Decision, Baseline & Contamination Defense',
+      objective: 'Choose between current workflow, a simpler non-AI change, and AI, and define the layer, unit, and harness boundary.',
       scenario:
         'At Meridian, analysts complain that summarizing 5 empirical PDFs takes too long and briefs often omit study limitations. Two root causes appear in interviews: (a) PDFs are poorly indexed across shared drives, and (b) analysts have no standard template reminding them to include a Limitations section.',
       instructions: [
-        'Describe three concrete options: (1) Current workflow, (2) A credible simpler non-AI change addressing the two root causes above, and (3) AI assistance.',
-        'Explain why choosing Option 2 (the simpler change) could be the right decision without deploying AI.',
-        'State what specific evidence (on total task time, omission of limitations, or brief quality) would justify moving on to test AI assistance against Option 2.',
+        'Describe three concrete options: (1) Current workflow, (2) A credible simpler non-AI change addressing the two root causes, and (3) AI assistance.',
+        'State which layer (from the 7 layers) and unit of analysis you must test to decide whether AI improves on Option 2, and list two harness details you must pin before comparing runs.',
+        'State what specific evidence would justify stopping at Option 2 versus testing AI, plus one rule to prevent contamination or exploratory overfitting.',
       ],
-      requiredOutput: 'A 3-option comparison plus a clear decision rule for when to stop at the simpler change vs. test AI.',
+      requiredOutput: 'A 3-option scoping brief specifying layer, unit, pinned harness, decision rule, and contamination guard.',
       evaluationCriteria: [
-        'Directly addresses the supplied root causes (poor indexing and missing Limitations template).',
-        'Treats the non-AI option as a legitimate decision and comparator rather than a formality.',
+        'Treats the non-AI option as a serious baseline directly addressing indexing and missing templates.',
+        'Matches the layer (Workflow / Human–AI) and unit (brief / task session or analyst) to the deployment decision and keeps held-out private data separate from tuning.',
       ],
       strongExample:
-        'Option 1 (Current): manual search across shared drives with no template. Option 2 (Simpler change): add centralized full-text PDF search plus a mandatory 1-page brief checklist with a "Study Limitations" section. Option 3 (AI): retrieval-backed drafting assistant. Choosing Option 2 is legitimate if search + the checklist cuts retrieval delays and eliminates omitted Limitations at near-zero cost and zero hallucination risk. Testing AI is justified only if—after Option 2 is in place—synthesis drafting itself remains the bottleneck and a controlled test shows AI improves brief quality or reduces total task time without raising unsupported claims.',
-      reflectionQuestion: 'Think of an AI project you have seen recently: was it ever compared against a simpler non-AI improvement like better search or a checklist?',
+        'Options: (1) Current manual folder search with no template; (2) Centralized full-text PDF search + mandatory 1-page brief template with a Limitations section; (3) Pinned RAG drafting assistant tested against Option 2. Layer & Unit: Layer 5 (Human–AI Interaction) with task session / analyst as the unit of analysis; pin the model snapshot, chunking/retrieval top-k, system prompt, and retry limit. Decision rule: Stop at Option 2 if search + checklist fixes retrieval delays and eliminated omitted Limitations without hallucination risk; test AI only if synthesis drafting remains the bottleneck. Guardrail: Use newly collected private Meridian packets held out from prompt tuning.',
+      reflectionQuestion: 'In a project you work on, is AI currently being compared against a strong non-AI baseline—or only against a broken process?',
     },
     knowledgeChecks: [
       {
-        id: 'm3-q1',
+        id: 'm2-q1',
         question: 'Why compare an AI assistant against a credible simpler change (like better search or a checklist) instead of only a broken legacy workflow?',
         options: [
-          'Because comparing only against a broken workflow can attribute gains to AI that a cheaper, lower-risk non-AI fix would already deliver.',
+          'Because comparing only against a broken workflow can credit AI for gains a cheaper, lower-risk non-AI fix would already deliver.',
           'Because non-AI tools are always forbidden in confirmatory studies.',
-          'Because AI models cannot be evaluated scientifically without a product launch.',
+          'Because base models cannot be tested at Layer 2 without a UI.',
         ],
         correctIndex: 0,
         correctExplanation: 'A credible simpler comparator tests whether AI adds genuine value beyond straightforward workflow improvements.',
         distractorNotes: [
           'B is false: simpler non-AI baselines are strong comparators.',
-          'C is false: scientific capability studies can exist independent of deployment.',
+          'C is false: isolated model evals exist, though they only establish Layer 2 claims.',
         ],
       },
       {
-        id: 'm3-q2',
+        id: 'm2-q2',
         question: 'Why must exploratory and confirmatory evaluation modes be kept distinct?',
         options: [
           'Exploratory work is unscientific and should be avoided.',
@@ -386,75 +249,67 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
           'Confirmatory mode prohibits reporting limitations.',
         ],
         correctIndex: 1,
-        correctExplanation: 'Explore traces to discover failures, then lock outcomes, comparisons, and thresholds before inspecting a fresh confirmatory set.',
+        correctExplanation: 'Explore traces to discover failures and refine your spec, then lock outcomes, criteria, and thresholds before inspecting a fresh private confirmatory set.',
         distractorNotes: [
           'A and C are false.',
         ],
       },
     ],
     takeaways: [
-      'Always ask "What problem are we solving, and do we need AI?" before building an AI eval.',
-      'Current workflow, a simpler non-AI fix, and AI assistance are all legitimate decisions.',
-      'Keep formal 10-field framing briefs, agent harnesses, and contamination audits for formal studies.',
+      'The decision sets your layer, unit of analysis, baseline, and rigor—and choosing a simpler non-AI fix is a strong, valid outcome.',
+      'Pin the entire harness (model snapshot, retrieval, prompts, tools, permissions, retries) so comparisons isolate real changes.',
+      'Separate exploratory tuning from confirmatory testing and rely on private, refreshed domain cases rather than public benchmarks that may be contaminated.',
     ],
     furtherReading: [],
-    transition: 'Once you know what problem you are testing, Module 4 shows how to write test cases—ordinary, ambiguous, and escalation cases—that actually test your rules.',
+    transition: 'With your decision, layer, and baseline locked, Module 3 shows Operating Rule 2 in action: treating the eval as the spec by inspecting real traces and building clean datasets.',
   },
   {
-    id: 'm4',
-    number: 4,
-    title: 'Cases & Criteria: Writing Cases That Test Your Rules',
-    subtitle: 'Ordinary, ambiguous, and escalation cases—and why challenge sets ≠ everyday failure rates',
-    integratedLessons: 'Lesson 5',
+    id: 'm3',
+    number: 3,
+    title: 'Datasets & Error Analysis: Building Real Test Cases',
+    subtitle: 'Treat the eval as the spec: trace analysis, ordinary/ambiguous/escalation cases, and sampling without bias',
+    integratedLessons: 'Datasets & Sampling',
     overview:
-      'A good small eval tests more than happy-path prompts. Learn to write expected behavior for ordinary, ambiguous, and escalation cases, and see why deliberately difficult challenge cases are essential for finding flaws—yet cannot be read as your everyday failure rate.',
+      'Operating Rule 2 says treat the eval as the spec: inspect real traces and failure modes first, before iterating on prompts or architecture. Learn to build Datasets (Stimuli) covering ordinary, ambiguous, and escalation cases, and keep discovery/challenge sampling strictly separate from representative traffic samples.',
     objectives: [
-      'Write concrete test cases and observable expected behavior for an ordinary case, an ambiguous case, and a case requiring escalation.',
-      'Distinguish a construct, an observable criterion, and a scoring metric.',
-      'Explain why challenge/edge-case sets are useful for finding weaknesses and why their failure rate does not equal everyday production prevalence.',
-      'Select task-appropriate metrics without treating any single metric as overall quality.',
+      'Use trace and error analysis on real examples to surface recurring failure modes before writing automated evaluators or tuning prompts.',
+      'Write concrete test cases and observable expected behavior across ordinary, ambiguous, and escalation/abstention situations.',
+      'Separate four distinct sampling purposes—discovery, representative, challenge, and regression—so stress-test failure rates are never mistaken for production prevalence.',
+      'Assess synthetic test cases honestly for realism and coverage without treating synthetic origin as proof of real-world prevalence.',
     ],
     researchEvidence: [
-      {
-        citation: 'Shaikh, O., Chai, V., Gelfand, M. J., Yang, D., & Bernstein, M. S. (2024). Rehearsal: Simulating Conflict to Teach Conflict Resolution. CHI 2024.',
-        sourceType: 'Conference paper (Peer-reviewed)',
-        sampleOrScope: 'Intrinsic TrueSkill ecological validity eval + extrinsic user study (N = 40 vs. static training material).',
-        finding: 'Participants practicing with Rehearsal used significantly more cooperative strategies in actual conflicts than control participants, though declarative knowledge recognition/recall scores did not significantly differ.',
-        limitations: 'Short-term controlled study (N = 40) on conflict scenarios.',
-        doesNotEstablish: 'Does not prove universal effectiveness across all interpersonal or workplace training domains.',
-      },
       {
         citation: 'NIST (2024). Assessing Risks and Impacts of AI (ARIA) Program.',
         sourceType: 'Technical report / Framework',
         url: 'https://ai-challenges.nist.gov/aria',
-        sampleOrScope: 'Combines model testing, red teaming, and user testing.',
-        finding: 'Illustrates methodological complementarity across automated tests, adversarial probing, and human-centered evaluation.',
+        sampleOrScope: 'Combines automated model testing, adversarial probing/red teaming, and user task testing.',
+        finding: 'Illustrates methodological complementarity across automated checks, targeted failure discovery, and human-centered testing.',
         limitations: 'Programmatic evaluation methodology; specific findings depend on the participating systems and scenarios.',
-        doesNotEstablish: 'Does not mandate a single fixed metric across all domains.',
+        doesNotEstablish: 'Does not mandate a single fixed metric or dataset size across all domains.',
       },
     ],
     caseStudy: {
-      stageTitle: 'Stage 4 (Fictional Case Study): Writing Meridian’s Case Types',
+      stageTitle: 'Stage 3 (Fictional Case Study): Building Meridian’s Private Case Suite',
       narrative:
-        'For Meridian’s paper-summary assistant, you design three case types: (1) an ordinary case (two clear randomized trials with matching endpoints), (2) an ambiguous case (an observational study whose abstract sounds causal, requiring careful wording), and (3) an escalation/abstention case (a question about a confidential M&A deal not in the corpus, where the assistant must refuse rather than guess). You keep stress-test challenge cases separate from representative daily queries.',
+        'Before touching prompt templates, you read 40 real Meridian analyst queries and intermediate traces. Recurring failures jump out immediately: causal wording on observational studies, omitted limitations, and confident guesses when a paper is not in the folder. You organize Meridian’s private test suite into three case types—(1) ordinary randomized-trial summaries, (2) ambiguous observational abstracts, and (3) out-of-corpus confidential queries requiring refusal—and keep your hard challenge set separate from a representative weekly sample.',
       keyDecisions: [
-        'Write observable pass/fail expectations for ordinary, ambiguous, and escalation cases.',
+        'Inspect raw traces and retrieved passages before deciding which automated checks to build.',
         'Report challenge-set failure rates separately from representative everyday failure rates.',
       ],
     },
     misconceptions: [
       {
-        myth: '“A 40% failure rate on our edge-case suite means 40% of real users see failures.”',
-        reality: 'Challenge sets deliberately oversample hard, rare, or adversarial inputs. They find weaknesses, but only a representative sample estimates everyday prevalence.',
+        myth: '“A 40% failure rate on our edge-case challenge suite means 40% of real users see failures.”',
+        reality: 'Challenge sets deliberately oversample hard or adversarial cases to expose weaknesses quickly. Only a representative sample estimates everyday prevalence.',
       },
       {
-        myth: '“Gold-standard human labels are objective and error-free.”',
-        reality: 'Annotators often disagree on ambiguous examples; clear expected-behavior rules and adjudication are needed.',
+        myth: '“Synthetic LLM-generated test cases can replace real user logs and domain packets.”',
+        reality: 'Synthetic cases are useful for probing targeted hypotheses, but they easily miss messy real-world inputs, formatting quirks, and true traffic distributions.',
       },
     ],
     exercise: {
-      title: 'Assignment 4: Write Ordinary, Ambiguous & Escalation Cases',
-      objective: 'Author three distinct test cases with observable pass/fail criteria and explain sampling limits.',
+      title: 'Assignment 3: Write Ordinary, Ambiguous & Escalation Cases',
+      objective: 'Author three distinct test cases with observable pass/fail behavior and separate challenge sampling from prevalence estimation.',
       scenario:
         'You are expanding the Return-Policy Assistant ("Unused items can be returned within 30 days; damaged-on-arrival items and disputes over $500 must be escalated to a human agent").',
       instructions: [
@@ -469,12 +324,12 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
         'Correctly distinguishes weakness discovery (challenge sampling) from prevalence estimation (representative sampling).',
       ],
       strongExample:
-        '1) Ordinary: "Bought 10 days ago, sealed and unused. Can I return it?" Expected: Confirm eligibility directly without re-asking if it was used. 2) Ambiguous: "Bought 15 days ago; I opened the outer shipping box to look at the color, never used the item." Expected: Ask/clarify whether the product packaging or item itself was used before promising a return, or cite exact policy rule on opened outer boxes. 3) Escalation: "My $650 monitor arrived with a cracked screen 3 days ago." Expected: Do not auto-approve or auto-deny; immediately escalate to a human agent per the damaged-on-arrival and >$500 policy. Sampling note: 20 deliberately hard cases expose brittle rules quickly, but because they oversample rare edge cases, a 35% failure rate on that challenge set cannot estimate the everyday failure rate across typical customer messages.',
-      reflectionQuestion: 'Need retrieval-specific metrics (Recall@k, NDCG@k) or a 100-item RAG dataset assignment? See Optional Advanced Track A (RAG Evaluation).',
+        '1) Ordinary: "Bought 10 days ago, sealed and unused. Can I return it?" Expected: Confirm eligibility directly without re-asking if it was used. 2) Ambiguous: "Bought 15 days ago; I opened the outer shipping box to look at the color, never used the item." Expected: Ask/clarify whether the product itself or inner seal was opened before promising a return. 3) Escalation: "My $650 monitor arrived with a cracked screen 3 days ago." Expected: Do not auto-approve or auto-deny; immediately escalate to a human agent per the damaged-on-arrival and >$500 rule. Sampling note: 20 deliberately hard cases expose brittle rules quickly, but because they oversample rare edge cases, a 35% failure rate on that challenge set cannot estimate everyday traffic failure rates.',
+      reflectionQuestion: 'Need retrieval-specific metrics (Recall@k, NDCG@k) or a 100-item RAG dataset design? See Optional Advanced Track A (RAG Evaluation).',
     },
     knowledgeChecks: [
       {
-        id: 'm4-q1',
+        id: 'm3-q1',
         question: 'Your team builds a 25-case challenge set of tricky, ambiguous customer messages and the bot fails 10 of them (40%). What can you conclude?',
         options: [
           '40% of everyday production customer chats will fail.',
@@ -489,12 +344,12 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
         ],
       },
       {
-        id: 'm4-q2',
-        question: 'Which metric family matches probabilistic confidence calibration (whether "80% confident" answers are right ~80% of the time)?',
+        id: 'm3-q2',
+        question: 'Which metric family measures whether an AI system’s stated probability or confidence ("80% sure") matches how often it is actually right?',
         options: [
           'Brier score or Expected Calibration Error (ECE).',
           'Cohen’s kappa.',
-          'Raw accuracy alone.',
+          'Raw pass rate alone.',
         ],
         correctIndex: 0,
         correctExplanation: 'Brier score, log loss, and ECE measure alignment between predicted probabilities and empirical frequencies.',
@@ -505,88 +360,75 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       },
     ],
     takeaways: [
-      'Always test ordinary cases, ambiguous cases, and escalation/abstention cases.',
-      'Challenge cases find failure modes; representative samples estimate everyday prevalence—never mix their rates.',
-      'For retrieval-specific metrics (Recall@k, MRR, NDCG) and the 100-item RAG dataset exercise, see Advanced Track A.',
+      'Inspect real inputs and traces first—treating the eval as the spec before optimizing prompts or architecture.',
+      'Always include ordinary, ambiguous, and escalation/abstention cases with observable pass/fail expectations.',
+      'Keep discovery, challenge, regression, and representative samples separate so you never report stress-test failure rates as everyday rates.',
     ],
     furtherReading: [
       { label: 'Husain & Shankar: Error & Trace Analysis Guidance', type: 'Industry guidance', url: 'https://hamel.dev/blog/posts/evals/' },
     ],
-    transition: 'Once you have cases and expected behaviors, Module 5 shows what happens when two human reviewers disagree on grading—and how to fix ambiguous rules and avoid average traps.',
+    transition: 'Once you have clean test cases, Module 4 tackles Rubrics & Judges: turning vague goals into observable rules, calibrating LLM judges, scoring telemetry, and preventing averages from hiding critical failures.',
   },
   {
-    id: 'm5',
-    number: 5,
-    title: 'Grading: Resolving Disagreement & Average Traps',
-    subtitle: 'Fixing ambiguous rubrics, rescoring concrete answers, and preventing averages from hiding critical errors',
-    integratedLessons: 'Lesson 6 (Grading & Aggregation)',
+    id: 'm4',
+    number: 4,
+    title: 'Rubrics & Judges: Scoring Without Fooling Yourself',
+    subtitle: 'Observable criteria, code/LLM/human judges, telemetry scoring, and avoiding aggregation traps',
+    integratedLessons: 'Rubrics, Judges & Aggregation',
     overview:
-      'Even good test cases fail if two reviewers score the same answer differently or if one composite score hides a critical failure. Start with a concrete reviewer disagreement, tighten the scoring rule, rescore, and keep agreement statistics and LLM-judge validation ready when scaling up.',
+      'Even great test cases break down if two reviewers score the same output differently, if an unvalidated LLM judge silently misses critical failures, or if a high composite score hides a severe leak. Learn how to sharpen rubrics, choose and validate judges (including production telemetry), and aggregate without hiding risk.',
     objectives: [
       'Diagnose why two reviewers disagree on a concrete output, rewrite an ambiguous rule into an observable check, and rescore.',
-      'Explain how a high composite average or Simpson’s paradox can conceal serious safety or subgroup failures.',
-      'Choose appropriate inter-rater reliability measures (Cohen’s κ, weighted κ, Krippendorff’s α, ICC) when scaling human review.',
-      'Validate an LLM-as-a-judge against independently adjudicated human ratings for biases and rare-failure false negatives.',
+      'Choose appropriately among deterministic code checks, human review, calibrated LLM judges, and telemetry + scoring rules.',
+      'Validate an LLM-as-a-judge on held-out human labels for rare-failure false negatives and position/verbosity/self-preference biases.',
+      'Prevent composite averages and Simpson’s paradox from burying critical safety or subgroup failures.',
     ],
-    researchEvidence: [
-      {
-        citation: 'Jakesch, M., Bhat, A., Buschek, D., Zalmanson, L., & Naaman, M. (2023). Co-writing with opinionated language models affects users’ views. CHI 2023.',
-        sourceType: 'Conference paper (Peer-reviewed)',
-        sampleOrScope: 'Controlled online co-writing experiment on social-media opinions.',
-        finding: 'Co-writing with an opinionated model shifted participants’ written post stances and subsequent survey opinions, even though most participants rated the suggestions balanced.',
-        limitations: 'Short-term online writing task on a single topic.',
-        doesNotEstablish: 'Does not establish permanent long-term attitude change across all writing tools.',
-      },
-      {
-        citation: 'Padmakumar, V., Ibrahim, L., Wang, Z. Z., Wang, J., Liao, Q. V., & Yang, D. (2026). Offloading Score: Measuring AI Reliance Through Counterfactual Workflows. NeurIPS 2026 (Oral) / Preprint.',
-        sourceType: 'Conference paper (Peer-reviewed)',
-        sampleOrScope: 'Workflow induction from interaction traces with counterfactual step estimation (>85% plausibility in content validity checks).',
-        finding: 'Higher Offloading Score was generally associated with lower system/code recall, alongside an outlier cluster of appropriately reliant users who used the model to learn and improvise.',
-        limitations: 'Observational correlation in coding workflows; counterfactual steps are LM-estimated.',
-        doesNotEstablish: 'Does not prove offloading alone causes low understanding in every workflow.',
-      },
-    ],
+    researchEvidence: [],
     caseStudy: {
-      stageTitle: 'Stage 5 (Fictional Case Study): Fixing a Rubric Disagreement at Meridian',
+      stageTitle: 'Stage 4 (Fictional Case Study): Tightening Meridian’s Rubric & Validating Judges',
       narrative:
-        'Two Meridian reviewers grade the same AI summary of an observational study. The summary says: "Flexible hours boosted retention by 12%." Reviewer 1 marks it PASS ("the 12% number is in the paper"). Reviewer 2 marks it FAIL ("the paper was observational—saying it \'boosted\' retention implies causation"). Rewriting the vague rule "be accurate" into "do not use causal verbs for observational studies" resolves the disagreement before scaling to an LLM judge.',
+        'Two Meridian reviewers grade the same AI summary of an observational survey: "Flexible hours boosted retention by 12%." Reviewer 1 marks PASS ("12% matches the paper"). Reviewer 2 marks FAIL ("\u2018boosted\u2019 implies causation from a survey"). Rewriting "be accurate" into "fail if causal verbs describe an observational study" resolves the disagreement before you ever prompt an LLM judge—and you keep any confidential data exposure as a mandatory release blocker separate from quality averages.',
       keyDecisions: [
-        'Investigate reviewer disagreement as a clue to rubric ambiguity rather than averaging scores away.',
-        'Treat confidential data exposure as a mandatory non-compensatory failure separate from quality averages.',
+        'Use reviewer disagreement to fix ambiguous rubrics before scaling up with an LLM judge.',
+        'Treat confidential data leaks as non-compensatory release blockers rather than averaging them with minor formatting bugs.',
       ],
     },
     misconceptions: [
       {
-        myth: '“When two reviewers disagree, just average their scores and move on.”',
-        reality: 'Disagreement often signals an ambiguous rubric or missing context; fixing the rule improves measurement far more than averaging noise.',
+        myth: '“When two reviewers disagree, average their scores and move on.”',
+        reality: 'Disagreement usually exposes an underspecified rubric or missing source context. Tightening the rule into an observable check fixes the measurement.',
       },
       {
-        myth: '“90% agreement with humans means an LLM judge can replace human review.”',
-        reality: 'High overall agreement can mask poor recall on rare critical errors, plus position, verbosity, and self-preference biases.',
+        myth: '“90% overall agreement means an LLM judge can replace human review.”',
+        reality: 'High overall agreement can mask poor recall on rare, high-severity failures alongside position, verbosity, or self-preference bias. Always audit false negatives on held-out adjudicated data.',
+      },
+      {
+        myth: '“Production telemetry is automatically an evaluation score.”',
+        reality: 'Telemetry (e.g., user edits, thumbs-down, or citation overrides) supplies raw evidence—you still need an explicit scoring rule defining how that evidence counts and checking for confounders.',
       },
     ],
     exercise: {
-      title: 'Assignment 5: Resolve a Two-Reviewer Disagreement & Expose an Average Trap',
-      objective: 'Rewrite an ambiguous scoring rule from a concrete disagreement, rescore the answer, and critique a single composite score.',
+      title: 'Assignment 4: Resolve a Reviewer Disagreement & Expose an Average Trap',
+      objective: 'Rewrite an ambiguous scoring rule from a concrete disagreement, rescore the output, and fix misleading composite reporting.',
       scenario:
-        'Source excerpt (fictional): "In a 2024 survey of 400 employees, teams with flexible hours reported 12% lower turnover than fixed-hour teams; no randomized assignment was used." AI summary: "Flexible hours reduced employee turnover by 12%." Original rubric rule: "Summary is accurate." Reviewer 1 scores PASS (the 12% figure matches). Reviewer 2 scores FAIL ("reduced" implies causation from a survey). Separately, across 100 test runs, the system passes 95, has 4 minor formatting issues, and leaks 1 confidential client name (reported as "95% pass rate").',
+        'Source excerpt (fictional): "In a 2024 survey of 400 employees, teams with flexible hours reported 12% lower turnover than fixed-hour teams; no randomized assignment was used." AI summary: "Flexible hours reduced employee turnover by 12%." Original rubric rule: "Summary is accurate." Reviewer 1 scores PASS (12% matches). Reviewer 2 scores FAIL ("reduced" implies causation from a survey). Separately, across 100 runs, the system passes 95, has 4 minor formatting issues, and leaks 1 confidential client name (reported as "95% pass rate").',
       instructions: [
         'State why Reviewer 1 and Reviewer 2 reasonably disagreed under the vague rule "Summary is accurate."',
-        'Rewrite the scoring rule into an observable pass/fail check that resolves the ambiguity, and rescore the AI summary under your revised rule.',
-        'Explain why reporting "95% pass rate" on the 100 runs misleads decision-makers, and show how to report the results instead.',
+        'Rewrite the rubric into an observable pass/fail rule that resolves the ambiguity, and rescore the AI summary.',
+        'Explain why reporting "95% pass rate" on the 100 runs misleads decision-makers, and show how to report those 100 runs instead.',
       ],
       requiredOutput: 'Diagnosis of disagreement, revised observable rule + rescore, and disaggregated reporting recommendation.',
       evaluationCriteria: [
         'Revised rule targets observable causal vs. associative wording grounded in the supplied excerpt.',
-        'Separates the 1 confidential-name leak as a critical/mandatory failure rather than averaging it with formatting issues.',
+        'Separates the 1 confidential-name leak as a critical release blocker rather than averaging it with formatting issues.',
       ],
       strongExample:
-        'Disagreement diagnosis: "accurate" did not specify whether matching the number (12%) is enough or whether study design (non-randomized survey) must be preserved. Revised rule: "Fail if the summary uses causal language (e.g., reduced, caused, boosted) to describe a non-randomized/observational finding." Rescore: FAIL ("reduced" states causation not supported by the survey). Average trap: A "95% pass rate" weights 4 minor formatting bugs equally with 1 confidential client-name leak. Report instead: 95/100 full passes, 4/100 low-severity formatting issues, and 1/100 critical confidentiality violation (release blocker).',
-      reflectionQuestion: 'If you later automate this revised rule with an LLM judge, what separate dataset do you need before trusting the judge?',
+        'Disagreement diagnosis: "accurate" did not specify whether matching the number (12%) is enough or whether non-randomized study design must be preserved. Revised rule: "Fail if the summary uses causal language (e.g., reduced, boosted, caused) for an observational or non-randomized finding." Rescore: FAIL ("reduced" asserts causation unsupported by the survey). Average trap: A "95% pass rate" treats 4 minor formatting bugs as equivalent to 1 confidential client-name leak. Report instead: 95/100 full passes, 4/100 low-severity formatting issues, and 1/100 critical confidentiality violation (release blocker).',
+      reflectionQuestion: 'If you automate this revised rule with an LLM judge, what separate held-out dataset do you need before trusting the judge?',
     },
     knowledgeChecks: [
       {
-        id: 'm5-q1',
+        id: 'm4-q1',
         question: 'Two reviewers disagree on whether a summary is "accurate" because one checks numbers and the other checks causal wording. What is the best first step?',
         options: [
           'Average their scores so you get 0.5.',
@@ -601,7 +443,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
         ],
       },
       {
-        id: 'm5-q2',
+        id: 'm4-q2',
         question: 'Which reliability measure handles two or more raters with missing ratings across nominal, ordinal, or interval scales?',
         options: [
           'Raw percentage agreement.',
@@ -609,7 +451,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
           'Brier score.',
         ],
         correctIndex: 1,
-        correctExplanation: 'Krippendorff’s alpha generalizes across 2+ raters, missing data, and multiple measurement levels.',
+        correctExplanation: 'Krippendorff’s alpha corrects for chance agreement and generalizes across 2+ raters, missing labels, and multiple scale types.',
         distractorNotes: [
           'A does not correct for chance agreement.',
           'C measures probabilistic calibration.',
@@ -617,26 +459,26 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       },
     ],
     takeaways: [
-      'Treat reviewer disagreement as a signal to clarify ambiguous rules into observable checks.',
-      'Never bury rare critical failures inside a high composite pass rate.',
-      'When scaling up, use chance-corrected reliability (κ, α, ICC) and validate LLM judges on independent held-out human labels.',
+      'Resolve reviewer disagreement by turning vague criteria into observable rules before automating with an LLM judge.',
+      'Pair the right judge with the check (code, human, calibrated LLM, or telemetry + explicit scoring rule) and audit judges on held-out human labels.',
+      'Never average away severe failures—report severity tiers, subgroup breakdowns, and mandatory release blockers separately.',
     ],
     furtherReading: [],
-    transition: 'With reliable grades in hand, Module 6 teaches how to interpret a real version comparison—like a +0.10-point quality gain that costs 9× more.',
+    transition: 'With reliable scoring in place, Module 5 shows how to compare two versions rigorously—accounting for your unit of analysis, uncertainty, Goodhart’s Law tradeoffs, and full validity checks.',
   },
   {
-    id: 'm6',
-    number: 6,
-    title: 'Interpreting a Comparison: Gain, Uncertainty & Cost',
-    subtitle: 'Comparing versions on the same cases, difference CIs, subgroups, validity, and formal protocols',
-    integratedLessons: 'Lessons 7, 8 & 9',
+    id: 'm5',
+    number: 5,
+    title: 'Comparing Versions: Uncertainty, Tradeoffs & Goodhart’s Law',
+    subtitle: 'Paired differences, clustered units of analysis, cost/latency tradeoffs, validity pillars, and statistical reference',
+    integratedLessons: 'Comparisons, Statistics & Validity',
     overview:
-      'Build statistical intuition around one concrete decision: System B beats System A by +0.10 points on a 5-point scale, but costs 9× more and runs 5× slower. Learn to interpret uncertainty in the direct difference, weigh practical value, separate validity from reliability, and govern formal studies.',
+      'Learn how to interpret a real A/B or version comparison without falling for statistical illusions or Goodhart’s Law: System B beats System A by +0.10 points on a 5-point scale, but costs 9× more and runs 5.4× slower. Compute direct paired differences, cluster uncertainty at the right unit of analysis, check subgroups, and verify all three validity pillars.',
     objectives: [
-      'Compare two systems on the same cases using a direct difference confidence interval instead of eyeballing overlapping separate CIs.',
-      'Distinguish statistical detectability from practical significance when weighing quality gains against cost, latency, and subgroup disparities.',
-      'Separate measurement validity (Category A), study design & generalization (Category B), and reliability & traceability (Category C).',
-      'Use pre-registered protocols, separate product/evaluator versioning, and longitudinal monitoring for formal deployment decisions.',
+      'Compare two versions on the same tasks using a direct paired difference CI instead of eyeballing overlapping separate CIs.',
+      'Align confidence intervals and standard errors with your unit of analysis (clustering repeated tasks per analyst or turns per session).',
+      'Apply Operating Rule 4 (Goodhart’s Law) by weighing quality gains against cost, latency, audit time, and subgroup disparities.',
+      'Separate Measurement Validity (Category A), Study Design & Generalization (Category B), and Reliability & Traceability (Category C).',
     ],
     researchEvidence: [
       {
@@ -648,65 +490,56 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
         doesNotEstablish: 'Does not provide AI-specific benchmark thresholds.',
       },
       {
-        citation: 'Long, T., Gero, K. I., & Chilton, L. B. (2024). Not Just Novelty: A Longitudinal Study on Utility and Customization of AI Workflows. arXiv preprint.',
-        sourceType: 'Preprint',
-        sampleOrScope: 'Longitudinal study of users working with AI chains over time.',
-        finding: 'Identified a familiarization phase after which users understood the workflow, customized prompts, and rated utility higher—indicating perceived utility was not solely a short-lived novelty effect.',
-        limitations: 'Preprint studying a specific AI-chain interface and participant group.',
-        doesNotEstablish: 'Does not guarantee all AI tools improve with familiarity.',
-      },
-      {
-        citation: 'Ibrahim, L., Hafner, F. S., Cheng, M., Lee, C., Anselmetti, R., Willer, R., Rocher, L., & Yang, D. (2026). Sycophantic AI Makes Human Interaction Feel More Effortful and Less Satisfying Over Time. arXiv:2605.07912.',
-        sourceType: 'Preprint',
-        url: 'https://arxiv.org/abs/2605.07912',
-        sampleOrScope: 'Short-term preference ranking and longitudinal exposure study.',
-        finding: 'Participants ranked sycophantic AI responses first in immediate comparisons, whereas extended exposure was associated with lower satisfaction with human interactions and higher preference for AI over humans.',
-        limitations: 'Preprint; effects depend on the interaction setting and exposure duration studied.',
-        doesNotEstablish: 'Does not establish identical effect sizes across every enterprise copilot.',
+        citation: 'NIST (2023). Artificial Intelligence Risk Management Framework (AI RMF 1.0). NIST AI 100-1.',
+        sourceType: 'Technical report / Framework',
+        url: 'https://www.nist.gov/itl/ai-risk-management-framework',
+        sampleOrScope: 'National risk-management guidance across Govern, Map, Measure, and Manage functions.',
+        finding: 'Treats measurement and governance as iterative, cross-cutting functions rather than a one-time pre-release checkbox.',
+        limitations: 'Provides high-level organizational principles rather than task-specific statistical thresholds.',
+        doesNotEstablish: 'Does not validate any specific vendor benchmark or proprietary evaluation score.',
       },
     ],
     caseStudy: {
-      stageTitle: 'Stage 6 (Fictional Case Study): Interpreting Meridian’s Mixed Results',
+      stageTitle: 'Stage 5 (Fictional Case Study): Interpreting Meridian’s Mixed Version Comparison',
       narrative:
-        'Meridian’s 32-analyst crossover study (128 crossed sessions across 48 confirmatory packets) shows a +0.40 quality gain (95% CI [+0.18, +0.62]) and 0/100 confidentiality breaches (~3% one-sided 95% upper bound under binomial assumptions)—but unsupported claims rose by +1.6 pp (95% CI [+0.2, +3.0]), failing the pre-specified +1.0 pp non-inferiority margin. Total task time changed inconclusively (−2.5 min). Consistent with the decision rule, you withhold the pilot.',
+        'Meridian’s 32-analyst crossover study (128 crossed sessions across 48 confirmatory packets) shows a +0.40 quality gain (cluster-robust 95% CI [+0.18, +0.62]) and 0/100 confidentiality breaches (~3% one-sided 95% upper bound under binomial assumptions)—but unsupported claims rose by +1.6 pp (95% CI [+0.2, +3.0]), failing the pre-specified +1.0 pp non-inferiority gate. Total task time changed inconclusively (−2.5 min). Honoring your pre-registered tradeoff rule, you withhold the pilot.',
       keyDecisions: [
-        'Use direct within-analyst difference CIs rather than comparing separate condition CIs by overlap.',
-        'Honor the pre-specified +1.0 pp non-inferiority gate even when synthesis quality improves.',
+        'Use direct within-analyst paired difference CIs clustered by analyst/packet rather than eyeballing separate CIs.',
+        'Honor pre-specified tradeoff gates (unsupported-claim limit) even when average quality rises.',
       ],
     },
     misconceptions: [
       {
         myth: '“Overlapping 95% confidence intervals prove there is no real difference.”',
-        reality: 'Overlap of separate CIs is not a formal test of the difference—especially on shared/paired cases. Estimate the difference CI directly.',
+        reality: 'Overlap of separate CIs is not a formal test of the difference—especially on shared tasks where item difficulty cancels out. Estimate the difference CI directly.',
       },
       {
-        myth: '“p < 0.05 means the gain is worth paying for.”',
-        reality: 'Large samples detect tiny differences; practical value depends on effect magnitude relative to cost, latency, and error consequences.',
+        myth: '“p < 0.05 means the improvement is worth shipping.”',
+        reality: 'Large samples can detect tiny differences; practical worth depends on effect size relative to cost, latency, verification effort, and subgroup regressions.',
       },
     ],
     exercise: {
-      title: 'Assignment 6: Decide Whether a +0.10 Gain Is Worth 9× the Cost',
-      objective: 'Interpret a direct difference CI, weigh cost/latency trade-offs, and handle an underpowered subgroup gap.',
+      title: 'Assignment 5: Decide Whether a +0.10 Gain Is Worth 9× the Cost',
+      objective: 'Interpret a direct paired difference CI, weigh Goodhart’s Law tradeoff metrics, and handle an underpowered subgroup gap.',
       scenario:
         'Fictional paired comparison on N = 200 shared research tasks (25 analysts, 8 tasks each): System A mean 4.10/5 (SD 0.60, 95% CI [4.02, 4.18]), latency 1.2s, cost $0.02/task; Non-English subgroup (n = 15 tasks) mean 2.80/5. System B mean 4.20/5 (SD 0.70, 95% CI [4.10, 4.30]), latency 6.5s, cost $0.18/task; Non-English subgroup (n = 15 tasks) mean 3.90/5. Direct paired difference (B − A): +0.10 points (cluster-robust 95% CI [+0.01, +0.19]).',
       instructions: [
-        'Warning: The overlap of the two separate 95% CIs ([4.02, 4.18] and [4.10, 4.30]) is not a formal statistical test of the difference.',
-        'Explain what the direct paired difference CI ([+0.01, +0.19]) establishes—and distinguish statistical uncertainty from measurement uncertainty (rater noise).',
-        'Explain what would make a +0.10-point gain worthwhile (or not worthwhile) given 9× higher cost ($0.18 vs. $0.02) and 5.4× higher latency (6.5s vs. 1.2s).',
-        'Assess the Non-English subgroup (n = 15: 2.80 vs. 3.90) and state what evidence is needed before deciding for Non-English users.',
+        'Explain why overlapping separate 95% CIs ([4.02, 4.18] and [4.10, 4.30]) do not establish "no difference," and what the cluster-robust paired difference CI ([+0.01, +0.19]) actually tells you (plus what rater/rubric noise it leaves out).',
+        'Weigh the +0.10-point gain against 9× higher cost ($0.18 vs. $0.02) and 5.4× higher latency (6.5s vs. 1.2s) using Operating Rule 4 (Goodhart’s Law).',
+        'Assess the Non-English subgroup (n = 15: 2.80 vs. 3.90) and state what evidence is needed before deploying System A to Non-English users.',
       ],
-      requiredOutput: 'A concise decision memo covering the direct difference CI, cost/latency trade-off, and Non-English subgroup plan.',
+      requiredOutput: 'A concise decision memo covering the direct difference CI, cost/latency tradeoff, and Non-English subgroup plan.',
       evaluationCriteria: [
-        'Uses the direct paired difference CI [+0.01, +0.19] rather than separate-CI overlap.',
+        'Uses the direct cluster-robust paired difference CI [+0.01, +0.19] rather than separate-CI overlap.',
         'Explicitly weighs +0.10 points against 9× cost and 5.4× latency, and flags n = 15 subgroup uncertainty.',
       ],
       strongExample:
-        'Although the two separate 95% CIs overlap ([4.02, 4.18] and [4.10, 4.30]), the direct cluster-robust paired difference is +0.10 with 95% CI [+0.01, +0.19], indicating a statistically detectable but small overall gain (which still does not quantify rubric or rater measurement error). For English tasks, a +0.10-point shift on a 5-point scale is unlikely to justify 9× cost ($0.18 vs. $0.02) and 5.4× latency (6.5s vs. 1.2s) unless that 0.10 gain reflects preventing high-severity errors. For Non-English tasks, System A scored 2.80 vs. System B’s 3.90, but n = 15 is too small for a precise estimate: do not deploy System A for Non-English workflows yet; collect a larger stratified Non-English sample before choosing (or consider routing Non-English queries separately).',
-      reflectionQuestion: 'What domain threshold would make a +0.10-point gain worth 9× higher cost in your own application?',
+        'Although the two separate 95% CIs overlap ([4.02, 4.18] and [4.10, 4.30]), the direct cluster-robust paired difference (accounting for 8 tasks per analyst) is +0.10 with 95% CI [+0.01, +0.19]—a statistically detectable but tiny gain (and it still excludes rubric/rater measurement error). For English tasks, chasing +0.10 on a 5-point scale at 9× cost ($0.18 vs. $0.02) and 5.4× latency (6.5s vs. 1.2s) risks Goodharting the quality score unless that 0.10 eliminates high-severity errors. For Non-English tasks, System A drops to 2.80 vs. B’s 3.90, but n = 15 is underpowered: block System A on Non-English queries and collect a larger stratified Non-English sample before deciding.',
+      reflectionQuestion: 'Which paired tradeoff metrics (latency, dollar cost, audit minutes, or subgroup gap) guard your primary metric against Goodhart’s Law?',
     },
     knowledgeChecks: [
       {
-        id: 'm6-q1',
+        id: 'm5-q1',
         question: 'Two systems have separate 95% CIs of [4.02, 4.18] and [4.10, 4.30] on the same 200 paired test tasks. What is the right way to test their difference?',
         options: [
           'Conclude there is no statistically significant difference because the two separate 95% CIs overlap.',
@@ -721,21 +554,21 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
         ],
       },
       {
-        id: 'm6-q2',
+        id: 'm5-q2',
         question: 'If you log 300 chat turns across 5 user sessions, why is treating N = 300 as independent observations statistically invalid?',
         options: [
           'Because 300 is too small for any confidence interval.',
-          'Because turns within the same session are clustered and share user/context dependencies, understating uncertainty.',
+          'Because turns within the same session share user/context dependencies, understating uncertainty when your unit is the session.',
           'Because chat turns can only be analyzed qualitatively.',
         ],
         correctIndex: 1,
-        correctExplanation: 'Clustered observations within a conversation are correlated; standard errors must account for clustering at the session/user level.',
+        correctExplanation: 'Clustered observations within a session are correlated; standard errors must account for clustering at the session/user unit of analysis.',
         distractorNotes: [
           'A and C are false.',
         ],
       },
       {
-        id: 'm6-q3',
+        id: 'm5-q3',
         question: 'According to the Standards for Educational and Psychological Testing, what does validity apply to?',
         options: [
           'A fixed property of a benchmark dataset regardless of how it is used.',
@@ -750,7 +583,7 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
         ],
       },
       {
-        id: 'm6-q4',
+        id: 'm5-q4',
         question: 'A model produces 0 critical failures in 100 independent representative trials. Using the rule of three, what is the approximate one-sided 95% upper bound on the failure rate?',
         options: [
           '0%, proving the model is completely safe in production.',
@@ -766,57 +599,179 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       },
     ],
     takeaways: [
-      'Compare versions on the same cases and estimate a direct difference CI—do not judge significance by overlapping separate CIs.',
-      'Weigh effect magnitude against cost, latency, verification burden, and subgroup disparities.',
-      'Keep measurement validity, study design/generalization, and reliability/traceability distinct.',
+      'Compare versions on shared tasks using a direct paired difference CI clustered at your unit of analysis—never judge by overlapping separate CIs.',
+      'Pair primary quality metrics with cost, latency, audit time, and subgroup breakdowns so Goodhart’s Law does not hide regressions.',
+      'Keep measurement validity, causal/external study design, and reliability/traceability distinct.',
     ],
     furtherReading: [
       { label: 'NIST Automated Benchmark Guidance (Draft)', type: 'Technical report / Framework', url: 'https://www.nist.gov/itl/ai-risk-management-framework' },
     ],
-    transition: 'Finally, Module 7 applies everything you learned to audit public benchmark claims, vendor decks, and press releases.',
+    transition: 'With version comparison mastered, Module 6 brings evals into live Layers 4–6: verifying end-to-end workflows, measuring real human task time, and governing production monitoring.',
+  },
+  {
+    id: 'm6',
+    number: 6,
+    title: 'Real-World Performance: Workflows, Human–AI & Production Monitoring',
+    subtitle: 'Testing Layers 4–6 in practice: end-to-end state checks, total human task time, and post-launch monitoring',
+    integratedLessons: 'Workflows, Human–AI & Lifecycle',
+    overview:
+      'Passing lower-layer tests never proves real-world success. See how teams evaluate Layers 4–6 in practice: verifying actual environment state changes for workflows/agents, measuring whether real users do better work in less total time (drafting + checking + fixing), and running disciplined production monitoring with separate product/evaluator versioning.',
+    objectives: [
+      'Verify workflow and agent runs by checking actual environment/artifact state rather than trusting the model’s self-report.',
+      'Design a practical two-condition user workflow comparison (current process vs. workflow + AI) measuring output quality and total task time (drafting + checking + correction).',
+      'Recognize when a third AI-alone condition is required (claiming human–AI synergy) and why real users outperform simulated personas.',
+      'Set up post-launch monitoring with telemetry + scoring rules, separate product/evaluator versions, named owners, and reevaluation triggers.',
+    ],
+    researchEvidence: [
+      {
+        citation: 'Becker, J., Rush, N., Barnes, E., & Rein, D. (2025). Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity. METR Technical Report.',
+        sourceType: 'Technical report / Framework',
+        url: 'https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/',
+        sampleOrScope: 'RCT with 16 experienced open-source developers completing 246 tasks on large, complex repositories (~5 years prior experience).',
+        finding: 'Developers forecasted a ~20% speedup with AI tools, yet observed total task time was 19% slower when AI tools were allowed.',
+        limitations: 'Concerns early-2025 tools, experienced developers on familiar large repos, and specific task conditions.',
+        doesNotEstablish: 'Does not generalize to all AI coding tools, novice developers, or greenfield projects.',
+      },
+      {
+        citation: 'Vaccaro, M., Almaatouq, A., & Malone, T. W. (2024). When combinations of humans and AI are useful: A systematic review and meta-analysis. Nature Human Behaviour, 8(12), 2293–2303.',
+        sourceType: 'Meta-analysis (Peer-reviewed)',
+        url: 'https://doi.org/10.1038/s41562-024-02024-1',
+        sampleOrScope: 'Synthesizes 106 studies and 370 effect sizes comparing Human+AI against Human alone and AI alone.',
+        finding: 'Human–AI combinations outperformed humans alone on average (g = 0.64), but average synergy vs. the best solo actor was negative (g = -0.23), especially on decision-making tasks where AI outperformed humans alone.',
+        limitations: 'Reflects historical tasks and mostly pre-frontier models across heterogeneous experimental designs.',
+        doesNotEstablish: 'Does not establish that all future human–AI systems fail at decision-making or succeed at creation.',
+      },
+    ],
+    caseStudy: {
+      stageTitle: 'Stage 6 (Fictional Case Study): Meridian’s End-to-End Workflow & Monitoring Plan',
+      narrative:
+        'Before rolling out Meridian’s assistant, you verify Layer 4 (did citations survive a full brief edit without broken links?) and Layer 5 (two-condition check: Meridian analysts using their search+checklist baseline vs. using the AI assistant, timing drafting + citation verification + error fixing together). Post-launch, you turn live citation-edit telemetry into a weekly monitored metric with a named safety owner, pinned evaluator version, and clear rollback triggers.',
+      keyDecisions: [
+        'Measure total task time (drafting + citation checking + correction) on real analysts rather than drafting speed or simulated personas.',
+        'Version the production system and the monitoring judge independently, with explicit reevaluation triggers on model, prompt, retrieval, or traffic shifts.',
+      ],
+    },
+    misconceptions: [
+      {
+        myth: '“Faster AI drafting automatically saves the user time.”',
+        reality: 'As METR (2025) showed, users often feel faster even when checking, prompting, and fixing errors makes total task time slower. Always time the whole workflow.',
+      },
+      {
+        myth: '“LLM-simulated personas can replace real user tests—or you always need a 3-condition study.”',
+        reality: 'Two conditions (current workflow vs. human+AI) answer practical adoption questions with real users; simulated personas miss real workflow friction and verification cost. Add an AI-alone condition only when claiming synergy over both solo baselines.',
+      },
+    ],
+    exercise: {
+      title: 'Assignment 6: Design a Workflow Time Check & Production Monitoring Plan',
+      objective: 'Specify a practical two-condition Layer 5 workflow test plus two concrete post-launch monitoring and reevaluation triggers.',
+      scenario:
+        'Leadership wants to roll out an AI research drafting assistant to 40 support analysts because early offline tests passed 90% accuracy.',
+      instructions: [
+        'Design a two-condition workflow check (Current workflow vs. Analyst + AI) naming the participants, quality measure, and the exact time components summed into total task time.',
+        'State when you would add a third AI-alone condition (and what a two-condition check alone cannot establish).',
+        'Specify two post-launch monitoring signals (combining telemetry + an explicit scoring rule) and one change that triggers immediate reevaluation.',
+      ],
+      requiredOutput: 'A concise workflow test plan plus 2 monitoring rules and 1 reevaluation trigger.',
+      evaluationCriteria: [
+        'Includes drafting, checking, and error-correction time in total task time using real analysts.',
+        'Defines explicit scoring rules for live telemetry and keeps product and evaluator versions separate.',
+      ],
+      strongExample:
+        'Workflow test: Compare (1) analysts using the current search+template workflow vs. (2) the same analysts using the AI assistant on comparable real packets. Track blinded brief quality (1–5), unsupported claims, and total task time = drafting + citation verification + error correction. Add AI-alone only if claiming human+AI beats fully automated briefs. Monitoring: Track (a) analyst citation-override rate (telemetry scored as unsupported-claim flags via weekly stratified human audit of 30 sessions) and (b) weekly private regression suite pass rate. Version product and judge separately; trigger full reevaluation whenever the underlying model snapshot, retrieval index, or input language mix shifts.',
+      reflectionQuestion: 'In an AI tool you use right now, how many minutes saved during drafting are spent back on verification and fixes?',
+    },
+    knowledgeChecks: [
+      {
+        id: 'm6-q1',
+        question: 'When testing whether an AI copilot helps your team in practice, why must you sum drafting, checking, and correction time—and when do you add an AI-alone condition?',
+        options: [
+          'Because checking and fixing errors often erase drafting speedups; add AI-alone only when claiming human–AI synergy over both solo baselines.',
+          'Because checking time is negligible; add AI-alone in every user test.',
+          'Because user perception surveys are always more accurate than timing tasks.',
+        ],
+        correctIndex: 0,
+        correctExplanation: 'Total task time captures the real net speedup (or slowdown), and two conditions suffice for workflow adoption unless you claim synergy over solo AI.',
+        distractorNotes: [
+          'B ignores verification cost and overcomplicates standard adoption tests.',
+          'C is contradicted by empirical evidence (e.g., METR 2025).',
+        ],
+      },
+      {
+        id: 'm6-q2',
+        question: 'Why must production systems and automated monitoring evaluators be versioned separately?',
+        options: [
+          'Because evaluator prompts cannot be stored in version control.',
+          'So an intentional rubric or judge update is never mistaken for a system improvement or regression.',
+          'So teams can delete raw production logs after scoring.',
+        ],
+        correctIndex: 1,
+        correctExplanation: 'Separate versioning ensures shifts in measured pass rates can be attributed cleanly to system changes vs. measurement changes.',
+        distractorNotes: [
+          'A and C are false.',
+        ],
+      },
+    ],
+    takeaways: [
+      'For workflows and agents (Layer 4), verify actual environment state changes rather than model self-reports.',
+      'For Human–AI workflows (Layer 5), test real users against your current baseline and time drafting + checking + fixing together.',
+      'In production, pair live telemetry with explicit scoring rules, separate product/evaluator versions, named owners, and reevaluation triggers.',
+    ],
+    furtherReading: [
+      { label: 'Deep HCI Research & SPHERE Card Framework', type: 'Optional Advanced Track', url: undefined },
+    ],
+    transition: 'Finally, Module 7 uses everything from Modules 1–6 to call out hype—auditing public benchmarks, vendor decks, and overstated AI claims.',
   },
   {
     id: 'm7',
     number: 7,
-    title: 'Auditing a Public Claim: What Was Actually Tested?',
-    subtitle: 'Classifying vendor claims, exposing benchmark pitfalls, and rewriting overstated press releases',
-    integratedLessons: 'Module 7 & Claim Classification',
+    title: 'Calling Out Hype: Auditing Benchmarks & Vendor Claims',
+    subtitle: 'Spotting contamination, undisclosed harnesses, Goodharted metrics, and rewriting overstated AI claims',
+    integratedLessons: 'Auditing Public Claims',
     overview:
-      'Public leaderboards, vendor decks, and press releases routinely stretch narrow benchmark scores into sweeping deployment claims. Learn to audit any AI claim with four core questions: what was tested, what comparison was made, what is unknown, and what wording the evidence actually supports.',
+      'Public leaderboards, vendor decks, and press releases routinely stretch narrow Layer 2 scores into sweeping real-world claims. Audit any AI claim with four no-nonsense questions: what was tested (layer, unit, dataset), what comparison was made (and with what harness), what is missing or Goodharted, and what wording the supplied evidence actually supports.',
     objectives: [
       'Classify vendor and marketing statements as empirical, normative, predictive, mechanistic, comparative, or underspecified.',
-      'Audit a public benchmark or press release across 8 dimensions: benchmark scope/saturation, comparator & version parity, prompt/harness parity, contamination risk, metric/aggregation choices, statistical uncertainty, generalization, and missing safety/human-outcome evidence.',
-      'Explain why scores from different benchmarks cannot be directly equated without shared anchors.',
-      'Rewrite an overstated press release into a bounded statement supported strictly by the facts supplied.',
+      'Audit a public benchmark or press release across 8 dimensions: scope/saturation, comparator & version parity, harness parity, contamination risk, metric/aggregation choices, statistical uncertainty, generalization across layers, and missing safety/human-outcome evidence.',
+      'Explain why scores from different benchmarks cannot be equated without shared anchors.',
+      'Rewrite an overstated press release into a calibrated statement supported strictly by supplied facts.',
     ],
     researchEvidence: [],
     caseStudy: {
       stageTitle: 'Stage 7 (Fictional Case Study): Auditing a Competing Vendor’s Press Release',
       narrative:
-        'A competing vendor pitches Meridian with a headline: "94% on LeadingQA—the most intelligent research AI!" Your audit shows LeadingQA is an older public benchmark with contamination risk, the vendor did not disclose its retry/tool harness or baseline versions, and no error bars, cost, or analyst-workflow results were supplied. Meridian declines to procure on the leaderboard claim alone.',
+        'A competing vendor pitches Meridian with a headline: "94% on LeadingQA—the most intelligent research AI!" Your audit exposes the gap: LeadingQA is an older public benchmark with contamination risk (Layer 2), the vendor omitted its retry/tool harness and baseline versions, and no uncertainty bounds, latency/cost tradeoffs, or analyst-workflow evidence (Layer 5) were supplied. Meridian declines to buy on leaderboard hype alone.',
       keyDecisions: [
-        'Require disclosure of exact model snapshot, harness, comparator, and uncertainty before weighting external scores.',
-        'Test candidate tools on Meridian’s own held-out tasks and human workflow.',
+        'Require exact model snapshot, full harness disclosure, comparators, tradeoffs, and uncertainty before weighting external scores.',
+        'Verify candidate tools on Meridian’s own private held-out tasks and real analyst workflow.',
       ],
     },
-    misconceptions: [],
+    misconceptions: [
+      {
+        myth: '“Ranking #1 on a public leaderboard proves a tool is best for our team.”',
+        reality: 'Public leaderboards frequently suffer from contamination, hidden retry/scaffold harnesses, Goodharting, and mismatched tasks—and tell you nothing about Layer 5 workflow benefit.',
+      },
+      {
+        myth: '“Zero observed failures on a safety benchmark means zero production risk.”',
+        reality: '0/100 independent trials still allows up to ~3% failure rate at 95% confidence (Rule of Three)—and says nothing about untested distribution shifts or prompt injection.',
+      },
+    ],
     exercise: {
       title: 'Assignment 7: Classify Vendor Claims & Audit the Apex-7 Press Release',
-      objective: 'Classify individual claims by type, audit a press release across 8 dimensions, and write a defensible revision using only supplied facts.',
+      objective: 'Classify individual claims by type, audit a press release across 8 dimensions, and write a calibrated revision using only supplied facts.',
       scenario:
         'Fictional vendor press release: "Our new model Apex-7 is the most intelligent AI system ever built, achieving #1 (92.4%) on ReasoningBench—proving it outperforms human experts and is safe for enterprise deployment." Also classify two companion pitch-deck bullets: (a) "Any hallucinated citation is unacceptable for client delivery," and (b) "Deploying Apex-7 will cut analyst research time by 40% next quarter."',
       instructions: [
         'Part A (Claim classification): Classify the two pitch-deck bullets (a and b) plus the press-release claims ("92.4% on ReasoningBench", "most intelligent", "outperforms human experts") as Empirical, Normative, Predictive, Mechanistic, Comparative, or Unsupported/Underspecified.',
-        'Part B (8-point audit of the press release): Audit (1) benchmark scope & saturation, (2) comparator & model version parity, (3) prompt/harness/retry disclosure, (4) contamination risk, (5) metric & aggregation details, (6) statistical uncertainty (missing sample size / CIs), (7) generalization to enterprise workflows, and (8) missing safety & human-expert evidence.',
-        'Part C (Defensible rewrite): Write a 2-sentence scientifically defensible revision using ONLY facts actually supplied in the press release (do not invent prompt settings, sample sizes, or confidence intervals).',
+        'Part B (8-point audit): Audit (1) benchmark scope & saturation, (2) comparator & version parity, (3) prompt/harness/retry disclosure, (4) contamination risk, (5) metric & aggregation details, (6) statistical uncertainty (sample size / CIs), (7) cross-layer generalization to enterprise workflows, and (8) missing safety & human-outcome evidence.',
+        'Part C (Calibrated rewrite): Write a 2-sentence revision using ONLY facts supplied in the press release (do not invent prompt settings, sample sizes, or confidence intervals).',
       ],
       requiredOutput: 'Claim classifications, an 8-point audit list, and a strictly bounded 2-sentence rewrite.',
       evaluationCriteria: [
-        'Accurately separates empirical claims from normative rules, predictions, and unsupported extrapolations.',
-        'Covers all 8 audit dimensions and does NOT invent undisclosed details (like zero-shot prompts or ±1.2% CIs) in the rewrite.',
+        'Accurately separates empirical claims from normative rules, predictions, and unsupported cross-layer extrapolations.',
+        'Covers all 8 audit dimensions and does NOT invent undisclosed details in the rewrite.',
       ],
       strongExample:
-        'Part A: Bullet (a) is Normative (acceptable-risk policy); Bullet (b) is Predictive/Unsupported (forecast without workflow evidence); "92.4% on ReasoningBench" is Empirical (though underspecified); "most intelligent" and "outperforms human experts" are Unsupported extrapolations. Part B (8-point audit): (1) ReasoningBench scope/saturation undisclosed; (2) comparator models & version snapshots unnamed; (3) prompt, tool harness, and retry count undisclosed; (4) training/test contamination unaddressed; (5) metric definition and subgroup breakdown omitted; (6) sample size and confidence interval omitted; (7) narrow benchmark cannot generalize to enterprise workflows; (8) zero human-expert comparison or safety testing reported. Part C (Defensible rewrite): "The vendor reports that Apex-7 ranked #1 with a score of 92.4% on ReasoningBench, though the release omits the evaluation setup, comparator versions, sample size, and uncertainty interval. This single reported score does not establish general intelligence, superiority over human experts, or readiness and safety for enterprise deployment."',
+        'Part A: Bullet (a) is Normative (acceptable-risk rule); Bullet (b) is Predictive/Unsupported (forecast without Layer 5 workflow evidence); "92.4% on ReasoningBench" is Empirical (though underspecified); "most intelligent" and "outperforms human experts" are Unsupported extrapolations. Part B (8-point audit): (1) ReasoningBench scope/saturation undisclosed; (2) comparator versions unnamed; (3) prompt, tool harness, and retry count undisclosed; (4) training contamination unaddressed; (5) metric definition and subgroup splits omitted; (6) sample size and CIs omitted; (7) narrow Layer 2 benchmark cannot establish enterprise workflow success; (8) zero human-expert comparison or safety testing reported. Part C (Calibrated rewrite): "The vendor reports that Apex-7 ranked #1 with a score of 92.4% on ReasoningBench, though the release omits the evaluation setup, comparator versions, sample size, and uncertainty interval. This single reported score does not establish general intelligence, superiority over human experts, or readiness and safety for enterprise deployment."',
       reflectionQuestion: 'What single missing detail in an AI press release makes you immediately skeptical of the headline number?',
     },
     knowledgeChecks: [
@@ -851,75 +806,11 @@ export const MODULES_CURRICULUM: ModuleCurriculum[] = [
       },
     ],
     takeaways: [
-      'Ask four questions of every public claim: what was tested, what comparison was made, what is unknown, and what wording the evidence supports.',
-      'Never invent undisclosed setup details or error bars when summarizing a third-party claim.',
-      'Use calibrated language: "The study found…", "The authors report…", "This remains uncertain…".',
+      'Audit every public claim with four questions: what layer/unit was tested, what harness and baseline were used, what is hidden or Goodharted, and what the evidence actually supports.',
+      'Never invent undisclosed setup details or confidence intervals when summarizing a third-party claim.',
+      'Use calibrated phrasing: "The study found…", "The authors report…", "This remains uncertain…".',
     ],
     furtherReading: [],
-    transition: 'Ready to put all seven modules together into a formal study? Open the Final Capstone Project, the Eval Protocol Tool, or the Optional Advanced Tracks.',
-  },
-];
-
-export interface LessonMappingRow {
-  originalLesson: string;
-  newModule: string;
-  contentRetained: string;
-  changesMade: string;
-}
-
-export const LESSON_CONSOLIDATION_MAP: LessonMappingRow[] = [
-  {
-    originalLesson: 'Lesson 1: What Is AI Evaluation & How It Works',
-    newModule: 'Module 1: Foundations: Run Your First Eval',
-    contentRetained: 'Definition, 3 statement types, 10-element landscape, misconceptions, glossary & evidence hierarchy.',
-    changesMade: 'Opened with the 5-minute return-policy chatbot eval before diagrams/taxonomy; moved vendor-claim classification to Module 7.',
-  },
-  {
-    originalLesson: 'Lesson 2: Why Human–AI Interaction Changes Everything',
-    newModule: 'Module 2: Human–AI Interaction: Does AI Help People?',
-    contentRetained: 'Interaction vs. autonomy, SPHERE (Zhao et al., 2025), Vaccaro et al. (2024) synergy meta-analysis.',
-    changesMade: 'Centered on the 2-condition workflow question (counting checking & correction time), with AI-alone synergy and SPHERE as extensions.',
-  },
-  {
-    originalLesson: 'Lesson 3: Purpose, Scope, Targets & Evaluation Modes',
-    newModule: 'Module 3: Framing: Do We Need AI for This Problem?',
-    contentRetained: 'Exploratory vs. confirmatory modes, nested scopes, agent harnesses, contamination, and 10-field formal brief.',
-    changesMade: 'Brought the practical adoption question ("do we need AI, or would better search/a checklist work?") to the front.',
-  },
-  {
-    originalLesson: 'Lesson 4: Who Evaluates, For Whom & Context Coverage',
-    newModule: 'Modules 2 & 3 (distributed by theme)',
-    contentRetained: 'Target users vs. crowd annotators, CoMPosT caricature risks, HELM-style missing coverage.',
-    changesMade: 'Merged participant/synthetic-persona topics into Module 2 and context/coverage exclusions into Module 3.',
-  },
-  {
-    originalLesson: 'Lesson 5: How We Evaluate: Methods, Intrinsic vs. Extrinsic & Sampling',
-    newModule: 'Module 4: Cases & Criteria: Writing Cases That Test Your Rules',
-    contentRetained: 'Ordinary/ambiguous/escalation cases, challenge vs. representative sampling, intrinsic vs. extrinsic, 8 evidence methods.',
-    changesMade: 'Moved 100-item RAG retrieval dataset assignment and retrieval-specific metrics (Recall@k, MRR, NDCG) to Advanced Track A.',
-  },
-  {
-    originalLesson: 'Lesson 6: Measuring Real Outcomes, Skill Erosion & Grading',
-    newModule: 'Modules 2 (Human Outcomes) & 5 (Grading)',
-    contentRetained: 'METR study, Anthropic coding-skills study (17 pp), two-reviewer disagreement, aggregation trap, κ/α/ICC, LLM-judge validation.',
-    changesMade: 'Consolidated human-outcomes studies (METR, Anthropic) into Module 2 and focused Module 5 on reviewer disagreement, rubric revision, and aggregation traps.',
-  },
-  {
-    originalLesson: 'Lesson 7: Statistical Uncertainty, Clustering & Validity',
-    newModule: 'Module 6: Interpreting a Comparison: Gain, Uncertainty & Cost',
-    contentRetained: '0/100 rare-failure bound, conversation clustering, 3-category validity review, 12 worked examples.',
-    changesMade: 'Built main lesson around the +0.10-point gain at 9× cost comparison and direct difference CIs.',
-  },
-  {
-    originalLesson: 'Lesson 8: When to Evaluate: Lifecycle, Long-Term Effects & Governance',
-    newModule: 'Module 6 (Deployment & Formal Study Material)',
-    contentRetained: 'Short-term vs. long-term dynamics (familiarization, sycophancy), governance roles, oversight checks, reevaluation triggers.',
-    changesMade: 'Placed in the formal-study/deployment section of Module 6 alongside pre-registered protocols.',
-  },
-  {
-    originalLesson: 'Lesson 9: Worked Example, Reporting Discipline & Protocol Builder',
-    newModule: 'Module 7 + Final Capstone Project',
-    contentRetained: 'Meridian case study, Claim Calibration table, 12-field protocol, Decision Statement.',
-    changesMade: 'Combined vendor-claim classification and press-release audit in Module 7; expanded Meridian into the 22-element Capstone with reproducible synthetic exercise.',
+    transition: 'Ready to integrate all seven modules into one complete evaluation plan? Open the Final Capstone Project, the Practice Tools, or Optional Advanced Tracks (A–G).',
   },
 ];
