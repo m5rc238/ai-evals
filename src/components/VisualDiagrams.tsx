@@ -253,7 +253,7 @@ export function FallaciesDiagram() {
         <text x="426" y="210" fontSize="10.5" fill="#5C5346">• Tuning on the test set &amp; claiming confirmation</text>
       </svg>
       <figcaption className="mt-2.5 text-center font-mono text-[11px] text-[#5C5346]">
-        FIG 6.1 — Four families of AI evaluation fallacies that cause teams to overstate readiness or misread real-world impact.
+        FIG 7.1 — Four families of AI evaluation fallacies that cause teams to overstate readiness or misread real-world impact.
       </figcaption>
     </figure>
   );

@@ -234,9 +234,40 @@ Evaluations decay as models, prompts, retrieval corpora, and user behaviors shif
 
 ---
 
-## 6. Auditing Benchmarks, Vendor Claims & Bounded Reporting
+## 6. Human–AI Interaction & Epistemic Risk
 
-*Corresponds to Module 6 (Chapters 6.1–6.2).*
+*Corresponds to Module 6 (Chapters 6.1–6.4).*
+
+### Frame Top-Down, Instrument Bottom-Up
+
+The "Model-Centric vs. Human-Centered" binary breaks down in production because it erases Layers 3–4 (retrieval, tools, harnesses, UI), implies a false zero-sum tradeoff, and conflates *what* is measured with *how* it is scored. Across our 7-layer stack, apply one asymmetric principle: **frame evaluation top-down** from the human and outcome layers (Layers 5–7), then **build instrumentation bottom-up** across Layers 1–4 using the cheapest automated checks that reliably predict higher-layer failures.
+
+### Four Core HAI Constructs
+
+- **Human–AI Complementarity:** The joint team outperforms *both* the human alone and the AI alone.
+- **Calibrated Reliance:** Accepting right outputs and rejecting wrong ones—splitting failures into **over-reliance** (accepting wrong outputs without verification) and **under-reliance** (ignoring correct outputs due to distrust or friction).
+- **Oversight Cost & Cognitive Load:** If prompting, reading, and fact-checking costs more cognitive effort than doing the task manually, the system shifts labor rather than reducing it.
+- **Error Visibility & Recovery:** Systems that *fail loudly* (refusing, flagging missing sources) are often safer than systems that *fail smoothly* in confident prose.
+
+### Epistemia, the Verification Trap & Cognitive Biases
+
+In *Epistemological Fault Lines Between Human and Artificial Intelligence* (Quattrociocchi, Capraro, & Perc, 2025, `arXiv:2512.19466`, preprint synthesis), the authors define **Epistemia** as a structural condition where linguistic plausibility substitutes for epistemic evaluation—producing *the feeling of knowing without the labor of judgment*. Across seven structural fault lines (**Grounding, Parsing, Experience, Motivation, Causality, Metacognition, Value**), generative fluency breaks fluency as a cue for accuracy and creates the **90%/10% Verification Trap**: when an AI is right ~90% of the time and smoothly wrong ~10% of the time, busy humans down-regulate scrutiny and miss the hardest edge cases.
+
+Cognitive biases distort both **end users** (Processing Fluency Heuristic, Automation Bias, Illusion of Explanatory Depth, Anchoring, Anthropomorphism, Confirmation Bias) and **evaluators/judges** (Verbosity/Polish Bias, Position Bias, Self-Enhancement Bias, and satisfaction-only rubrics).
+
+### Designing Evals Against Epistemia
+
+1. **Decouple satisfaction from decision quality:** Pair user ratings with objective task accuracy and error audits.
+2. **Test calibration and abstention explicitly:** Include unanswerable and underspecified queries; reward appropriate hedging or abstention.
+3. **Measure error detection under fluency:** Seed realistic, high-fluency errors in user trials to test whether UI affordances (inline source passages, cognitive forcing functions) actually help users catch errors.
+4. **Run counterfactual & sycophancy probes:** Test whether outputs hold up under rephrased premises or polite false user assumptions.
+5. **Audit judges against blind expert review:** Randomize A/B order, strip length/formatting advantages, and calibrate on stratified real failures.
+
+---
+
+## 7. Auditing Benchmarks, Vendor Claims & Bounded Reporting
+
+*Corresponds to Module 7 (Chapters 7.1–7.2).*
 
 Audit every public leaderboard, vendor pitch, or internal deck with four questions:
 1. **What layer, unit, and cases were actually tested?**
@@ -260,7 +291,7 @@ Separate empirical observations, normative policy rules, predictions, and unsupp
 
 ---
 
-## 7. Worked Example & 12-Field Companion Protocol
+## 8. Worked Example & 12-Field Companion Protocol
 
 ### Worked Example: Meridian Research Assistant (Fictional Capstone Scenario)
 

@@ -579,15 +579,409 @@ export const COURSE_MODULES_PART_2: CourseModule[] = [
   },
 
   /* ========================================================================
-   * MODULE 6: Auditing Benchmarks & Vendor Claims (Chapters 6.1 – 6.2)
+   * MODULE 6: Human–AI Interaction (HAI) & Epistemic Risk (Chapters 6.1 – 6.4)
    * ======================================================================== */
   {
     id: 'm6',
     number: 6,
+    title: 'Human–AI Interaction & Epistemic Risk',
+    subtitle: 'Beyond the model/human binary, HAI constructs, Epistemia & the 7 fault lines, cognitive biases, and anti-epistemia evals',
+    overview:
+      'Evaluating a model in isolation answers a narrow technical question. In deployment, AI operates inside a feedback loop with human users, interfaces, and workflows. Across four focused chapters you will learn why "Model-Centric vs. Human-Centered" breaks down on the 7-layer stack, master core HAI constructs like calibrated reliance and error visibility, examine Epistemia and cognitive biases in users and judges, and design evals that catch fluent errors.',
+    objectives: [
+      'Move beyond the "Model-Centric vs. Human-Centered" binary by framing evaluations top-down from Layers 5–7 and instrumenting bottom-up across Layers 1–4.',
+      'Operationalize four core HAI constructs: complementarity, calibrated reliance (over- vs. under-reliance), oversight cost, and error visibility & recovery.',
+      'Explain Epistemia, the seven epistemological fault lines (Quattrociocchi et al., 2025), the 90%/10% Verification Trap, and cognitive biases in both users and evaluators.',
+      'Design anti-epistemia evals: decoupling satisfaction from accuracy, testing abstention, seeding realistic fluent errors, and running sycophancy perturbation probes.',
+    ],
+    chapters: [
+      {
+        id: '6.1',
+        code: 'Chapter 6.1',
+        title: 'Beyond the Binary: Model-Centric vs. Human-Centered Evals',
+        readMinutes: 6,
+        summary:
+          'Why "Model-Centric vs. Human-Centered" is a useful starting contrast but a weak operational model—and how to frame top-down and instrument bottom-up across the 7-layer stack.',
+        sections: [
+          {
+            heading: 'The Starting Contrast',
+            paragraphs: [
+              'Traditional machine learning evaluation is model-centric: it treats the model as a self-contained input-output function evaluated against static benchmarks. Human–AI Interaction (HAI) evaluation is human-centered: it shifts the unit of analysis to the coupled human–AI system, measuring what happens when a real person tries to accomplish an ill-structured, multi-turn goal with an AI interface.',
+            ],
+            table: {
+              headers: ['Dimension', 'Model-Centric Evals (Layers 1–2)', 'Human-Centered / HAI Evals (Layers 5–7)'],
+              rows: [
+                ['Unit of Analysis', 'The model in isolation (claim, response, prompt)', 'The joint system (Human + Interface + AI: task session, analyst, team)'],
+                ['Task Structure', 'Static, single-turn, well-defined prompts', 'Dynamic, multi-turn, ambiguous real-world tasks'],
+                ['Core Metrics', 'Accuracy, F1, pass@k, latency, refusal rate', 'Calibrated reliance, complementarity, cognitive load, error recovery'],
+                ['Primary Failure Modes', 'Hallucination, instruction non-compliance, toxicity', 'Over-reliance, automation bias, verification fatigue, unrecoverable drift'],
+                ['Primary Validity Risk', 'Benchmark saturation and data contamination', 'Weak construct validity (wrong proxy) and ecological validity (lab tasks lacking real stakes)'],
+              ],
+            },
+          },
+          {
+            heading: 'Why the Binary Breaks Down',
+            paragraphs: [
+              'While "Model-Centric vs. Human-Centered" exposes classic engineering blind spots, treating it as a rigid binary fails operationally for three reasons:',
+            ],
+            bullets: [
+              {
+                label: '1. It erases the engineered system layers (Layers 3–4)',
+                text: 'Production AI is rarely a raw model meeting a raw human. Between them sit retrieval pipelines (RAG), tool calls, prompt scaffolding, deterministic guardrails, and UI affordances. A binary forces you to shoehorn pipeline bugs into "model" or "human" when they belong to neither.',
+              },
+              {
+                label: '2. It implies a false zero-sum trade-off',
+                text: 'Teams do not trade model accuracy for human usability. Lower-layer reliability (Layers 1–4) and higher-layer interaction quality (Layers 5–7) are tightly coupled.',
+              },
+              {
+                label: '3. It conflates what is measured with how it is measured',
+                text: 'Isolated model outputs can be graded by human raters (side-by-side preference), while human interaction behavior can be measured automatically via telemetry (override rates, edit distance, abandonment) paired with scoring rules.',
+              },
+            ],
+          },
+          {
+            heading: 'The Asymmetric Operating Principle on Our 7-Layer Stack',
+            paragraphs: [
+              'Instead of a binary, use our unified 7-layer stack from Chapter 1.3 (Data & Inputs → Isolated Model → Component → Workflow / Agent → Human–AI Interaction → Organizational → Wider Impacts) with one asymmetric operating principle:',
+            ],
+            callout: {
+              kind: 'rule',
+              title: 'Frame top-down; instrument bottom-up',
+              body: 'Frame your evaluation top-down from the higher layers (Layers 5–7)—defining which human-system failure or organizational harm actually matters—then build instrumentation bottom-up across Layers 1–4, finding the cheapest automated checks that reliably predict higher-layer behavior.',
+            },
+          },
+        ],
+        keyTakeaways: [
+          'Model-centric vs. human-centered is a helpful starting contrast, not an operational architecture.',
+          'Never erase Layers 3–4 (retrieval, tools, harnesses, UI) or confuse what is measured with who scores it.',
+          'Frame evaluations top-down from real human/outcome failures, then instrument bottom-up across Layers 1–4.',
+        ],
+      },
+      {
+        id: '6.2',
+        code: 'Chapter 6.2',
+        title: 'Core Constructs in HAI Evaluation',
+        readMinutes: 6,
+        summary:
+          'Four analytical constructs that explain why a 95%-accurate model can still degrade real decisions—and why failing loudly is often safer than failing smoothly.',
+        sections: [
+          {
+            heading: 'Four Constructs That Do the Analytical Work',
+            paragraphs: [
+              'When evaluating Layer 5 (Human–AI Interaction) and Layer 6 (Organizational outcomes), generic accuracy scores miss the dynamics of human judgment. Four constructs capture whether the coupled human–AI system actually works:',
+            ],
+            bullets: [
+              {
+                label: '1. Human–AI Complementarity',
+                text: 'The gold standard of collaborative AI: the human–AI team outperforms BOTH the human working alone and the AI working alone. Empirical studies (including Vaccaro et al., 2024) repeatedly show that adding a high-accuracy AI assistant can still degrade joint decisions if users cannot tell when to override it.',
+              },
+              {
+                label: '2. Calibrated Reliance (Over-Reliance vs. Under-Reliance)',
+                text: 'Appropriate trust in action—accepting correct outputs and rejecting wrong ones. Failures split into two opposite regimes: over-reliance (accepting incorrect AI outputs without adequate verification) and under-reliance (ignoring or overriding correct AI outputs due to distrust, UI friction, or poor explanation).',
+              },
+              {
+                label: '3. Oversight Cost & Cognitive Load',
+                text: 'Supervising an AI is never free. If prompting, reading dense prose, and fact-checking subtle claims requires more cognitive effort than doing the work manually, the system shifts labor rather than reducing it.',
+              },
+              {
+                label: '4. Error Visibility & Recovery',
+                text: 'How quickly a user notices a subtle failure and how easily they can steer the system back on track. Systems that fail loudly (returning an error, flagging missing sources, or abstaining) are often far safer than systems that fail smoothly in confident prose.',
+              },
+            ],
+            callout: {
+              kind: 'example',
+              title: 'Failing loudly vs. failing smoothly at Meridian',
+              body: 'If Meridian’s retriever finds zero papers on a topic and returns "No matching sources found in the corpus," the analyst immediately knows to search manually (loud failure, near-zero harm). If the model instead synthesizes a polished two-paragraph answer from parametric memory with a plausible-looking citation, the error becomes invisible (smooth failure, high epistemic risk).',
+            },
+          },
+        ],
+        keyTakeaways: [
+          'Track calibrated reliance in both directions: over-reliance on wrong outputs and under-reliance on right outputs.',
+          'Measure oversight cost and error visibility explicitly—failing loudly is safer than failing smoothly.',
+          'Complementarity requires beating both solo human and solo AI baselines.',
+        ],
+        toolLink: {
+          tool: 'sphere-tool',
+          label: 'Optional HCI Tool: SPHERE Card Builder',
+          description: 'Need a structured 5-dimension card for a formal HAI study? Use the SPHERE Card Tool (or browse Layer 5 reliance/friction metrics in the Metrics Taxonomy Tool).',
+        },
+      },
+      {
+        id: '6.3',
+        code: 'Chapter 6.3',
+        title: 'Epistemia, the Seven Fault Lines & Cognitive Biases',
+        readMinutes: 8,
+        summary:
+          'Why fluent prose tricks human judgment, how the 90%/10% Verification Trap collapses scrutiny, and how cognitive biases distort both end users and evaluators.',
+        sections: [
+          {
+            heading: 'Epistemia: The Feeling of Knowing Without the Labor of Judgment',
+            paragraphs: [
+              'Most evaluation frameworks assume that if an AI output looks accurate and sounds helpful, it is aligned with human judgment. A cognitive science and epistemological lens reveals why surface polish can mask deep structural failure.',
+              'In Epistemological Fault Lines Between Human and Artificial Intelligence (Quattrociocchi, Capraro, & Perc, 2025, arXiv:2512.19466), the authors note that traditional search engines filtered information—returning candidate sources and leaving credibility judgment to the user. Generative AI synthesizes a single, fluent, authoritative-sounding answer, collapsing search, selection, and explanation into one smooth surface. They call the resulting condition Epistemia:',
+            ],
+            callout: {
+              kind: 'warning',
+              title: 'Epistemia (Quattrociocchi, Capraro, & Perc, 2025)',
+              body: 'A structural condition in which linguistic plausibility substitutes for epistemic evaluation, producing the feeling of knowing without the labor of judgment.',
+            },
+          },
+          {
+            heading: 'The Seven Epistemological Fault Lines',
+            paragraphs: [
+              'Even when human and AI answers look identical on the surface, their underlying pipelines diverge across seven fault lines:',
+            ],
+            table: {
+              headers: ['Fault Line', 'Human Epistemic Pipeline', 'LLM Generative Pipeline', 'Evaluation Implication'],
+              rows: [
+                ['1. Grounding', 'Multimodal, embodied, social perception anchored in a shared world', 'Abstracted symbol sequences reconstructed statistically from text', 'Models miss pragmatic cues (sarcasm, stakes, physical context) humans register effortlessly.'],
+                ['2. Parsing', 'Situational parsing into scenes, agents, intentions, and risks', 'Mechanical tokenization and formal partitioning of strings', 'Fragility to superficial prompt phrasing and structural perturbations.'],
+                ['3. Experience', 'Episodic memory, intuitive physics/psychology, situated concepts', 'Relational similarity in high-dimensional embedding space', 'Brittle generalization outside training distributions despite fluent recall.'],
+                ['4. Motivation', 'Goal-directed, stakes-sensitive judgment', 'Goal-agnostic conditional probability estimation', 'No intrinsic stake in truth; optimizes continuation likelihood or reward proxies.'],
+                ['5. Causality', 'Mental models supporting interventions and counterfactuals', 'Surface statistical associations and co-occurrence patterns', 'Confuses correlation with causation; breaks under novel counterfactuals.'],
+                ['6. Metacognition', 'Internal conflict detection, uncertainty monitoring, withholding judgment', 'Forced continuation without internal truth monitoring', 'Forced confidence: identical fluency when recalling verified facts or confabulating.'],
+                ['7. Value', 'Normative commitments tied to ethics and accountability', 'Next-token prediction shaped externally by post-training alignment', 'Simulated normativity without genuine accountability or moral agency.'],
+              ],
+            },
+            callout: {
+              kind: 'rule',
+              title: 'Epistemic scope note',
+              body: 'Quattrociocchi et al. (2025, preprint) is a theoretical synthesis, not a closed empirical verdict. Engineering layers like RAG, deterministic tools, and abstention training actively mitigate symptoms of these fault lines—yet adding retrieval and citations often makes answers MORE convincing faster than it makes the underlying process more knowing, making rigorous evals harder, not easier.',
+            },
+          },
+          {
+            heading: 'Silent Epistemic Hazards & The 90%/10% Verification Trap',
+            paragraphs: [
+              'Mapping failures onto these fault lines separates obvious bugs from silent epistemic hazards:',
+            ],
+            bullets: [
+              {
+                label: 'Fluent confabulation (Metacognition)',
+                text: 'Unlike a database returning NULL, an LLM generates false claims with the exact syntactic polish of true ones—breaking fluency as a cue for accuracy.',
+              },
+              {
+                label: 'Sycophancy & preference hacking (Motivation & Value)',
+                text: 'Models tuned on human preference ratings learn to mirror user beliefs and validate flawed premises. Naive "user satisfaction" evals actively reward this failure mode.',
+              },
+              {
+                label: 'Spurious causal rationalizations (Causality)',
+                text: 'Polished chain-of-thought explanations can sound logically rigorous while masking unfaithful internal shortcuts.',
+              },
+              {
+                label: 'The Verification Trap (System–Human Coupling)',
+                text: 'When an AI system is right 90% of the time and smoothly wrong 10% of the time, busy humans rationally down-regulate their scrutiny—causing error detection to collapse precisely on the hardest edge cases.',
+              },
+            ],
+          },
+          {
+            heading: 'Cognitive Biases in Two Groups: End Users and Evaluators',
+            paragraphs: [
+              'Epistemia succeeds because generative fluency exploits well-documented human heuristics—distorting both the end users in deployment and the evaluators/judges scoring the system:',
+            ],
+            table: {
+              headers: ['Group Distorted', 'Bias / Heuristic', 'How It Breaks AI Systems or Evals'],
+              rows: [
+                ['End Users (Layer 5)', 'Processing Fluency Heuristic', 'Ease of reading and clean formatting feel like truth even when claims are unsupported.'],
+                ['End Users (Layer 5)', 'Automation Bias', 'Favoring automated suggestions and ignoring contradictory cues, especially under time pressure.'],
+                ['End Users (Layer 5)', 'Illusion of Explanatory Depth (IoED)', 'A polished explanation creates the sensation of understanding, causing users to skip verification.'],
+                ['End Users (Layer 5)', 'Anchoring, Anthropomorphism & Confirmation Bias', 'First drafts anchor subsequent reasoning; conversational tone implies self-awareness; sycophantic outputs confirm user priors.'],
+                ['Evaluators & Judges (Measurement)', 'Verbosity, Polish & Position Bias', 'Both human raters and LLM judges prefer longer, better-formatted answers and exhibit A/B order effects.'],
+                ['Evaluators & Judges (Measurement)', 'Self-Enhancement & Satisfaction Rubrics', 'LLM judges favor their own model family; asking raters "which feels more helpful?" without ground-truth checks selects directly for epistemia.'],
+              ],
+            },
+          },
+        ],
+        keyTakeaways: [
+          'Epistemia occurs when linguistic fluency substitutes for actual verification—creating the feeling of knowing without the labor of judgment.',
+          'The 90%/10% Verification Trap explains why high-accuracy models that fail smoothly cause human oversight to collapse on edge cases.',
+          'Cognitive biases distort both end users (fluency, automation bias, IoED, anchoring) and evaluators (verbosity, position, self-enhancement, helpfulness-only rubrics).',
+        ],
+      },
+      {
+        id: '6.4',
+        code: 'Chapter 6.4',
+        title: 'Designing Evals Against Epistemia',
+        readMinutes: 6,
+        summary:
+          'Six concrete changes to how you construct datasets, run user trials, and score judges so your eval suite catches fluent errors instead of rewarding them.',
+        sections: [
+          {
+            heading: 'Six Concrete Engineering & Study-Design Defenses',
+            paragraphs: [
+              'Moving from surface alignment to epistemic evaluation requires concrete changes in how tests are built and scored:',
+            ],
+            bullets: [
+              {
+                label: '1. Decouple satisfaction from decision quality',
+                text: 'Never treat thumbs-up, CSAT, or "perceived helpfulness" as proxies for factual accuracy or complementarity. Always pair subjective ratings with objective task outcomes and error audits.',
+              },
+              {
+                label: '2. Test calibration and abstention explicitly',
+                text: 'Include unanswerable, underspecified, and out-of-corpus queries in your test suite. Score whether the system asks clarifying questions, hedges appropriately, or abstains rather than rewarding forced completion.',
+              },
+              {
+                label: '3. Measure error detection under fluency',
+                text: 'In user studies, intentionally seed realistic, high-fluency errors (or draw from real model failure traces) and measure whether users catch them. Compare detection rates across UI affordances such as inline passage highlights, uncertainty markers, and cognitive forcing functions.',
+              },
+              {
+                label: '4. Run counterfactual, perturbation & sycophancy probes',
+                text: 'Test whether model reasoning survives inverted premises, rephrased wording, or polite-but-false user assumptions ("I believe the study proved causation—can you summarize how?").',
+              },
+              {
+                label: '5. Audit judges against blind human ground truth',
+                text: 'Randomize A/B order to control position bias, strip unnecessary formatting/length advantages, and calibrate LLM judges regularly against blind expert review on a stratified sample of real failures (reinforcing Chapter 3.2).',
+              },
+              {
+                label: '6. Track longitudinal trust drift & skill retention',
+                text: 'Short lab sessions capture first-impression usability, not verification fatigue or skill atrophy. For high-stakes workflows, track override rates, edit depth, and independent human performance over weeks.',
+              },
+            ],
+          },
+        ],
+        keyTakeaways: [
+          'Always decouple user satisfaction from verified decision quality and explicitly reward calibrated abstention.',
+          'Test human error detection on seeded high-fluency failures and stress-test models with polite false-premise sycophancy probes.',
+          'Audit automated judges for order/verbosity bias against blind expert review and track override/edit depth longitudinally.',
+        ],
+        trackLink: {
+          label: 'Optional Advanced Track G: Deep Human–AI Research & SPHERE',
+          description: 'Explore empirical studies on sycophancy drift, cognitive offloading scores, skill formation, and persona simulation limits.',
+        },
+      },
+    ],
+    practiceLab: {
+      title: 'Practice Lab 6: Epistemic Audit of an Eval Suite',
+      intro:
+        'Apply Chapters 6.1–6.4 by running a four-question epistemic audit on an existing AI workflow to expose where fluent errors can slip past both users and judges.',
+      caseStudy: {
+        stageTitle: 'Meridian Workshop — Stage 7: Epistemic Risk Audit',
+        narrative:
+          'Meridian’s internal pilot scores 4.7/5 on analyst satisfaction—yet a seeded fluent-error audit reveals that when the assistant smoothly fabricates a causal conclusion backed by a real-looking citation, analysts miss 68% of seeded errors under normal time pressure (the Verification Trap). You redesign the UI to show the exact source sentence inline with a mandatory "Check causal wording" prompt and add polite false-premise sycophancy probes to your CI suite.',
+        keyDecisions: [
+          'Stop treating 4.7/5 analyst satisfaction as evidence of calibrated reliance or factual safety.',
+          'Add seeded fluent-error detection checks and sycophancy perturbation probes alongside inline source-passage verification.',
+        ],
+      },
+      misconceptions: [
+        {
+          myth: '“High user satisfaction (4.7/5 or high thumbs-up) proves the AI improves decisions.”',
+          reality: 'Fluent, agreeable answers trigger processing fluency and the Illusion of Explanatory Depth—often earning high satisfaction scores while increasing over-reliance on subtle errors.',
+        },
+        {
+          myth: '“Adding RAG and clickable citations eliminates epistemia.”',
+          reality: 'Citations can make wrong summaries look MORE authoritative faster than they make verification effortless—unless UI affordances keep oversight cost low and error visibility high.',
+        },
+      ],
+      exercises: [
+        {
+          title: 'Exercise 6: Four-Question Epistemic Audit of an AI Feature',
+          objective: 'Audit a real or prototype AI feature across the 7 layers, the 7 epistemological fault lines, fluent-error detection, and judge biases.',
+          scenario:
+            'Select an AI feature you use or build (or use the Meridian Research Assistant: RAG-backed paper summarization with clickable footnote links and a thumbs-up/down feedback button).',
+          instructions: [
+            '1. Layer Check: Which of the 7 layers (Data & Inputs → Wider Impacts) do your current metrics actually measure, and what unverified assumption connects your automated Layer 1–4 metrics to Layer 5–6 user outcomes?',
+            '2. Fault-Line Mapping: Pick your system’s three most costly failure modes and map each to the driving epistemological fault line(s) (Grounding, Parsing, Experience, Motivation, Causality, Metacognition, Value).',
+            '3. Epistemia Stress Test: If the system produces a completely wrong answer written in fluent, confident prose, what concrete mechanism—in the UI, workflow, or eval suite—would catch it?',
+            '4. Judge Audit: Identify one way your current evaluation rubric (human or LLM-based) could inadvertently reward verbosity, polish, or sycophantic agreement over calibrated accuracy—and how you will fix it.',
+          ],
+          requiredOutput: 'A structured 4-part epistemic audit covering layers, fault lines, fluent-error defense, and judge bias mitigation.',
+          evaluationCriteria: [
+            'Clearly distinguishes what lower-layer metrics measure from the unverified jump to Layer 5–6 human outcomes.',
+            'Maps concrete failure modes to fault lines, proposes an observable fluent-error detection mechanism, and fixes a specific judge bias.',
+          ],
+          strongExample:
+            '1) Layer Check: Current metrics only measure Layer 3 retrieval Recall@5 and Layer 2 claim faithfulness on clean snippets; the unverified assumption is that 92% snippet faithfulness means analysts catch the remaining 8% of errors at Layer 5. 2) Fault-Line Mapping: (a) Confident answer when corpus lacks evidence → Metacognition (forced continuation); (b) Turning survey correlations into causal claims → Causality; (c) Agreeing with an analyst’s flawed leading prompt → Motivation/Value (sycophancy). 3) Epistemia Stress Test: Seed 10 realistic fluent errors into a blinded analyst trial to measure detection rate, surface exact quoted source sentences inline beside each claim, and add an explicit abstention test suite. 4) Judge Audit: Our current LLM judge uses "Which summary is more helpful?"—rewarding verbose prose. Replace with binary claim-entailment checks, randomize A/B order, and calibrate weekly against blind expert review.',
+          reflectionQuestion: 'If your AI system were right 90% of the time and smoothly wrong 10% of the time, how many weeks would it take before your users stopped checking?',
+        },
+      ],
+    },
+    quiz: {
+      intro: 'Test your mastery of Chapters 6.1–6.4 before moving to Module 7.',
+      questions: [
+        {
+          id: 'm6-q1',
+          question: 'What is the asymmetric operating principle for connecting high-level HAI goals with automated engineering evals across the 7-layer stack?',
+          options: [
+            'Pick the easiest Layer 2 benchmark first and assume it guarantees Layer 5 user benefit.',
+            'Frame evaluation top-down from the higher human/outcome layers (which failure actually matters), then build instrumentation bottom-up across Layers 1–4.',
+            'Replace all automated Layers 1–4 checks with user surveys.',
+          ],
+          correctIndex: 1,
+          correctExplanation: 'Top-down framing keeps evaluations anchored to real human/workflow failures, while bottom-up instrumentation finds cheap automated proxies that actually predict them.',
+          distractorNotes: [
+            'A commits a classic cross-layer leap.',
+            'C throws away fast regression checks and relies on weak subjective proxies.',
+          ],
+        },
+        {
+          id: 'm6-q2',
+          question: 'Why are AI systems that "fail loudly" (e.g., abstaining or flagging missing sources) often safer in human–AI workflows than systems that "fail smoothly"?',
+          options: [
+            'Because loud failures increase error visibility and trigger human scrutiny, whereas smooth, fluent failures exploit processing fluency and the Verification Trap.',
+            'Because loud failures never require any human oversight.',
+            'Because smooth failures always have higher latency.',
+          ],
+          correctIndex: 0,
+          correctExplanation: 'Visible errors allow fast human recovery; smooth, confident confabulations mask errors and induce over-reliance.',
+          distractorNotes: [
+            'B and C are false.',
+          ],
+        },
+        {
+          id: 'm6-q3',
+          question: 'What is the "Verification Trap" in human–AI interaction?',
+          options: [
+            'When a deterministic unit test runs too slowly.',
+            'When an AI is right ~90% of the time and smoothly wrong ~10% of the time, causing humans to down-regulate scrutiny and miss the hardest edge-case failures.',
+            'When users refuse to use an AI tool at all.',
+          ],
+          correctIndex: 1,
+          correctExplanation: 'High baseline accuracy paired with fluent errors lulls reviewers into automation bias, collapsing detection on the remaining errors.',
+          distractorNotes: [
+            'A is unrelated.',
+            'C describes under-reliance, not the Verification Trap.',
+          ],
+        },
+        {
+          id: 'm6-q4',
+          question: 'Which evaluation practice directly tests whether your system and UI defend against Epistemia?',
+          options: [
+            'Tracking only thumbs-up satisfaction ratings after each response.',
+            'Seeding realistic, high-fluency errors in user trials to measure error-detection rates alongside explicit abstention and polite false-premise sycophancy probes.',
+            'Removing all unanswerable questions from your test set.',
+          ],
+          correctIndex: 1,
+          correctExplanation: 'Directly measuring fluent-error detection, abstention calibration, and resistance to sycophantic premises tests epistemic safety rather than surface polish.',
+          distractorNotes: [
+            'A rewards epistemia directly.',
+            'C hides forced-continuation failures.',
+          ],
+        },
+      ],
+    },
+    researchEvidence: [
+      {
+        citation: 'Quattrociocchi, W., Capraro, V., & Perc, M. (2025). Epistemological Fault Lines Between Human and Artificial Intelligence. arXiv:2512.19466.',
+        sourceType: 'Preprint',
+        url: 'https://arxiv.org/abs/2512.19466',
+        sampleOrScope: 'Theoretical synthesis comparing human epistemic pipelines with generative LLM token-transition pipelines across seven fault lines.',
+        finding: 'Defines Epistemia—where linguistic plausibility substitutes for epistemic evaluation, creating the feeling of knowing without the labor of judgment—and maps seven structural fault lines (Grounding, Parsing, Experience, Motivation, Causality, Metacognition, Value).',
+        limitations: 'Theoretical preprint synthesis rather than a controlled empirical benchmark; retrieval, tools, and calibration training mitigate some symptoms.',
+        doesNotEstablish: 'Does not prove that engineered RAG/tool systems cannot reduce error rates—rather warns that added polish can make answers more convincing faster than they become more knowing.',
+      },
+    ],
+  },
+
+  /* ========================================================================
+   * MODULE 7: Auditing Benchmarks & Vendor Claims (Chapters 7.1 – 7.2)
+   * ======================================================================== */
+  {
+    id: 'm7',
+    number: 7,
     title: 'Auditing Benchmarks & Vendor Claims',
     subtitle: 'How leaderboards mislead, the 4-question audit, and calibrated evidence reporting',
     overview:
-      'Put everything from Modules 1–5 together to call out hype. Across two sharp chapters you will learn the recurring mechanisms by which public benchmarks and vendor decks mislead—and how to audit any AI claim and rewrite it strictly within what the supplied evidence supports.',
+      'Put everything from Modules 1–6 together to call out hype. Across two sharp chapters you will learn the recurring mechanisms by which public benchmarks and vendor decks mislead—and how to audit any AI claim and rewrite it strictly within what the supplied evidence supports.',
     objectives: [
       'Recognize the major benchmark and reporting pitfalls: contamination, saturation, undisclosed harnesses, Goodharted proxies, and cross-layer leaps.',
       'Apply the 4-question audit to any press release, vendor pitch, or internal slide deck.',
@@ -596,8 +990,8 @@ export const COURSE_MODULES_PART_2: CourseModule[] = [
     ],
     chapters: [
       {
-        id: '6.1',
-        code: 'Chapter 6.1',
+        id: '7.1',
+        code: 'Chapter 7.1',
         title: 'How Benchmarks & Leaderboards Mislead',
         readMinutes: 6,
         summary:
@@ -649,8 +1043,8 @@ export const COURSE_MODULES_PART_2: CourseModule[] = [
         ],
       },
       {
-        id: '6.2',
-        code: 'Chapter 6.2',
+        id: '7.2',
+        code: 'Chapter 7.2',
         title: 'The 4-Question Audit & Calibrated Reporting',
         readMinutes: 5,
         summary:
@@ -706,11 +1100,11 @@ export const COURSE_MODULES_PART_2: CourseModule[] = [
       },
     ],
     practiceLab: {
-      title: 'Practice Lab 6: Audit the Apex-7 Vendor Press Release',
+      title: 'Practice Lab 7: Audit the Apex-7 Vendor Press Release',
       intro:
         'Apply the 4-question audit and claim-calibration table to dissect a fictional enterprise vendor pitch without inventing undisclosed details.',
       caseStudy: {
-        stageTitle: 'Meridian Workshop — Stage 7: Auditing a Competing Vendor Pitch',
+        stageTitle: 'Meridian Workshop — Stage 8: Auditing a Competing Vendor Pitch',
         narrative:
           'A competing vendor pitches Meridian with a headline: "94% on LeadingQA—the most intelligent research AI!" Your audit exposes the gaps: LeadingQA is an older public benchmark with contamination risk (Layer 2), the vendor omitted its retry/tool harness and baseline versions, and zero uncertainty bounds, cost/latency tradeoffs, or analyst-workflow results (Layer 5) were supplied. Meridian declines to buy on leaderboard hype alone.',
         keyDecisions: [
@@ -730,7 +1124,7 @@ export const COURSE_MODULES_PART_2: CourseModule[] = [
       ],
       exercises: [
         {
-          title: 'Exercise 6: Classify Claims & Audit the Apex-7 Press Release',
+          title: 'Exercise 7: Classify Claims & Audit the Apex-7 Press Release',
           objective: 'Classify individual statements, run an 8-point audit, and write a calibrated 2-sentence rewrite strictly bounded to supplied facts.',
           scenario:
             'Fictional vendor press release: "Our new model Apex-7 is the most intelligent AI system ever built, achieving #1 (92.4%) on ReasoningBench—proving it outperforms human experts and is safe for enterprise deployment." Also classify two companion pitch-deck bullets: (a) "Any hallucinated citation is unacceptable for client delivery," and (b) "Deploying Apex-7 will cut analyst research time by 40% next quarter."',
@@ -751,10 +1145,10 @@ export const COURSE_MODULES_PART_2: CourseModule[] = [
       ],
     },
     quiz: {
-      intro: 'Complete the final module assessment for Module 6.',
+      intro: 'Complete the final module assessment for Module 7.',
       questions: [
         {
-          id: 'm6-q1',
+          id: 'm7-q1',
           question: 'Which statement most accurately reports the results of passing a safety test suite?',
           options: [
             '“The system is safe for all enterprise users.”',
@@ -769,7 +1163,7 @@ export const COURSE_MODULES_PART_2: CourseModule[] = [
           ],
         },
         {
-          id: 'm6-q2',
+          id: 'm7-q2',
           question: 'Why can comparing two models on the same benchmark still be misleading if their harnesses differ?',
           options: [
             'Because token budgets, tool access, retries, and system prompts can drive large score differences independent of the base model.',
@@ -783,7 +1177,7 @@ export const COURSE_MODULES_PART_2: CourseModule[] = [
           ],
         },
         {
-          id: 'm6-q3',
+          id: 'm7-q3',
           question: 'A pitch deck states: "Any hallucinated citation is unacceptable for client delivery." What type of statement is this?',
           options: [
             'An empirical test result.',

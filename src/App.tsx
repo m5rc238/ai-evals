@@ -132,7 +132,7 @@ export function App() {
                 AI Evaluation Study Guide
               </h1>
               <p className="hidden font-mono text-[11px] text-[#5C5346] sm:block">
-                6-Module Course · {TOTAL_CHAPTERS} Deep Chapters, Practice Labs &amp; Quizzes
+                7-Module Course · {TOTAL_CHAPTERS} Deep Chapters, Practice Labs &amp; Quizzes
               </p>
             </div>
           </div>
@@ -231,17 +231,17 @@ export function App() {
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 space-y-4">
           <div className="rounded-md border border-[#335C81] bg-[#E3EAF0] px-4 py-2.5 text-xs text-[#1E3A54] flex flex-wrap items-center justify-between gap-2">
             <span>
-              <strong>Optional HCI Tool (Linked to Module 5 · Ch 5.2 &amp; Track G):</strong> Structure a formal Human–AI interaction study using the SPHERE evaluation card.
+              <strong>Optional HCI Tool (Linked to Module 6 · Ch 6.2 &amp; Track G):</strong> Structure a formal Human–AI interaction study using the SPHERE evaluation card.
             </span>
             <div className="flex items-center gap-3">
               <button onClick={() => openView('tracks')} className="font-semibold underline">
                 Open Track G
               </button>
               <button
-                onClick={() => selectModuleSection(4, { kind: 'chapter', chapterIdx: 1 })}
+                onClick={() => selectModuleSection(5, { kind: 'chapter', chapterIdx: 1 })}
                 className="font-semibold underline"
               >
-                ← Return to Ch 5.2
+                ← Return to Ch 6.2
               </button>
             </div>
           </div>
